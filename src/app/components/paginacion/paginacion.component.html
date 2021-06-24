@@ -1,0 +1,14 @@
+<div class="d-flex flex-row-reverse m-2">
+  <div class="">
+
+    <button class="btn btn-sm btn-outline-primary " (click)="back()">
+      < </button>
+        <small class="ml-2 mr-2">
+          {{ pageModel.pageNro + 1 }}
+        </small>
+        <button class="btn btn-sm btn-outline-primary " [disabled]="blockBtn" (click)="next()">
+          >
+        </button>
+
+  </div>
+</div>

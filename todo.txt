@@ -1,0 +1,3 @@
+- Blockear acceso a usuario EMPLEADO
+- Diseño:
+    * arreglar cruds de tabs de productos

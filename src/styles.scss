@@ -1,0 +1,81 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/styles/variables.scss";
+
+h4 {
+  padding: 9px 9px 0px 20px;
+}
+
+body {
+  background-color: $primary-background;
+  // color: $primary-color !important;
+  font-family: $font-family;
+}
+
+// .btn-primary:hover,
+// .btn-primary:active,
+// .btn-primary:visited,
+// .btn-outline-primary:hover,
+// .btn-outline-primary:active,
+// .btn-outline-primary:visited {
+//   background-color: $primary-color !important;
+// }
+
+// .btn-secondary:hover,
+// .btn-secondary:active,
+// .btn-secondary:visited,
+// .btn-outline-secondary:hover,
+// .btn-outline-secondary:active,
+// .btn-outline-secondary:visited {
+//   background-color: $secondary-color !important;
+// }
+
+
+// .btn-primary,
+// .btn-outline-primary,
+// .btn-secondary,
+// .btn-outline-secondary {
+//   border-color: #fff;
+// }
+
+.btn:focus,
+.btn-primary,
+.btn-outline-primary {
+  // color: #fff;
+  // background-color: $primary-color;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: $card-background;
+  min-height: 500px;
+  // box-shadow: 0px 0px 3px 1px rgba(156, 156, 156, 1);
+  width: 90%;
+}
+
+.row {
+  margin: 5px;
+}
+
+.table,
+.tab-content,
+.nav-link {
+  font-family: $font-family;
+}
+
+.table {
+  font-size: small;
+}
+
+.table .thead-dark th {
+  color: #fff;
+  background-color: $primary-color;
+  border-color: #ffffff;
+}
+
+img:focus,
+p:focus {
+  outline: none !important;
+}

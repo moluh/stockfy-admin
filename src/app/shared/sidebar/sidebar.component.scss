@@ -1,0 +1,68 @@
+@import 'src/assets/styles/variables.scss';
+
+.icons {
+  margin-left: 9px;
+}
+
+.ped-icon {
+  margin-left: 12px;
+}
+
+.dir {
+  cursor: pointer;
+  width: 200px;
+  height: 40px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 40px;
+  top: 0;
+  left: 0;
+  background: #0F2027;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+p {
+  color: #000000;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 0px !important;
+}
+
+.sidenav .dir:hover {
+  color: #ffffff;
+  transition: 0.5s;
+  background: $secondary-color;
+}
+
+div::-webkit-scrollbar {
+  display: none;
+}
+
+.animated {
+  margin-top: 10px;
+  position: absolute;
+  background-color: $primary-background;
+  position: absolute;
+  z-index: 999;
+  border-radius: 5px;
+}
+
+.collapsed {
+  width: 40px;
+}
+
+span {
+  margin-left: 5px;
+}
+
+.active {
+  background-color: $primary-color;
+  color: #ffffff;
+}

@@ -1,0 +1,122 @@
+<div *ngIf="showTable$ | async">
+    <section>
+        <div class="row m-1">
+            <div class="col-md-3">
+                <select class="form-control form-control-sm" name="filter" id="filter" (change)="checkAttrSelected()" [(ngModel)]="attr_selected">
+                    <option *ngFor="let attr of attr_list" [ngValue]="attr">
+                        {{                             
+                            attr === 'nombre' ? 'Nombre' :
+                            attr === 'descripcion' ? 'Descripcion' :
+                            attr === 'precio_costo' ? 'Precio Costo' :
+                            attr === 'precio_venta' ? 'Precio Venta' :
+                            attr === 'sku' ? 'SKU' :
+                            attr === 'ean' ? 'EAN' :
+                            attr === 'stock_actual' ? 'Stock Actual' :
+                            attr === 'archivado' ? 'Archivado' :
+                            attr === 'proveedor' ? 'Proveedor' :
+                            attr === 'marca' ? 'Marca' : 'Categoria'
+                         }}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <div *ngIf="attr_selected === 'archivado'" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="isArchive" [(ngModel)]="isArchive">
+                    <label class="form-check-label" for="isArchive"> Archivado </label>
+                </div>
+                <div *ngIf="
+                    attr_selected !== 'archivado' &&
+                    attr_selected !== 'proveedor' &&
+                    attr_selected !== 'categoria_uno' &&
+                    attr_selected !== 'marca'
+                " class="form-check">
+                    <input  class="form-control form-control-sm round" type="text" id="search" placeholder="Buscar.." [(ngModel)]="searchText">
+                </div>
+                
+                <div>
+                    <select *ngIf="attr_selected === 'proveedor'" class="form-control form-control-sm" name="id_filter_list" id="id_filter_list" [(ngModel)]="id_filter_list">
+                        <option *ngFor="let item of providers" [ngValue]="item.id">
+                            {{ item.proveedor }}
+                        </option>
+                    </select>
+                    <select *ngIf="attr_selected === 'categoria_uno'" class="form-control form-control-sm" name="id_filter_list" id="id_filter_list" [(ngModel)]="id_filter_list">
+                        <option *ngFor="let item of categories" [ngValue]="item.id">
+                            {{ item.categoria }}
+                        </option>
+                    </select>
+                    <select *ngIf="attr_selected === 'marca'" class="form-control form-control-sm" name="id_filter_list" id="id_filter_list" [(ngModel)]="id_filter_list">
+                        <option *ngFor="let item of brands" [ngValue]="item.id">
+                            {{ item.marca }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-sm btn-outline-secondary" (click)="applyFilter()">Aplicar filtro</button>
+            </div>
+            <div class="col-md-2">
+                <button *ngIf="isFiltering" class="btn btn-sm btn-outline-secondary" (click)="removeFilter()">Remover filtro</button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-sm btn-outline-primary float-right" (click)="goTo()"> +
+                    Nuevo
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="table-responsive text-center">
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Título</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Venta</th>
+                            <th scope="col">Costo</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of products">
+                            <td> {{ product?.nombre }} </td>
+                            <td> {{ product?.stock_actual }} </td>
+                            <td> {{ product?.precio_venta | currency:'ARS':'symbol':'1.0' }} </td>
+                            <td> {{ product?.precio_costo | currency:'ARS':'symbol':'1.0' }} </td>
+                            <td>
+                                <button (click)="goTo(product)" class="btn btn-primary btn-sm m-1" title="Editar">
+                                    <app-icon [iconName]="icons.edit" class="icons"></app-icon>
+                                </button>
+                                <button class="btn btn-danger btn-sm btn-acciones"
+                                    title="Al archivar, dejará de estar disponible para modificaciones, pero no se eliminará">
+                                    <app-icon [iconName]="icons.archive" class="icons"></app-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <app-paginacion (changePage)="pageChanged($event)"></app-paginacion>
+
+    <div class="row">
+        <div class="col-md-2">
+            <p> Archivo CSV:</p>
+        </div>
+        <div class="col-md-4">
+            <input class="form-control form-control-sm round" type="file" style="display: none" (change)="onUploadFile($event)" #fileInput>
+            <button class="btn btn-block btn-sm btn-info" style="color: white;" (click)="fileInput.click()">
+                <i class="fas fa-plus"></i> Seleccionar
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-block btn-sm btn-success float-right" style="color: white;" (click)="uploadCsv()">
+                <i [ngClass]="{'fas fa-upload':!showLoading,'fa fa-spinner fa-pulse fa-2x fa-fw':showLoading}"></i>
+                Cargar productos
+            </button>
+            {{ csvFile?.name }}
+        </div>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

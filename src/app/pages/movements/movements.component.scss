@@ -1,0 +1,40 @@
+li {
+    list-style: none;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cecece;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+li:hover {
+    background: #cecece;
+}
+
+ul {
+    height: 300px;
+    overflow: auto;
+    padding-inline-start: 0px !important;
+}
+
+.state-outline-success {
+    border-color: rgb(97, 255, 97);
+    border-style: solid;
+    border-width: 1px;
+}
+
+.state-success {
+    background-color: rgb(97, 255, 97);
+}
+
+.state-outline-danger {
+    border-color: rgb(255, 85, 85);
+    border-style: solid;
+    border-width: 1px;
+}
+
+.state-danger {
+    background-color: rgb(255, 85, 85);
+}

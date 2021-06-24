@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg">
+
+
+  <div class="btn-bars" (click)="setSide()">
+    <app-icon [iconName]="icons.bars"></app-icon>
+  </div>
+
+  <!-- <a *ngIf="usuario | async as user" class="navbar-brand"> 
+    {{ user.nombre }} 
+  </a> -->
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav" aria-controls="nav"
+    aria-expanded="false" aria-label="Toggle navigation" (click)="setUlMobile()">
+    <app-icon [iconName]="icons.users"></app-icon>
+  </button>
+
+  <div class="collapse navbar-collapse" id="nav">
+
+    <ul [ngClass]="{'ul-mobile': ulMobile}" class="navbar-nav text-center d-flex align-items-center">
+      <li class="ml-2">
+        <img src="assets/images/logo.png">
+      </li>
+
+      <li class="ml-3">
+        <a *ngIf="usuario.role === 'ADMIN'" class="navbar-brand"> Admin: {{ usuario.nombre }} </a>
+        <a *ngIf="usuario.role === 'USUARIO'" class="navbar-brand"> {{ usuario.nombre }} </a>
+      </li>
+
+      <li class="sign-out">
+        <button class="btn btn-sm btn-outline btn-sign-out" (click)="auth.logout()">
+          <app-icon [iconName]="icons.signOut"></app-icon>
+          Salir
+        </button>
+      </li>
+    </ul>
+
+  </div>
+
+</nav>

@@ -1,0 +1,35 @@
+li {
+    list-style: none;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cecece;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    border-radius: 5px;
+}
+
+b {
+    display: block;
+}
+
+.status-card {
+    margin: 5px;
+    border-width: 5px;
+    border-style: solid;
+}
+
+.completado {
+    border-color: #50e895;
+}
+
+.anulado {
+    border-color: #ff2020;
+}
+
+.pendiente {
+    border-color: #ebff34;
+}
+
+.btn-acciones{
+    margin-left: 5px;
+}

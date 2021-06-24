@@ -1,0 +1,41 @@
+<div *ngIf="showTable$ | async">
+    <section>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-sm btn-outline-primary float-right" (click)="goTo()"> +
+                    Nuevo
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="table-responsive text-nowrap text-center">
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Marca</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let brand of brands">
+                            <td> {{ brand.marca }} </td>
+                            <td>
+                                <button (click)="goTo(brand)" class="btn btn-primary btn-sm m-1" title="Editar">
+                                    Ver
+                                </button>
+
+                                <button class="btn btn-danger btn-sm btn-acciones"
+                                    title="Al archivar, dejará de estar disponible para modificaciones, pero no se eliminará">
+                                    Archivar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <app-paginacion (changePage)="pageChanged($event)"></app-paginacion>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,43 @@
+@import "src/assets/styles/variables.scss";
+
+.card {
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 auto;
+  float: none;
+  margin-bottom: 10px;
+  width: auto;
+  height: auto;
+  max-width: 300px;
+  max-height: 440px;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+
+input {
+  margin: 0 auto;
+  border-color: $secondary-color;
+}
+
+.body-login {
+  position: absolute;
+  background: $primary-background;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.btn-session {
+  margin-top: 25px;
+  color:  $primary-color;
+  border-color: $primary-color;;
+}
+
+.login-card {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}

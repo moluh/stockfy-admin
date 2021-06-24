@@ -1,0 +1,10 @@
+@import 'src/assets/styles/variables.scss';
+
+a {
+    width: max-content;
+    color: $primary-color;
+}
+
+.direction {
+    cursor: pointer;
+}

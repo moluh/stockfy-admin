@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12 mt-2">
+    <button
+      class="btn btn-sm btn-outline-danger float-right ml-2"
+      (click)="goTo()"
+      type="button"
+    >
+      Volver
+    </button>
+  </div>
+</div>
+<form [formGroup]="userForm" (ngSubmit)="send()">
+  <div id="row" class="row">
+    <div class="col-sm-12 col-md-4 col-lg-4">
+      <label for="nombre">Nombre</label>
+      <input
+        id="nombre"
+        class="form-control form-control-sm"
+        type="text"
+        placeholder="Nombre.."
+        formControlName="nombre"
+        (change)="isEditing = true"
+      />
+      <!-- <small *ngIf="nombreNoValido" class="text-danger">Nombre Inválido</small> -->
+    </div>
+
+    <div class="col-sm-12 col-md-4 col-lg-4">
+      <label for="apellido">Apellido</label>
+      <input
+        id="apellido"
+        class="form-control form-control-sm"
+        type="text"
+        placeholder="Apellido.."
+        formControlName="apellido"
+        (change)="isEditing = true"
+      />
+      <!-- <small *ngIf="nombreNoValido" class="text-danger">Nombre Inválido</small> -->
+    </div>
+
+    <div class="col-sm-12 col-md-4 col-lg-4">
+      <label for="username">Username</label>
+      <input
+        id="username"
+        class="form-control form-control-sm"
+        type="text"
+        placeholder="Username.."
+        formControlName="username"
+        (change)="isEditing = true"
+      />
+      <!-- <small *ngIf="nombreNoValido" class="text-danger">Nombre Inválido</small> -->
+    </div>
+
+    <div class="col-sm-12 col-md-4 col-lg-4">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        class="form-control form-control-sm"
+        type="text"
+        placeholder="Email.."
+        formControlName="email"
+        (change)="isEditing = true"
+      />
+      <!-- <small *ngIf="nombreNoValido" class="text-danger">Nombre Inválido</small> -->
+    </div>
+
+    <div class="col-sm-12 col-md-4 col-lg-4">
+      <label for="password">Contraseña</label>
+      <input
+        id="password"
+        class="form-control form-control-sm"
+        type="password"
+        placeholder="Contraseña.."
+        formControlName="password"
+        (change)="isEditing = true"
+      />
+      <!-- <small *ngIf="nombreNoValido" class="text-danger">Nombre Inválido</small> -->
+    </div>
+
+
+    <div class="col-sm-12 col-md-3 col-lg-3">
+      <label for="role"> ROL:</label>
+      <select
+        formControlName="role"
+        [compareWith]="compareRol"
+        id="role"
+        class="form-control form-control-sm"
+        (change)="isEditing = true"
+      >
+        <option [ngValue]="'ADMIN'">ADMIN</option>
+        <option [ngValue]="'EMPLEADO'">EMPLEADA/O</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 mt-5">
+      <button
+        class="btn btn-sm btn-outline-danger float-right ml-2"
+        [disabled]="userForm.invalid"
+        type="submit"
+      >
+        Guardar
+      </button>
+    </div>
+  </div>
+</form>

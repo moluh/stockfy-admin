@@ -1,0 +1,50 @@
+@import 'src/assets/styles/variables.scss';
+
+.navbar {
+  height: 60px;
+  border-color: $primary-color;
+  // border-top-width: 5px;
+  // border-top-style: solid;
+  color: $primary-font-color;
+}
+
+.btn-bars {
+  cursor: pointer;
+}
+
+ul {
+  width: 100%;
+}
+
+.ul-mobile{
+  position: absolute;
+  background-color: white;
+  z-index: 999;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: double;
+  padding: 10px;
+  border-color: $primary-color;
+}
+
+.sign-out {
+  margin-left: auto;
+  border-radius: 5px;
+}
+
+.btn-sign-out:hover {
+  background-color: $primary-color;
+  color: white;
+  transition: 1.5;
+}
+
+a {
+  cursor: pointer;
+  color: #000000;  
+}
+
+img {
+  height: 40px;
+  width: auto;
+  border-radius: 5px;
+}

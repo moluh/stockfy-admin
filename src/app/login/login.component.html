@@ -1,0 +1,30 @@
+<div class="body-login animated fadeIn">
+  <div class="login-card">
+    <div class="card mx-auto">
+      <div class="card-header">
+        <div>
+          <img src="assets/images/logo.png">
+          <h5>Sistema de control.</h5>
+          <p>Administración</p>
+        </div>
+      </div>
+      <div class="mb-2">
+        <form [formGroup]="LoginForm" (ngSubmit)="login()">
+          <div class="m-3">
+            <input type="text" class="form-control form-control-sm round" placeholder="Usuario"
+              formControlName="username" (keyup)="checkForm()" />
+          </div>
+          <div class="m-3">
+            <input type="password" class="form-control form-control-sm round" placeholder="Contraseña"
+              formControlName="password" required />
+          </div>
+          <div>
+            <button type="submit" class="btn btn-sm btn-session" [disabled]="!LoginForm.valid">Ingresar
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

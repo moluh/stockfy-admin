@@ -1,0 +1,328 @@
+<app-title-section [title]="title"></app-title-section>
+
+<div class="row">
+  <div class="col-md-5 col-sm-12 rounded">
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg-6">
+        <label for="eanCode">Código</label>
+        <input
+          id="eanCode"
+          type="text"
+          class="form-control form-control-sm"
+          placeholder="Código"
+          [(ngModel)]="eanCode"
+          (change)="getProductByEanCode()"
+          (keyup.enter)="getProductByEanCode()"
+        />
+      </div>
+      <div class="col-sm-12 col-md-3 col-lg-3">
+        <label for="quantity">Cant.</label>
+        <input
+          id="quantity"
+          type="number"
+          class="form-control form-control-sm"
+          placeholder="Cant."
+          [(ngModel)]="quantity"
+          (keyup.enter)="validateProductToPush()"
+        />
+      </div>
+      <div class="col-sm-12 col-md-3 col-lg-3">
+        <label for="agregar">Agregar</label>
+        <button
+          id="agregar"
+          type="button"
+          class="btn btn-sm btn-block btn-secondary"
+          (click)="validateProductToPush()"
+          (keyup.enter)="validateProductToPush()"
+        >
+          +
+        </button>
+      </div>
+      <!-- *ngIf="showFilter" -->
+      <div class="col-md-6 mt-3">
+        <label for="attribute">Búsqueda por</label>
+        <select
+          class="form-control form-control-sm"
+          id="attribute"
+          [(ngModel)]="attribute"
+        >
+          <option value="nombre" selected>Nombre</option>
+          <option value="descripcion">Descripción</option>
+          <option value="codigo_fabricante">Cod. fabricante</option>
+        </select>
+      </div>
+      <div class="col-md-6 mt-3">
+        <label for="text">Filtrar</label>
+        <input
+          id="text"
+          type="text"
+          class="form-control form-control-sm"
+          placeholder="Buscar.."
+          [(ngModel)]="text"
+          (keyup)="getPaginatedByTxt()"
+        />
+      </div>
+      <!-- *ngIf="foundProduct" -->
+      <div class="col-md-12 mt-2">
+        <div *ngIf="foundProduct">
+          <label for="alertTotal">Producto seleccionado:</label>
+          <div class="alert alert-dark" id="alertTotal" role="alert">
+            <b> {{ foundProduct.nombre }} </b>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="products.length > 0" class="col-md-12 mt-2">
+        <div>
+          <label for="text">Artículos filtrados</label>
+          <ul>
+            <li
+              *ngFor="let prod of products"
+              (click)="setProduct(prod); showFilter = !showFilter"
+            >
+              <b> {{ prod.nombre + " - " }} </b>
+              {{
+                prod.descripcion.length > 20
+                  ? (prod.descripcion | slice: 0:20) + "..."
+                  : prod.descripcion
+              }}
+
+              <br />
+              {{ prod.ean }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-7 col-lg-7">
+    <div class="row">
+      <div class="col-sm-12 col-md-4 col-lg-4">
+        <label for="salesType">
+          Cond. venta <span class="text-danger"> *</span>
+        </label>
+        <select
+          class="form-control form-control-sm"
+          id="salesType"
+          (change)="checkSalesType()"
+          [(ngModel)]="salesType"
+        >
+          <option value="efectivo" selected>Efectivo</option>
+          <option value="ctacte">Cuenta corriente</option>
+          <option value="tarjeta">Tarjeta</option>
+        </select>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="movement.estado === 'p'">
+        <label for="delivery">Entrega:</label>
+        <input
+          id="delivery"
+          type="number"
+          class="form-control form-control-sm"
+          [(ngModel)]="delivery"
+          (keyup)="calculateTotal()"
+          placeholder="$"
+        />
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="descuento"
+            (change)="applyDiscountChange()"
+          />
+          <label class="form-check-label" for="descuento"> Descuento </label>
+        </div>
+        <div class="mt-2">
+          <input
+            *ngIf="isDiscountAvailable"
+            id="text"
+            type="number"
+            class="form-control form-control-sm"
+            [(ngModel)]="discount"
+            (keyup)="calculateTotal()"
+            placeholder="$"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <label for="client">Cliente <span class="text-danger"> *</span></label>
+        <p *ngIf="_dataSource?.simpleObject">
+          {{
+            !_dataSource.simpleObject?.nombre
+              ? "Seleccione un cliente"
+              : _dataSource.simpleObject?.nombre +
+                " " +
+                _dataSource.simpleObject?.apellido
+          }}
+        </p>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3">
+        <button
+          type="button"
+          id="client"
+          class="btn btn-block btn-outline-primary btn-sm"
+          data-toggle="modal"
+          data-target="#selectClient"
+        >
+          Seleccionar
+        </button>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3">
+        <button
+          type="button"
+          id="client"
+          class="btn btn-block btn-outline-primary btn-sm"
+          data-toggle="modal"
+          data-target="#addClient"
+        >
+          Nuevo
+        </button>
+      </div>
+    </div>
+    <!-- find client Modal  -->
+    <div
+      class="modal fade bd-example-modal-lg"
+      id="selectClient"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="selectClient"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content p-4">
+          <app-title-section [title]="'Buscar cliente'"></app-title-section>
+          <app-tab-clientes [blockButtons]="true"></app-tab-clientes>
+        </div>
+      </div>
+    </div>
+    <!-- add edit client Modal  -->
+    <div
+      class="modal fade bd-example-modal-lg"
+      id="addClient"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addClient"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content p-4">
+          <app-title-section [title]="'Agregar cliente'"></app-title-section>
+          <app-add-edit-clientes [canGoBack]="false"></app-add-edit-clientes>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+          <label for="descrip">Descripción</label>
+          <textarea
+            class="form-control"
+            id="descrip"
+            rows="3"
+            [(ngModel)]="commentary"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="movement?.movimiento_lineas?.length > 0">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div
+          id="table"
+          class="
+            table-responsive table-sm table-striped
+            uk-table-condensed
+            my-custom-scrollbar
+          "
+        >
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Cant.</th>
+                <th scope="col">Precio</th>
+                <!-- <th scope="col">Rebaja</th> -->
+                <th scope="col">Total</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let prod of movement.movimiento_lineas">
+                <td>{{ prod.nombre }}</td>
+                <td>{{ prod.cantidad }}</td>
+                <td>
+                  {{ prod.precio_venta | currency: "ARS":"symbol":"2.0" }}
+                </td>
+                <!-- <td>{{ prod.precio_oferta | currency:'ARS':'symbol':'2.0' }}</td> -->
+                <td>
+                  {{
+                    prod.precio_venta * prod.cantidad
+                      | currency: "ARS":"symbol":"2.0"
+                  }}
+                </td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-block btn-danger"
+                    (click)="deleteProduct(prod)"
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="alert alert-secondary" id="alertTotal" role="alert">
+          <h6
+            class="text-center"
+            *ngIf="
+              movement?.movimiento_lineas?.length === 0 ||
+              movement?.movimiento_lineas === undefined
+            "
+          >
+            Sin artículos cargados
+          </h6>
+          <h6
+            class="text-center"
+            *ngIf="
+              movement?.movimiento_lineas?.length > 0 &&
+              movement?.movimiento_lineas !== undefined
+            "
+          >
+            Total: {{ totalOfSale | currency: "ARS":"symbol":"2.0" }}
+          </h6>
+          <h6
+            class="text-center"
+            *ngIf="
+              (movement?.movimiento_lineas?.length > 0 &&
+                movement?.saldo > 0) ||
+              movement?.saldo !== null
+            "
+          >
+            Saldo: {{ movement?.saldo | currency: "ARS":"symbol":"2.0" }}
+          </h6>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="mt-2 mb-3">
+          <button
+            type="button"
+            class="btn btn-sm btn-block btn-success"
+            (click)="isValidMovement()"
+          >
+            Confirmar movimiento
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

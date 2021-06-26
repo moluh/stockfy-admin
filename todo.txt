@@ -1,3 +1,7 @@
 - Blockear acceso a usuario EMPLEADO
+- Agregar detalle de productos filtrados
+- Imprimir movimiento, al generarlo y al seleccionar uno desde la lista
+- Limitar las longitudes de los inputs respetando el valor definido en las entidades
+- Estadísticas
 - Diseño:
-    * arreglar cruds de tabs de productos
+    * Arreglar cruds de tabs

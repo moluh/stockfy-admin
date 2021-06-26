@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let movement of movements">
-                            <td> # {{ movement.id }} </td>
+                            <td> {{ movement.id }} </td>
                             <td> {{ movement.fecha_hora | date:'medium' }} </td>
                             <td> {{ movement.cliente.nombre + ' ' + movement.cliente.apellido }} </td>
                             <td> {{

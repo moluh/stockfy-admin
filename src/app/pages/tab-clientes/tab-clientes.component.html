@@ -39,6 +39,7 @@
                 <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                         <tr>
+                            <th scope="col">ID</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Saldo</th>
                             <th scope="col">Tel.</th>
@@ -47,6 +48,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let client of clients">
+                            <td> {{ client.id }} </td>
                             <td> {{ client.nombre + ' ' + client.apellido }} </td>
                             <td> {{ client.telefono }} </td>
                             <td> {{ client.telefono }} </td>

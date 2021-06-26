@@ -34,6 +34,7 @@
                 <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                         <tr>
+                            <th scope="col">ID</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Usuario</th>
                             <th scope="col">Email</th>
@@ -42,6 +43,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let user of users">
+                            <td> {{ user.id }} </td>
                             <td> {{ user.nombre + ' ' + user.apellido }} </td>
                             <td> {{ user.username }} </td>
                             <td> {{ user.email }} </td>

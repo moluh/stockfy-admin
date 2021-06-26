@@ -133,6 +133,7 @@
         <table class="table table-sm table-hover">
           <thead class="thead-dark">
             <tr>
+              <th scope="col">ID</th>
               <th scope="col">Título</th>
               <th scope="col">Stock</th>
               <th scope="col">Venta</th>
@@ -142,6 +143,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let product of products">
+              <td>{{ product?.id }}</td>
               <td>{{ product?.nombre }}</td>
               <td>{{ product?.stock_actual }}</td>
               <td>

@@ -10,5 +10,5 @@ FRONTEND:
 
 BACKEND:
 - devolver el count de movimientos
-- Al agregar un pago a un movimiento se actualiza la fecha_hora del movimiento. No debería.
+- Al agregar un pago a un movimiento se actualiza la fecha del movimiento. No debería.
 - Estadísticas

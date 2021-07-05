@@ -34,7 +34,7 @@ export class AddEditExpensesComponent implements OnInit {
       id: [''],
       monto: ['', [Validators.required, Validators.minLength(1)]],
       descripcion: ['', [Validators.required, Validators.minLength(2)]],
-      fecha_hora: [this._date.getActualDate()],
+      fecha: [this._date.getActualDate()],
     });
 
   }

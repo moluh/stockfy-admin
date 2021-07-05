@@ -1,20 +1,42 @@
 <app-title-section [title]="title"></app-title-section>
 
+<div class="row">
+  <div class="col-sm-12 col-md-4 col-lg-4">
+    <label for="desde">Desde</label>
+    <input [(ngModel)]="desde" id="desde" class="form-control form-control-sm" type="date" />
+  </div>
+  <div class="col-sm-12 col-md-4 col-lg-4">
+    <label for="hasta">Hasta</label>
+    <input [(ngModel)]="hasta" id="hasta" class="form-control form-control-sm" type="date" />
+  </div>
+
+  <div class="col-sm-12 col-md-4 col-lg-4">
+    <label for="hasta">Confirmar:</label>
+    <button class="btn btn-sm btn-outline-danger" (click)="getStats()">
+      Obtener estadísticas
+    </button>
+  </div>
+</div>
+
 <div class="chart-wrapper m-4">
-    <canvas baseChart 
+  <canvas
+    baseChart
     [datasets]="barChartData"
     [labels]="barChartLabels"
     [options]="barChartOptions"
     [plugins]="barChartPlugins"
     [legend]="barChartLegend"
-    [chartType]="barChartType">
+    [chartType]="barChartType"
+  >
   </canvas>
 </div>
 
 <div class="chart-wrapper m-4">
-    <canvas baseChart 
+  <canvas
+    baseChart
     [data]="doughnutChartData"
     [labels]="doughnutChartLabels"
-    [chartType]="doughnutChartType">
+    [chartType]="doughnutChartType"
+  >
   </canvas>
 </div>

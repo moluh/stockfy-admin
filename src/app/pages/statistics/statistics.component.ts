@@ -10,7 +10,8 @@ import { Label, MultiDataSet } from 'ng2-charts';
 export class StatisticsComponent implements OnInit {
 
   title: string = "Estadísticas";
-
+  desde: Date = new Date();
+  hasta: Date = new Date();
   
   barChartOptions: ChartOptions = {
     responsive: true,
@@ -37,6 +38,10 @@ export class StatisticsComponent implements OnInit {
   ngOnInit(): void {
     // npm i ng2-charts@^2.3.0 chart.js@^2.9.3
     // npm un ng2-charts chart.js
+  }
+
+  getStats() {
+
   }
 
 }

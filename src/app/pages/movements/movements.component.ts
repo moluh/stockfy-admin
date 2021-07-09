@@ -223,10 +223,9 @@ export class MovementsComponent implements OnInit {
     this.movement.comentario = this.commentary;
     this.movement.modo_pago = this.salesType;
     this.movement.cliente = this._dataSource.simpleObject;
+    this.movement.pagos = []
     if (this.delivery)
-      this.movement.pagos.push({ monto: this.delivery })
-    else
-      this.movement.pagos = []
+      this.movement.pagos.push({ monto: this.delivery });
 
 
     this._toast.sweetConfirm("¿Confirmar venta?", "")

@@ -7,7 +7,7 @@ export const ENVIRONMENT: any = {
     dev: {
       clientSecret: '$56j%Z76rtq20',
       clientId: '1',
-      url: 'http://localhost:8080/api/v1'
+      url: 'http://localhost:3000/api/v1'
     },
     prod: {
       clientSecret: '$56j%as210"46¡¿72',

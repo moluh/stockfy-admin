@@ -1,5 +1,9 @@
 <app-title-section [title]="title"></app-title-section>
 
+<br>
+<hr>
+<app-title-section [title]="'Dashboard'"></app-title-section>
+
 <div class="row mb-5">
   <div class="col-sm-12 col-md-4 col-lg-4">
     <label for="fromDashboard">Desde</label>
@@ -20,9 +24,11 @@
     />
   </div>
 
-  <div class="col-sm-12 col-md-4 col-lg-4">
-    <label for="hasta">Confirmar:</label>
-    <button class="btn btn-sm btn-outline-danger" (click)="getStatsDashboard()">
+  <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
+    <button
+      class="btn btn-block btn-sm btn-outline-success"
+      (click)="getStatsDashboard()"
+    >
       Obtener estadísticas
     </button>
   </div>
@@ -85,6 +91,11 @@
   </div>
 </div>
 
+<br>
+<hr>
+<app-title-section [title]="'Gráficos'"></app-title-section>
+
+
 <div class="row mb-5">
   <div class="col-sm-12 col-md-4 col-lg-4">
     <label for="fromGraphic">Desde</label>
@@ -105,20 +116,86 @@
     />
   </div>
 
-  <div class="col-sm-12 col-md-4 col-lg-4">
-    <label for="hasta">Confirmar:</label>
-    <button class="btn btn-sm btn-outline-danger" (click)="getStatsGraphics()">
+  <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
+    <button
+      class="btn btn-block btn-sm btn-outline-success"
+      (click)="getStatsGraphics()"
+    >
       Obtener estadísticas
+    </button>
+  </div>
+
+  <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
+    <button
+      class="btn btn-block btn-sm btn-outline-success"
+      (click)="changeStyleGraphic()"
+    >
+      Cambiar estilo de grafico
     </button>
   </div>
 </div>
 
-<div *ngIf="statisticsGraphic">
+<div *ngIf="statisticsGraphic && styleGraphic == 'line'">
+  <div style="display: block;">
+    <canvas baseChart width="400" height="400"
+      [datasets]="lineDataCountMovimientos"
+      [labels]="lineLabelsCountMovimientos"
+      [options]="lineChartOptions"
+      [colors]="lineChartColors"
+      [legend]="lineChartLegend"
+      [chartType]="lineChartType"
+      [plugins]="lineChartPlugins">
+    </canvas>
+  </div>
+  <div style="display: block;">
+    <canvas baseChart width="400" height="400"
+      [datasets]="lineDataCountPagos"
+      [labels]="lineLabelsCountPagos"
+      [options]="lineChartOptions"
+      [colors]="lineChartColors"
+      [legend]="lineChartLegend"
+      [chartType]="lineChartType"
+      [plugins]="lineChartPlugins">
+    </canvas>
+  </div>  <div style="display: block;">
+    <canvas baseChart width="400" height="400"
+      [datasets]="lineDataGanancias"
+      [labels]="lineLabelsGanancias"
+      [options]="lineChartOptions"
+      [colors]="lineChartColors"
+      [legend]="lineChartLegend"
+      [chartType]="lineChartType"
+      [plugins]="lineChartPlugins">
+    </canvas>
+  </div>  <div style="display: block;">
+    <canvas baseChart width="400" height="400"
+      [datasets]="lineDataTotalDePagos"
+      [labels]="lineLabelsTotalDePagos"
+      [options]="lineChartOptions"
+      [colors]="lineChartColors"
+      [legend]="lineChartLegend"
+      [chartType]="lineChartType"
+      [plugins]="lineChartPlugins">
+    </canvas>
+  </div>  <div style="display: block;">
+    <canvas baseChart width="400" height="400"
+      [datasets]="lineDataTotalVendido"
+      [labels]="lineLabelsTotalVendido"
+      [options]="lineChartOptions"
+      [colors]="lineChartColors"
+      [legend]="lineChartLegend"
+      [chartType]="lineChartType"
+      [plugins]="lineChartPlugins">
+    </canvas>
+  </div>
+</div>
+
+<div *ngIf="statisticsGraphic && styleGraphic == 'bar'">
   <div class="chart-wrapper m-4">
     <canvas
       baseChart
-      [datasets]="dataCountMovimientos"
-      [labels]="labelsCountMovimientos"
+      [datasets]="barDataCountMovimientos"
+      [labels]="barLabelsCountMovimientos"
       [options]="barChartOptions"
       [plugins]="barChartPlugins"
       [legend]="barChartLegend"
@@ -130,8 +207,8 @@
   <div class="chart-wrapper m-4">
     <canvas
       baseChart
-      [datasets]="dataCountPagos"
-      [labels]="labelsCountPagos"
+      [datasets]="barDataCountPagos"
+      [labels]="barLabelsCountPagos"
       [options]="barChartOptions"
       [plugins]="barChartPlugins"
       [legend]="barChartLegend"
@@ -143,8 +220,8 @@
   <div class="chart-wrapper m-4">
     <canvas
       baseChart
-      [datasets]="dataGanancias"
-      [labels]="labelsGanancias"
+      [datasets]="barDataGanancias"
+      [labels]="barLabelsGanancias"
       [options]="barChartOptions"
       [plugins]="barChartPlugins"
       [legend]="barChartLegend"
@@ -156,8 +233,8 @@
   <div class="chart-wrapper m-4">
     <canvas
       baseChart
-      [datasets]="dataTotalDePagos"
-      [labels]="labelsTotalDePagos"
+      [datasets]="barDataTotalDePagos"
+      [labels]="barLabelsTotalDePagos"
       [options]="barChartOptions"
       [plugins]="barChartPlugins"
       [legend]="barChartLegend"
@@ -169,8 +246,8 @@
   <div class="chart-wrapper m-4">
     <canvas
       baseChart
-      [datasets]="dataTotalVendido"
-      [labels]="labelsTotalVendido"
+      [datasets]="barDataTotalVendido"
+      [labels]="barLabelsTotalVendido"
       [options]="barChartOptions"
       [plugins]="barChartPlugins"
       [legend]="barChartLegend"
@@ -179,13 +256,3 @@
     </canvas>
   </div>
 </div>
-
-<!-- <div class="chart-wrapper m-4">
-  <canvas
-    baseChart
-    [data]="doughnutChartData"
-    [labels]="doughnutChartLabels"
-    [chartType]="doughnutChartType"
-  >
-  </canvas>
-</div> -->

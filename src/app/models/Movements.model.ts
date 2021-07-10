@@ -4,7 +4,8 @@ import { Payments } from "./Payments.model";
 
 export class Movements {
     id: number;
-    fecha_hora: Date;
+    fecha: string | any;
+    hora: string | any;
     comentario: string;
     estado: string;
     total: number;

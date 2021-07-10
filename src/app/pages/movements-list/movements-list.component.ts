@@ -9,7 +9,7 @@ import { PaymentsService } from 'src/app/services/payments.service';
 import { ToastService } from 'src/app/services/toasts.service';
 
 const ATTR_LIST = [
-  "fecha_hora",
+  "fecha",
   "comentario",
   "estado",
   "total",
@@ -50,7 +50,7 @@ export class MovementsListComponent implements OnInit {
       id: [''],
       pago_nro: [],
       monto: ['', [Validators.required, Validators.minLength(1)]],
-      fecha_hora: [this._date.getActualDate(), [Validators.required, Validators.minLength(1)]],
+      fecha: [this._date.getActualDate(), [Validators.required, Validators.minLength(1)]],
       tasa_interes: [null],
       interes: [true],
       ganancia: [0],
@@ -71,7 +71,7 @@ export class MovementsListComponent implements OnInit {
     const hasProfit: boolean = this.paymentForm.controls['interes'].value;
     const tasa: number = this.paymentForm.controls['tasa_interes'].value;
     const monto: number = this.paymentForm.controls['monto'].value;
-    const fecha: Date = this.paymentForm.controls['fecha_hora'].value;
+    const fecha: Date = this.paymentForm.controls['fecha'].value;
 
     if (hasProfit) {
       if (tasa === 0 || tasa === undefined || tasa === null)

@@ -36,7 +36,7 @@
                     <tbody>
                         <tr *ngFor="let movement of movements">
                             <td> {{ movement.id }} </td>
-                            <td> {{ movement.fecha_hora | date:'medium' }} </td>
+                            <td> {{ movement.fecha | date:'medium' }} </td>
                             <td> {{ movement.cliente.nombre + ' ' + movement.cliente.apellido }} </td>
                             <td> {{
                                 (movement.estado === 'p'
@@ -93,7 +93,7 @@
                             <b> # </b> {{ movementSelected.id }}
                         </div>
                         <div class="col-sm-12 col-md-4 col-lg-4">
-                            <b> Fecha/Hora: </b> {{ movementSelected.fecha_hora | date:'medium' }}
+                            <b> Fecha/Hora: </b> {{ movementSelected.fecha | date:'medium' }}
                         </div>
                         <div class="col-sm-12 col-md-4 col-lg-4">
                             <b> Cliente: </b> {{ movementSelected?.cliente?.nombre }}
@@ -169,7 +169,7 @@
                                     <td>
                                         {{ pago?.monto | currency:'ARS':'symbol':'1.0' }}
                                     </td>
-                                    <td>{{ pago?.fecha_hora | date:'medium' }} </td>
+                                    <td>{{ pago?.fecha | date:'medium' }} </td>
                                     <!-- <td>{{ pago?.monto_recargo | currency:'ARS':'symbol':'1.0' }} </td> -->
                                     <td>{{ pago?.tasa_interes + '%' }} </td>
                                     <td>{{ pago?.ganancia | currency:'ARS':'symbol':'1.0' }} </td>
@@ -219,9 +219,9 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4">
-                                    <label for="fecha_hora">Fecha</label>
-                                    <input id="fecha_hora" class="form-control form-control-sm" type="date"
-                                        formControlName="fecha_hora" />
+                                    <label for="fecha">Fecha</label>
+                                    <input id="fecha" class="form-control form-control-sm" type="date"
+                                        formControlName="fecha" />
                                 </div>
                                 <div class="col-sm-6 col-md-6 col-lg-6 mt-3">
                                     <label for="ganancia">Total a pagar:</label>

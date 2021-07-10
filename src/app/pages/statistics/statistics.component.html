@@ -1,7 +1,7 @@
 <app-title-section [title]="title"></app-title-section>
 
-<br>
-<hr>
+<br />
+<hr />
 <app-title-section [title]="'Dashboard'"></app-title-section>
 
 <div class="row mb-5">
@@ -91,10 +91,9 @@
   </div>
 </div>
 
-<br>
-<hr>
+<br />
+<hr />
 <app-title-section [title]="'Gráficos'"></app-title-section>
-
 
 <div class="row mb-5">
   <div class="col-sm-12 col-md-4 col-lg-4">
@@ -115,7 +114,6 @@
       type="date"
     />
   </div>
-
   <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
     <button
       class="btn btn-block btn-sm btn-outline-success"
@@ -124,68 +122,104 @@
       Obtener estadísticas
     </button>
   </div>
+</div>
 
+<div class="row mb-5 pb-5">
+  <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
+    <b> Estilo de los gráficos: </b>
+  </div>
   <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
     <button
-      class="btn btn-block btn-sm btn-outline-success"
-      (click)="changeStyleGraphic()"
+      class="btn btn-block btn-sm btn-outline-secondary"
+      (click)="styleGraphic = 'bar'"
     >
-      Cambiar estilo de grafico
+      Gráfico de Barras
+    </button>
+  </div>
+  <div class="d-flex align-items-center col-sm-12 col-md-4 col-lg-4">
+    <button
+      class="btn btn-block btn-sm btn-outline-secondary"
+      (click)="styleGraphic = 'line'"
+    >
+      Gráfico de Líneas
     </button>
   </div>
 </div>
 
 <div *ngIf="statisticsGraphic && styleGraphic == 'line'">
-  <div style="display: block;">
-    <canvas baseChart width="400" height="400"
+  <div style="display: block">
+    <canvas
+      baseChart
+      width="400"
+      height="400"
       [datasets]="lineDataCountMovimientos"
       [labels]="lineLabelsCountMovimientos"
       [options]="lineChartOptions"
       [colors]="lineChartColors"
       [legend]="lineChartLegend"
       [chartType]="lineChartType"
-      [plugins]="lineChartPlugins">
+      [plugins]="lineChartPlugins"
+    >
     </canvas>
   </div>
-  <div style="display: block;">
-    <canvas baseChart width="400" height="400"
+  <div style="display: block">
+    <canvas
+      baseChart
+      width="400"
+      height="400"
       [datasets]="lineDataCountPagos"
       [labels]="lineLabelsCountPagos"
       [options]="lineChartOptions"
       [colors]="lineChartColors"
       [legend]="lineChartLegend"
       [chartType]="lineChartType"
-      [plugins]="lineChartPlugins">
+      [plugins]="lineChartPlugins"
+    >
     </canvas>
-  </div>  <div style="display: block;">
-    <canvas baseChart width="400" height="400"
+  </div>
+  <div style="display: block">
+    <canvas
+      baseChart
+      width="400"
+      height="400"
       [datasets]="lineDataGanancias"
       [labels]="lineLabelsGanancias"
       [options]="lineChartOptions"
       [colors]="lineChartColors"
       [legend]="lineChartLegend"
       [chartType]="lineChartType"
-      [plugins]="lineChartPlugins">
+      [plugins]="lineChartPlugins"
+    >
     </canvas>
-  </div>  <div style="display: block;">
-    <canvas baseChart width="400" height="400"
+  </div>
+  <div style="display: block">
+    <canvas
+      baseChart
+      width="400"
+      height="400"
       [datasets]="lineDataTotalDePagos"
       [labels]="lineLabelsTotalDePagos"
       [options]="lineChartOptions"
       [colors]="lineChartColors"
       [legend]="lineChartLegend"
       [chartType]="lineChartType"
-      [plugins]="lineChartPlugins">
+      [plugins]="lineChartPlugins"
+    >
     </canvas>
-  </div>  <div style="display: block;">
-    <canvas baseChart width="400" height="400"
+  </div>
+  <div style="display: block">
+    <canvas
+      baseChart
+      width="400"
+      height="400"
       [datasets]="lineDataTotalVendido"
       [labels]="lineLabelsTotalVendido"
       [options]="lineChartOptions"
       [colors]="lineChartColors"
       [legend]="lineChartLegend"
       [chartType]="lineChartType"
-      [plugins]="lineChartPlugins">
+      [plugins]="lineChartPlugins"
+    >
     </canvas>
   </div>
 </div>

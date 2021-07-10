@@ -13,6 +13,7 @@ import { ArraysGraphics } from './arraysGraphics';
   styleUrls: ['./statistics.component.scss'],
 })
 export class StatisticsComponent implements OnInit {
+  ag: ArraysGraphics = new ArraysGraphics();
   title: string = 'Estadísticas';
   statisticsDashboard: any = null;
   statisticsGraphic: any = null;
@@ -22,71 +23,47 @@ export class StatisticsComponent implements OnInit {
   fromGraphic: any = dayjs(new Date()).format('YYYY-MM-DD');
   toGraphic: any = dayjs(new Date()).add(1, 'month').format('YYYY-MM-DD');
 
-  // ================================
-  // BAR STYLE GRAPHIC
-  // ================================
-  public lineChartOptions: ChartOptions = {
-    responsive: true,
-  };
-  public lineChartColors: Color[] = [
-    {
-      borderColor: 'black',
-      backgroundColor: 'rgba(255,0,0,0.3)',
-    },
-  ];
-  public lineChartLegend = true;
-  public lineChartType = 'line';
-  public lineChartPlugins = [];
+  lineChartOptions: ChartOptions = this.ag.lineChartOptions;
+  lineChartColors: Color[] = this.ag.lineChartColors;
+  lineChartLegend = this.ag.lineChartLegend;
+  lineChartType = this.ag.lineChartType;
+  lineChartPlugins = this.ag.lineChartPlugins;
 
-  // LABELS
-  lineLabelsCountMovimientos: Label[] = [];
-  lineLabelsCountPagos: Label[] = [];
-  lineLabelsGanancias: Label[] = [];
-  lineLabelsTotalDePagos: Label[] = [];
-  lineLabelsTotalVendido: Label[] = [];
-  // DATA
-  lineDataCountMovimientos: ChartDataSets[] = [];
-  lineDataCountPagos: ChartDataSets[] = [];
-  lineDataGanancias: ChartDataSets[] = [];
-  lineDataTotalDePagos: ChartDataSets[] = [];
-  lineDataTotalVendido: ChartDataSets[] = [];
+  barChartOptions: ChartOptions = this.ag.barChartOptions;
+  barChartType: ChartType = this.ag.barChartType;
+  barChartLegend = this.ag.barChartLegend;
+  barChartPlugins = this.ag.barChartPlugins;
 
-  // ================================
-  // BAR STYLE GRAPHIC
-  // ================================
-  barChartOptions: ChartOptions = {
-    responsive: true,
-  };
-  barChartType: ChartType = 'bar';
-  barChartLegend = true;
-  barChartPlugins = [];
-  // LABELS
-  barLabelsCountMovimientos: Label[] = [];
-  barLabelsCountPagos: Label[] = [];
-  barLabelsGanancias: Label[] = [];
-  barLabelsTotalDePagos: Label[] = [];
-  barLabelsTotalVendido: Label[] = [];
-  // DATA
-  barDataCountMovimientos: ChartDataSets[] = [];
-  barDataCountPagos: ChartDataSets[] = [];
-  barDataGanancias: ChartDataSets[] = [];
-  barDataTotalDePagos: ChartDataSets[] = [];
-  barDataTotalVendido: ChartDataSets[] = [];
+  lineLabelsCountMovimientos: Label[] = this.ag.lineLabelsCountMovimientos;
+  lineLabelsCountPagos: Label[] = this.ag.lineLabelsCountPagos;
+  lineLabelsGanancias: Label[] = this.ag.lineLabelsGanancias;
+  lineLabelsTotalDePagos: Label[] = this.ag.lineLabelsTotalDePagos;
+  lineLabelsTotalVendido: Label[] = this.ag.lineLabelsTotalVendido;
+
+  barLabelsCountMovimientos: Label[] = this.ag.barLabelsCountMovimientos;
+  barLabelsCountPagos: Label[] = this.ag.barLabelsCountPagos;
+  barLabelsGanancias: Label[] = this.ag.barLabelsGanancias;
+  barLabelsTotalDePagos: Label[] = this.ag.barLabelsTotalDePagos;
+  barLabelsTotalVendido: Label[] = this.ag.barLabelsTotalVendido;
+
+  lineDataCountMovimientos: ChartDataSets[] = this.ag.lineDataCountMovimientos;
+  lineDataCountPagos: ChartDataSets[] = this.ag.lineDataCountPagos;
+  lineDataGanancias: ChartDataSets[] = this.ag.lineDataGanancias;
+  lineDataTotalDePagos: ChartDataSets[] = this.ag.lineDataTotalDePagos;
+  lineDataTotalVendido: ChartDataSets[] = this.ag.lineDataTotalVendido;
+
+  barDataCountMovimientos: ChartDataSets[] = this.ag.barDataCountMovimientos;
+  barDataCountPagos: ChartDataSets[] = this.ag.barDataCountPagos;
+  barDataGanancias: ChartDataSets[] = this.ag.barDataGanancias;
+  barDataTotalDePagos: ChartDataSets[] = this.ag.barDataTotalDePagos;
+  barDataTotalVendido: ChartDataSets[] = this.ag.barDataTotalVendido;
 
   constructor(private _stats: StatisticsService) {}
 
-  ngOnInit(): void {
-    // npm i ng2-charts@^2.3.0 chart.js@^2.9.3
-    // npm un ng2-charts chart.js
-  }
+  ngOnInit(): void {}
 
   changeStyleGraphic() {
     this.styleGraphic = this.styleGraphic === 'bar' ? 'line' : 'bar';
-  }
-
-  randomHexColor() {
-    const random = '#' + Math.floor(Math.random() * 16777215).toString(16);
-    return random;
   }
 
   getStatsDashboard() {
@@ -108,13 +85,12 @@ export class StatisticsComponent implements OnInit {
 
   setGraphicData(data) {
     data.map((stat) => {
-      // line labels
       this.lineLabelsCountMovimientos.push(dayjs(stat.Fecha).format('DD-MMM'));
       this.lineLabelsCountPagos.push(dayjs(stat.Fecha).format('DD-MMM'));
       this.lineLabelsGanancias.push(dayjs(stat.Fecha).format('DD-MMM'));
       this.lineLabelsTotalDePagos.push(dayjs(stat.Fecha).format('DD-MMM'));
       this.lineLabelsTotalVendido.push(dayjs(stat.Fecha).format('DD-MMM'));
-      // line datos
+
       this.lineDataCountMovimientos[0].data.push(
         parseInt(stat.CountMovimientos)
       );
@@ -123,13 +99,12 @@ export class StatisticsComponent implements OnInit {
       this.lineDataTotalDePagos[0].data.push(stat.TotalDePagos);
       this.lineDataTotalVendido[0].data.push(stat.TotalVendido);
 
-      // bar labels
       this.barLabelsCountMovimientos.push(dayjs(stat.Fecha).format('DD-MMM'));
       this.barLabelsCountPagos.push(dayjs(stat.Fecha).format('DD-MMM'));
       this.barLabelsGanancias.push(dayjs(stat.Fecha).format('DD-MMM'));
       this.barLabelsTotalDePagos.push(dayjs(stat.Fecha).format('DD-MMM'));
       this.barLabelsTotalVendido.push(dayjs(stat.Fecha).format('DD-MMM'));
-      // bar datos
+
       this.barDataCountMovimientos[0].data.push(
         parseInt(stat.CountMovimientos)
       );
@@ -142,99 +117,41 @@ export class StatisticsComponent implements OnInit {
   }
 
   resetData() {
-    // LABELS
-    this.lineLabelsCountMovimientos = [];
-    this.lineLabelsCountPagos = [];
-    this.lineLabelsGanancias = [];
-    this.lineLabelsTotalDePagos = [];
-    this.lineLabelsTotalVendido = [];
-    // DATA
-    this.lineDataCountMovimientos = [
-      {
-        data: [],
-        label: 'Cantidad de ventas',
-        backgroundColor: this.randomHexColor(),
-        hoverBackgroundColor: this.randomHexColor(),
-      },
-    ];
-    this.lineDataCountPagos = [
-      {
-        data: [],
-        label: 'Cantidad de pagos',
-        backgroundColor: this.randomHexColor(),
-        hoverBackgroundColor: this.randomHexColor(),
-      },
-    ];
-    this.lineDataGanancias = [
-      {
-        data: [],
-        label: 'Ganancias por intereses',
-        backgroundColor: this.randomHexColor(),
-        hoverBackgroundColor: this.randomHexColor(),
-      },
-    ];
-    this.lineDataTotalDePagos = [
-      {
-        data: [],
-        label: 'Monto total de pagos',
-        backgroundColor: this.randomHexColor(),
-        hoverBackgroundColor: this.randomHexColor(),
-      },
-    ];
-    this.lineDataTotalVendido = [
-      {
-        data: [],
-        label: 'Monto total vendido',
-        backgroundColor: this.randomHexColor(),
-        hoverBackgroundColor: this.randomHexColor(),
-      },
-    ];
-    // LABELS
-    this.barLabelsCountMovimientos = [];
-    this.barLabelsCountPagos = [];
-    this.barLabelsGanancias = [];
-    this.barLabelsTotalDePagos = [];
-    this.barLabelsTotalVendido = [];
-    // DATA
-    this.barDataCountMovimientos = [
-      {
-        data: [],
-        label: 'Cantidad de ventas',
-        backgroundColor: this.randomHexColor(),
-        hoverBackgroundColor: this.randomHexColor(),
-      },
-    ];
-    this.barDataCountPagos = [
-      {
-        data: [],
-        label: 'Cantidad de ventas',
-        backgroundColor: this.randomHexColor(),
-        hoverBackgroundColor: this.randomHexColor(),
-      },
-    ];
-    this.barDataGanancias = [
-      {
-        data: [],
-        label: 'Ganancias por intereses',
-        backgroundColor: this.randomHexColor(),
-        hoverBackgroundColor: this.randomHexColor(),
-      },
-    ];
-    this.barDataTotalDePagos = [
-      {
-        data: [],
-        label: 'Monto total de pagos',
-        backgroundColor: this.randomHexColor(),
-        hoverBackgroundColor: this.randomHexColor(),
-      },
-    ];
-    this.barDataTotalVendido = [
-      {
-        data: [],
-        label: 'Monto total vendido',
-        backgroundColor: this.randomHexColor(),
-        hoverBackgroundColor: this.randomHexColor(),
-      },
-    ];
+    const nag = new ArraysGraphics();
+    nag.resetData();
+    this.lineChartOptions = nag.lineChartOptions;
+    this.lineChartColors = nag.lineChartColors;
+    this.lineChartLegend = nag.lineChartLegend;
+    this.lineChartType = nag.lineChartType;
+    this.lineChartPlugins = nag.lineChartPlugins;
+
+    this.barChartOptions = nag.barChartOptions;
+    this.barChartType = nag.barChartType;
+    this.barChartLegend = nag.barChartLegend;
+    this.barChartPlugins = nag.barChartPlugins;
+
+    this.lineLabelsCountMovimientos = nag.lineLabelsCountMovimientos;
+    this.lineLabelsCountPagos = nag.lineLabelsCountPagos;
+    this.lineLabelsGanancias = nag.lineLabelsGanancias;
+    this.lineLabelsTotalDePagos = nag.lineLabelsTotalDePagos;
+    this.lineLabelsTotalVendido = nag.lineLabelsTotalVendido;
+
+    this.barLabelsCountMovimientos = nag.barLabelsCountMovimientos;
+    this.barLabelsCountPagos = nag.barLabelsCountPagos;
+    this.barLabelsGanancias = nag.barLabelsGanancias;
+    this.barLabelsTotalDePagos = nag.barLabelsTotalDePagos;
+    this.barLabelsTotalVendido = nag.barLabelsTotalVendido;
+
+    this.lineDataCountMovimientos = nag.lineDataCountMovimientos;
+    this.lineDataCountPagos = nag.lineDataCountPagos;
+    this.lineDataGanancias = nag.lineDataGanancias;
+    this.lineDataTotalDePagos = nag.lineDataTotalDePagos;
+    this.lineDataTotalVendido = nag.lineDataTotalVendido;
+
+    this.barDataCountMovimientos = nag.barDataCountMovimientos;
+    this.barDataCountPagos = nag.barDataCountPagos;
+    this.barDataGanancias = nag.barDataGanancias;
+    this.barDataTotalDePagos = nag.barDataTotalDePagos;
+    this.barDataTotalVendido = nag.barDataTotalVendido;
   }
 }

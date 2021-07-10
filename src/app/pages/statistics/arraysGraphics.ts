@@ -115,7 +115,7 @@ export class ArraysGraphics {
     },
   ];
 
-  initData() {
+  public resetData() {
     // LABELS
     this.lineLabelsCountMovimientos = [];
     this.lineLabelsCountPagos = [];

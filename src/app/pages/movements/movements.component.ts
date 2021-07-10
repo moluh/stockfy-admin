@@ -1,4 +1,3 @@
-import { typeofExpr } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Clients } from 'src/app/models/Clients.model';
@@ -10,6 +9,9 @@ import { DataSourceService } from 'src/app/services/data.source.service';
 import { MovementsService } from 'src/app/services/movements.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { ToastService } from 'src/app/services/toasts.service';
+import * as dayjs from 'dayjs';
+import * as utc from 'dayjs/plugin/utc';
+dayjs.extend(utc)
 
 @Component({
   selector: 'app-movements',
@@ -224,6 +226,9 @@ export class MovementsComponent implements OnInit {
     this.movement.modo_pago = this.salesType;
     this.movement.cliente = this._dataSource.simpleObject;
     this.movement.pagos = []
+    this.movement.fecha = dayjs(new Date()).format('YYYY-MM-DD');
+    this.movement.hora = dayjs(new Date()).format('HH:mm:ss');
+
     if (this.delivery)
       this.movement.pagos.push({ monto: this.delivery });
 

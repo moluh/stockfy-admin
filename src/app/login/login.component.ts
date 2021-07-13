@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit {
   }
 
   public login(): void {
-  
     this.auth.login(this.LoginForm.value);
   }
 

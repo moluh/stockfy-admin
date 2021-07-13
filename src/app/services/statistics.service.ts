@@ -23,7 +23,7 @@ export class StatisticsService {
   public getBetweenDatesDashboard(from, to): Observable<any[]> {
     return this.http.post<any[]>(`${this.url}`, {from, to}).pipe(
       map((res) => {
-        return <any[]>res[0];
+        return <any[]>res['data'][0];
       }),
       catchError(this.he.handleError)
     );
@@ -32,7 +32,7 @@ export class StatisticsService {
   public getBetweenDatesGraphic(from, to): Observable<any[]> {
     return this.http.post<any[]>(`${this.url}/grafico`, {from, to}).pipe(
       map((res) => {
-        return <any[]>res;
+        return <any[]>res['data'];
       }),
       catchError(this.he.handleError)
     );

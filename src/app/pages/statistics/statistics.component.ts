@@ -18,10 +18,10 @@ export class StatisticsComponent implements OnInit {
   statisticsDashboard: any = null;
   statisticsGraphic: any = null;
   styleGraphic: string = 'bar';
-  fromDashboard: any = dayjs(new Date()).format('YYYY-MM-DD');
-  toDashboard: any = dayjs(new Date()).add(1, 'month').format('YYYY-MM-DD');
-  fromGraphic: any = dayjs(new Date()).format('YYYY-MM-DD');
-  toGraphic: any = dayjs(new Date()).add(1, 'month').format('YYYY-MM-DD');
+  fromDashboard: any = dayjs().startOf('month').format('YYYY-MM-DD');
+  toDashboard: any = dayjs().endOf('month').format('YYYY-MM-DD');
+  fromGraphic: any = dayjs().startOf('month').format('YYYY-MM-DD');
+  toGraphic: any = dayjs().endOf('month').format('YYYY-MM-DD');
 
   lineChartOptions: ChartOptions = this.ag.lineChartOptions;
   lineChartColors: Color[] = this.ag.lineChartColors;

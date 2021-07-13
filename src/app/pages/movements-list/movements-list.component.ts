@@ -242,8 +242,6 @@ export class MovementsListComponent implements OnInit {
   }
 
   getPaginatedAndFilter() {
-    console.log('filter');
-
     this._movements
       .getPaginatedAndFilter(
         this.pag.pageNro,

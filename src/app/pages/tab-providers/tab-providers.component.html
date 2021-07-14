@@ -12,12 +12,14 @@
                 <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                         <tr>
+                            <th scope="col">ID</th>
                             <th scope="col">Proveedor</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let provider of providers">
+                            <td> {{ provider.id }} </td>
                             <td> {{ provider.proveedor }} </td>
                             <td>
                                 <button (click)="goTo(provider)" class="btn btn-primary btn-sm m-1" title="Editar">

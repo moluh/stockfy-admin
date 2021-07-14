@@ -12,12 +12,14 @@
                 <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                         <tr>
+                            <th scope="col">ID</th>
                             <th scope="col">Talle</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let size of sizes">
+                            <td> {{ size.id }} </td>
                             <td> {{ size.talle }} </td>
                             <td>
                                 <button (click)="goTo(size)" class="btn btn-primary btn-sm m-1" title="Editar">

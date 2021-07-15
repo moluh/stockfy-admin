@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { AngularEditorModule } from '@kolkov/angular-editor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { ChartsModule } from 'ng2-charts';
@@ -98,7 +97,6 @@ import { AddEditExpensesComponent } from './pages/add-edit-expenses/add-edit-exp
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule, // required animations module
-    AngularEditorModule,
     ImageCropperModule,
     FontAwesomeModule,
     ToastrModule.forRoot({

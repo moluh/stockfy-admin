@@ -111,6 +111,7 @@ export class MovementsListComponent implements OnInit {
             (res) => {
               this._toast.sweetAlert('¡Pago eliminado!', '');
               this.getMovement();
+              this.getMovements();
             },
             (err) => console.log(err)
           );
@@ -134,6 +135,7 @@ export class MovementsListComponent implements OnInit {
             (res) => {
               this._toast.sweetAlert('¡Pago agregado!', '');
               this.getMovement();
+              this.getMovements();
               this.clean();
             },
             (err) => console.log(err)
@@ -163,6 +165,10 @@ export class MovementsListComponent implements OnInit {
   pageChanged(event: { pageNro: number; pageSize: number }) {
     this.pag.pageNro = event.pageNro;
     this.pag.pageSize = event.pageSize;
+    this.getMovements();
+  }
+
+  getMovements() {
     this.isFiltering ? this.getFiltered() : this.getPaginated();
   }
 
@@ -301,7 +307,7 @@ export class MovementsListComponent implements OnInit {
         if (res)
           this._movements.changeState(movementId, state).subscribe(
             (res) => {
-              this.getPaginated();
+              this.getMovements();
             },
             (err) => console.log(err)
           );

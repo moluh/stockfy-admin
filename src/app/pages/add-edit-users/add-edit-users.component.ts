@@ -25,15 +25,7 @@ export class AddEditUsersComponent implements OnInit {
     private _dataSource: DataSourceService,
     private _api: ApiService
   ) {
-    this.userForm = this._fb.group({
-      id: [''],
-      nombre: ['', [Validators.required, Validators.minLength(2)]],
-      apellido: ['', [Validators.required, Validators.minLength(2)]],
-      username: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.minLength(2)]],
-      role: ['', [Validators.required]],
-      password: ['', [Validators.required]]
-    });
+    this.createForm();
   }
 
   ngOnInit(): void {
@@ -43,6 +35,96 @@ export class AddEditUsersComponent implements OnInit {
 
     // limpiamos la data del objeto del servicio
     this._dataSource.simpleObject = {};
+  }
+
+  get usernameNoValido() {
+    return (
+      this.userForm.get('username').invalid &&
+      this.userForm.get('username').touched
+
+    );
+  }
+
+  get passNoValida() {
+    return (
+      this.userForm.get('password').invalid && this.userForm.get('password').touched
+    );
+  }
+
+  get emailNoValido() {
+    return (
+      this.userForm.get('email').invalid && this.userForm.get('email').touched
+    );
+  }
+
+  get nombreNoValido() {
+    return (
+      this.userForm.get('nombre').invalid && this.userForm.get('nombre').touched
+    );
+  }
+
+  get apellidoNoValido() {
+    return (
+      this.userForm.get('apellido').invalid && this.userForm.get('apellido').touched
+    );
+  }
+
+  get roleNoValido() {
+    return (
+      this.userForm.get('role').invalid && this.userForm.get('role').touched
+    );
+  }
+
+
+  createForm() {
+    this.userForm = this._fb.group({
+      id: [''],
+      username: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(20),
+        ],
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(20),
+        ],
+      ],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
+        ],
+      ],
+      role: ['', [Validators.required]],
+      nombre: [
+        '',
+        [Validators.required, Validators.minLength(2), Validators.maxLength(70)],
+      ],
+      apellido: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(70),
+        ],
+      ],
+      telefono: [''],
+      domicilio: [''],
+      provincia: [''],
+      localidad: [''],
+      avatar: [''],
+      recpass: [''],
+      created_at: [''],
+      updated_at: [''],
+      activo: [''],
+    });
   }
 
   send() {

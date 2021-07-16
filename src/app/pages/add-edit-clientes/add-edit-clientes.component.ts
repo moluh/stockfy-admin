@@ -32,14 +32,14 @@ export class AddEditClientesComponent implements OnInit {
 
     this.clientForm = this._fb.group({
       id: [''],
-      nombre: ['', [Validators.required, Validators.minLength(2)]],
-      apellido: ['', [Validators.required, Validators.minLength(2)]],
-      provincia: [''],
-      localidad: [''],
+      nombre: ['', [Validators.required, Validators.maxLength(150)]],
+      apellido: ['', [Validators.required, Validators.maxLength(150)]],
+      provincia: ['', [Validators.maxLength(150)]],
+      localidad: ['', [Validators.maxLength(150)]],
       avatar: [''],
-      telefono: ['',],
-      domicilio: [''],
-      email: [''],
+      telefono: ['',, [Validators.maxLength(30)]],
+      domicilio: ['', [Validators.maxLength(150)]],
+      email: ['', [ Validators.maxLength(70)]],
       activo: [true],
     });
 

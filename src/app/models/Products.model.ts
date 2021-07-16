@@ -15,7 +15,7 @@ export class Products {
   peso?: number;
   precio_costo?: number;
   precio_venta?: number;
-  disponible?: boolean;
+  // disponible?: boolean;
   archivado?: boolean;
   rebaja?: number;
   sku?: string;

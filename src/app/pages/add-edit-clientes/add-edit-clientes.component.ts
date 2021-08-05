@@ -10,10 +10,9 @@ import { ToastService } from 'src/app/services/toasts.service';
 @Component({
   selector: 'app-add-edit-clientes',
   templateUrl: './add-edit-clientes.component.html',
-  styleUrls: ['./add-edit-clientes.component.scss']
+  styleUrls: ['./add-edit-clientes.component.scss'],
 })
 export class AddEditClientesComponent implements OnInit {
-
   @ViewChild('closeModal') private closeModal: ElementRef;
   @Input() canGoBack: boolean = true;
   isEditing: boolean = false;
@@ -28,8 +27,8 @@ export class AddEditClientesComponent implements OnInit {
     private _toast: ToastService,
     private _tabs: TabsServices,
     private _dataSource: DataSourceService,
-    private _api: ApiService) {
-
+    private _api: ApiService
+  ) {
     this.clientForm = this._fb.group({
       id: [''],
       nombre: ['', [Validators.required, Validators.maxLength(150)]],
@@ -37,12 +36,11 @@ export class AddEditClientesComponent implements OnInit {
       provincia: ['', [Validators.maxLength(150)]],
       localidad: ['', [Validators.maxLength(150)]],
       avatar: [''],
-      telefono: ['',, [Validators.maxLength(30)]],
+      telefono: ['', [Validators.maxLength(30)]],
       domicilio: ['', [Validators.maxLength(150)]],
-      email: ['', [ Validators.maxLength(70)]],
+      email: ['', [Validators.maxLength(70)]],
       activo: [true],
     });
-
   }
 
   ngOnInit(): void {
@@ -59,55 +57,67 @@ export class AddEditClientesComponent implements OnInit {
   }
 
   send() {
-    (this.clientForm.get('id').value === '' || this.clientForm.get('id').value === null)
+    this.clientForm.get('id').value === '' ||
+    this.clientForm.get('id').value === null
       ? this.post()
       : this.update();
   }
 
   update() {
-    this._toast.sweetConfirm('Confirmar cambios', '¿Desea guardar los cambios?')
+    this._toast
+      .sweetConfirm('Confirmar cambios', '¿Desea guardar los cambios?')
       .then((res) => {
         if (res)
           this._clients.update(this.clientForm.value).subscribe(
             (res: any) => {
-              this._api.handleSuccess(res, '¡Guardado!', ``)
+              this._api.handleSuccess(res, '¡Guardado!', ``);
               this.clean();
             },
-            err => this._api.handleError(err, 'Ocurrió un error', err.error));
+            (err) => this._api.handleError(err, 'Ocurrió un error', err.error)
+          );
       })
-      .catch(err => this._api.handleError(err, 'Ocurrió un error', err.error))
+      .catch((err) =>
+        this._api.handleError(err, 'Ocurrió un error', err.error)
+      );
   }
 
   post() {
-    this._toast.sweetConfirm('Guardar', '¿Desea guardar el cliente?')
-      .then(res => {
+    this._toast
+      .sweetConfirm('Guardar', '¿Desea guardar el cliente?')
+      .then((res) => {
         if (res)
           this._clients.post(this.clientForm.value).subscribe(
             (res: any) => {
-              this._api.handleSuccess(res, '¡Guardado!', ``)
+              this._api.handleSuccess(res, '¡Guardado!', ``);
               this.clean();
               this.hideModal();
             },
-            err => this._api.handleError(err, 'Ocurrió un error', err.error));
+            (err) => this._api.handleError(err, 'Ocurrió un error', err.error)
+          );
       })
-      .catch(err => this._api.handleError(err, 'Ocurrió un error', err.error))
+      .catch((err) =>
+        this._api.handleError(err, 'Ocurrió un error', err.error)
+      );
   }
 
   goTo() {
     this.isEditing
-      ? this._toast.sweetConfirm('Hay modificaciones sin guardar', '¿Descartar modificaciones?')
-        .then(res => res ? this.redirect() : null)
+      ? this._toast
+          .sweetConfirm(
+            'Hay modificaciones sin guardar',
+            '¿Descartar modificaciones?'
+          )
+          .then((res) => (res ? this.redirect() : null))
       : this.redirect();
   }
 
   redirect() {
-    this._router.navigate(["/usuarios/tab-clientes"])
-      .then(() => this._tabs.setShowTable(true))
+    this._router
+      .navigate(['/usuarios/tab-clientes'])
+      .then(() => this._tabs.setShowTable(true));
   }
 
   clean() {
     this.clientForm.reset();
   }
-
-
 }

@@ -16,7 +16,10 @@ import {
   faShoppingCart,
   faClipboardList,
   faDollarSign,
-  faArchive
+  faArchive,
+  faPlus,
+  faChevronDown,
+  faChevronUp
 } from '@fortawesome/free-solid-svg-icons';
 
 export const icons = {
@@ -37,5 +40,8 @@ export const icons = {
   ventas: faShoppingCart,
   movementList: faClipboardList,
   archive: faArchive,
-  expenses: faDollarSign
+  expenses: faDollarSign,
+  plus: faPlus,
+  chevDown: faChevronDown,
+  chevUp: faChevronUp
 };

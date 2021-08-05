@@ -130,8 +130,8 @@ const routes: Routes = [
   { path: 'estadisticas', component: StatisticsComponent },
   { path: 'configuraciones', component: ConfigurationsComponent },
 
-  { path: '**', pathMatch: 'full', redirectTo: 'ventas' },
-  { path: '', pathMatch: 'full', redirectTo: 'ventas' },
+  { path: '**', pathMatch: 'full', redirectTo: 'dashboard' },
+  { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
 
 ];
 

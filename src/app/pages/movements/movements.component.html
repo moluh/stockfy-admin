@@ -35,7 +35,7 @@
           (click)="validateProductToPush()"
           (keyup.enter)="validateProductToPush()"
         >
-          +
+          <app-icon [iconName]="icons.plus" class="icons"></app-icon>
         </button>
       </div>
       <!-- *ngIf="showFilter" -->
@@ -66,9 +66,11 @@
       <div class="col-md-12 mt-2">
         <div *ngIf="foundProduct">
           <label for="alertTotal">Producto seleccionado:</label>
-          <div class="alert alert-dark" id="alertTotal" role="alert">
-            <p> {{ foundProduct.nombre }} </p>
-            <b> {{ foundProduct.precio_venta | currency: "ARS":"symbol":"1.0" }} </b>
+          <div class="alert alert-selected" id="alertTotal" role="alert">
+            <p>{{ foundProduct.nombre }}</p>
+            <b>
+              {{ foundProduct.precio_venta | currency: "ARS":"symbol":"1.0" }}
+            </b>
           </div>
         </div>
       </div>
@@ -77,17 +79,22 @@
           <label for="text">Artículos filtrados</label>
           <div class="card-container">
             <div
-            class="card shadow"
+              class="m-2 card shadow"
               *ngFor="let prod of products"
               (click)="setProduct(prod); showFilter = !showFilter"
             >
               <div>{{ prod.nombre }}</div>
-              <div><b>{{ prod.precio_venta | currency: "ARS":"symbol":"1.0" }} </b> - {{ prod.ean }} </div>
-              <div>{{
-                prod.descripcion.length > 30
-                  ? (prod.descripcion | slice: 0:30) + "..."
-                  : prod.descripcion
-              }}</div>
+              <div>
+                <b>{{ prod.precio_venta | currency: "ARS":"symbol":"1.0" }} </b>
+                - {{ prod.ean }}
+              </div>
+              <div>
+                {{
+                  prod.descripcion.length > 30
+                    ? (prod.descripcion | slice: 0:30) + "..."
+                    : prod.descripcion
+                }}
+              </div>
             </div>
           </div>
         </div>
@@ -147,8 +154,10 @@
       </div>
     </div>
     <div class="row mt-4">
-      <div class="col-sm-6 col-md-6 col-lg-6">
-        <label for="client">Cliente <span class="text-danger"> *</span></label>
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <label>Cliente <span class="text-danger"> *</span></label>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-6">
         <p *ngIf="_dataSource?.simpleObject">
           {{
             !_dataSource.simpleObject?.nombre
@@ -218,8 +227,21 @@
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
-          <label for="descrip">Descripción</label>
+          <label for="descrip" (click)="showHideDescription()">
+            Descripción
+            <app-icon
+              *ngIf="!showDescription"
+              [iconName]="icons.chevDown"
+              class="icons"
+            ></app-icon>
+            <app-icon
+              *ngIf="showDescription"
+              [iconName]="icons.chevUp"
+              class="icons"
+            ></app-icon>
+          </label>
           <textarea
+            *ngIf="showDescription"
             class="form-control"
             id="descrip"
             rows="3"
@@ -280,8 +302,12 @@
     </div>
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12">
-        <div class="alert alert-secondary" id="alertTotal" role="alert">
-          <h6
+        <div
+          class="alert alert-total d-flex justify-content-between"
+          id="alertTotal"
+          role="alert"
+        >
+          <h4
             class="text-center"
             *ngIf="
               movement?.movimiento_lineas?.length === 0 ||
@@ -289,8 +315,8 @@
             "
           >
             Sin artículos cargados
-          </h6>
-          <h6
+          </h4>
+          <h4
             class="text-center"
             *ngIf="
               movement?.movimiento_lineas?.length > 0 &&
@@ -298,17 +324,17 @@
             "
           >
             Total: {{ totalOfSale | currency: "ARS":"symbol":"2.0" }}
-          </h6>
-          <h6
+          </h4>
+          <h4
             class="text-center"
             *ngIf="
-              (movement?.movimiento_lineas?.length > 0 &&
-                movement?.saldo > 0) ||
+              movement?.movimiento_lineas?.length > 0 &&
+              movement?.saldo > 0 &&
               movement?.saldo !== null
             "
           >
             Saldo: {{ movement?.saldo | currency: "ARS":"symbol":"2.0" }}
-          </h6>
+          </h4>
         </div>
       </div>
 

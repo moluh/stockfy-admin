@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import Swal from 'sweetalert2'
+import Swal, { SweetAlertOptions } from 'sweetalert2'
 
 @Injectable({
   providedIn: 'root'
@@ -72,16 +72,16 @@ export class ToastService {
 
   public sweetInterval(progreso: string) {
 
-    Swal.fire({
+    Swal.fire(<SweetAlertOptions>{
       title: 'Cargando imagen..',
       html: `Por favor espere un momento. ${progreso}`,
-      timer: 2000,
-      onBeforeOpen: () => {
-        Swal.showLoading()
-      },
-      onClose: () => {
+      timer: 2000
+      // onBeforeOpen: () => {
+      //   Swal.showLoading()
+      // },
+      // onClose: () => {
 
-      }
+      // }
     }).then((result) => {
       /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {

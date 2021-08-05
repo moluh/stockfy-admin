@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { icons } from 'src/assets/icons';
 
 
 @Component({
@@ -8,6 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class IconComponent implements OnInit {
 
+  icons = icons;
   @Input() iconName;
   @Input() iconSize;
   @Input() iconColor;

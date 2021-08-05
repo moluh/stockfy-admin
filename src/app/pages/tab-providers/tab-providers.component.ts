@@ -7,6 +7,7 @@ import { QueryPaginator } from 'src/app/models/QueryPaginator';
 import { DataSourceService } from 'src/app/services/data.source.service';
 import { TabsServices } from "src/app/services/tabs.service";
 import { ProvidersService } from 'src/app/services/providers.service';
+import { icons } from 'src/assets/icons';
 
 @Component({
   selector: 'app-tab-providers',

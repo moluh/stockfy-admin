@@ -8,6 +8,7 @@ import {
   faCheck,
   faExclamation,
   faTrash,
+  faSave,
   faArrowRight,
   faArrowLeft,
   faBars,
@@ -19,7 +20,14 @@ import {
   faArchive,
   faPlus,
   faChevronDown,
-  faChevronUp
+  faChevronUp,
+  faTimes,
+  faLock,
+  faLockOpen,
+  faEye,
+  faFilter,
+  faSearch
+
 } from '@fortawesome/free-solid-svg-icons';
 
 export const icons = {
@@ -43,5 +51,12 @@ export const icons = {
   expenses: faDollarSign,
   plus: faPlus,
   chevDown: faChevronDown,
-  chevUp: faChevronUp
+  chevUp: faChevronUp,
+  save: faSave,
+  times: faTimes,
+  lockOpen: faLockOpen,
+  lock: faLock,
+  eye: faEye,
+  filter: faFilter,
+  search: faSearch
 };

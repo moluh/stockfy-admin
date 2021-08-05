@@ -17,7 +17,7 @@
       *ngIf="usuario.role === 'ADMIN'"
       routerLinkActive="router-link-active"
     >
-      <app-icon [iconName]="icons.home" class="icons"></app-icon>
+      <app-icon [iconName]="'home'" class="icons"></app-icon>
       <span *ngIf="showDescrip"> Dashboard </span>
     </p>
 
@@ -30,7 +30,7 @@
         collapsed: !showDescrip
       }"
     >
-      <app-icon [iconName]="icons.ventas" class="icons"></app-icon>
+      <app-icon [iconName]="'ventas'" class="icons"></app-icon>
       <span *ngIf="showDescrip"> Ventas </span>
     </p>
 
@@ -43,7 +43,7 @@
         collapsed: !showDescrip
       }"
     >
-      <app-icon [iconName]="icons.movementList" class="icons"></app-icon>
+      <app-icon [iconName]="'movementList'" class="icons"></app-icon>
       <span *ngIf="showDescrip"> Movimientos lista </span>
     </p>
 
@@ -58,7 +58,7 @@
       }"
       (click)="showTable()"
     >
-      <app-icon [iconName]="icons.products" class="icons"></app-icon>
+      <app-icon [iconName]="'products'" class="icons"></app-icon>
       <span *ngIf="showDescrip"> Productos </span>
     </p>
 
@@ -72,7 +72,7 @@
         collapsed: !showDescrip
       }"
     >
-      <app-icon [iconName]="icons.expenses" class="icons"></app-icon>
+      <app-icon [iconName]="'expenses'" class="icons"></app-icon>
       <span *ngIf="showDescrip"> Gastos </span>
     </p>
 
@@ -87,7 +87,7 @@
       }"
       (click)="showTable()"
     >
-      <app-icon [iconName]="icons.users" class="icons"></app-icon>
+      <app-icon [iconName]="'users'" class="icons"></app-icon>
       <span *ngIf="showDescrip"> Usuarios </span>
     </p>
 
@@ -101,7 +101,7 @@
         collapsed: !showDescrip
       }"
     >
-      <app-icon [iconName]="icons.stats" class="icons"></app-icon>
+      <app-icon [iconName]="'stats'" class="icons"></app-icon>
       <span *ngIf="showDescrip"> Estadísticas </span>
     </p>
 
@@ -115,7 +115,7 @@
         collapsed: !showDescrip
       }"
     >
-      <app-icon [iconName]="icons.config" class="icons"></app-icon>
+      <app-icon [iconName]="'config'" class="icons"></app-icon>
       <span *ngIf="showDescrip"> Configuraciones </span>
     </p>
   </div>

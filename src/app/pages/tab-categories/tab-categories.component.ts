@@ -9,6 +9,7 @@ import { QueryPaginator } from 'src/app/models/QueryPaginator';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { DataSourceService } from 'src/app/services/data.source.service';
 import { TabsServices } from "src/app/services/tabs.service";
+import { icons } from 'src/assets/icons';
 
 @Component({
   selector: 'app-tab-categories',

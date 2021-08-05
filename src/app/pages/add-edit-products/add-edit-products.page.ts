@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  AbstractControlOptions,
   FormArray,
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Brands } from 'src/app/models/Brands.model';
 import { Categories } from 'src/app/models/Categories.model';
 import { Products } from 'src/app/models/Products.model';

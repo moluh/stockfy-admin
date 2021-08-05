@@ -31,11 +31,11 @@
         <button
           id="agregar"
           type="button"
-          class="btn btn-sm btn-block btn-secondary"
+          class="btn btn-sm btn-block btn-primary"
           (click)="validateProductToPush()"
           (keyup.enter)="validateProductToPush()"
         >
-          <app-icon [iconName]="icons.plus" class="icons"></app-icon>
+          <app-icon [iconName]="'plus'" class="icons"></app-icon>
         </button>
       </div>
       <!-- *ngIf="showFilter" -->
@@ -118,9 +118,11 @@
           <option value="tarjeta">Tarjeta</option>
         </select>
       </div>
-      <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="movement.estado === 'p'">
+      <!-- *ngIf="movement.estado === 'p'" -->
+      <div class="col-sm-12 col-md-4 col-lg-4">
         <label for="delivery">Entrega:</label>
         <input
+          [disabled]="movement.estado !== 'p'"
           id="delivery"
           type="number"
           class="form-control form-control-sm"
@@ -142,7 +144,7 @@
         </div>
         <div class="mt-2">
           <input
-            *ngIf="isDiscountAvailable"
+            [disabled]="!isDiscountAvailable"
             id="text"
             type="number"
             class="form-control form-control-sm"
@@ -154,10 +156,34 @@
       </div>
     </div>
     <div class="row mt-4">
-      <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="col-sm-8 col-md-8 col-lg-8">
         <label>Cliente <span class="text-danger"> *</span></label>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-6">
+      <div class="col-sm-2 col-md-2 col-lg-2">
+        <button
+          type="button"
+          id="client"
+          class="btn btn-block btn-outline-primary btn-sm"
+          data-toggle="modal"
+          data-target="#selectClient"
+        >
+          <app-icon [iconName]="'search'" class="icons"></app-icon>
+          <!-- Seleccionar -->
+        </button>
+      </div>
+      <div class="col-sm-2 col-md-2 col-lg-2">
+        <button
+          type="button"
+          id="client"
+          class="btn btn-block btn-outline-primary btn-sm"
+          data-toggle="modal"
+          data-target="#addClient"
+        >
+          <app-icon [iconName]="'plus'" class="icons"></app-icon>
+          <!-- Nuevo -->
+        </button>
+      </div>
+      <div class="mt-3 mb-3 col-sm-12 col-md-12 col-lg-12">
         <p *ngIf="_dataSource?.simpleObject">
           {{
             !_dataSource.simpleObject?.nombre
@@ -167,28 +193,6 @@
                 _dataSource.simpleObject?.apellido
           }}
         </p>
-      </div>
-      <div class="col-sm-3 col-md-3 col-lg-3">
-        <button
-          type="button"
-          id="client"
-          class="btn btn-block btn-outline-primary btn-sm"
-          data-toggle="modal"
-          data-target="#selectClient"
-        >
-          Seleccionar
-        </button>
-      </div>
-      <div class="col-sm-3 col-md-3 col-lg-3">
-        <button
-          type="button"
-          id="client"
-          class="btn btn-block btn-outline-primary btn-sm"
-          data-toggle="modal"
-          data-target="#addClient"
-        >
-          Nuevo
-        </button>
       </div>
     </div>
     <!-- find client Modal  -->
@@ -231,12 +235,12 @@
             Descripción
             <app-icon
               *ngIf="!showDescription"
-              [iconName]="icons.chevDown"
+              [iconName]="'chevDown'"
               class="icons"
             ></app-icon>
             <app-icon
               *ngIf="showDescription"
-              [iconName]="icons.chevUp"
+              [iconName]="'chevUp'"
               class="icons"
             ></app-icon>
           </label>
@@ -291,7 +295,7 @@
                     class="btn btn-sm btn-block btn-danger"
                     (click)="deleteProduct(prod)"
                   >
-                    Eliminar
+                    <app-icon [iconName]="'times'" class="icons"></app-icon>
                   </button>
                 </td>
               </tr>
@@ -307,7 +311,7 @@
           id="alertTotal"
           role="alert"
         >
-          <h4
+          <h5
             class="text-center"
             *ngIf="
               movement?.movimiento_lineas?.length === 0 ||
@@ -315,8 +319,8 @@
             "
           >
             Sin artículos cargados
-          </h4>
-          <h4
+          </h5>
+          <h5
             class="text-center"
             *ngIf="
               movement?.movimiento_lineas?.length > 0 &&
@@ -324,8 +328,8 @@
             "
           >
             Total: {{ totalOfSale | currency: "ARS":"symbol":"2.0" }}
-          </h4>
-          <h4
+          </h5>
+          <h5
             class="text-center"
             *ngIf="
               movement?.movimiento_lineas?.length > 0 &&
@@ -334,13 +338,14 @@
             "
           >
             Saldo: {{ movement?.saldo | currency: "ARS":"symbol":"2.0" }}
-          </h4>
+          </h5>
         </div>
       </div>
 
       <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="mt-2 mb-3">
           <button
+            style="font-size: larger"
             type="button"
             class="btn btn-sm btn-block btn-success"
             (click)="isValidMovement()"

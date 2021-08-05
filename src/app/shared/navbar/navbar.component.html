@@ -2,7 +2,7 @@
 
 
   <div class="btn-bars" (click)="setSide()">
-    <app-icon [iconName]="icons.bars"></app-icon>
+    <app-icon [iconName]="'bars'"></app-icon>
   </div>
 
   <!-- <a *ngIf="usuario | async as user" class="navbar-brand"> 
@@ -11,7 +11,7 @@
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav" aria-controls="nav"
     aria-expanded="false" aria-label="Toggle navigation" (click)="setUlMobile()">
-    <app-icon [iconName]="icons.users"></app-icon>
+    <app-icon [iconName]="'users'"></app-icon>
   </button>
 
   <div class="collapse navbar-collapse" id="nav">
@@ -28,7 +28,7 @@
 
       <li class="sign-out">
         <button class="btn btn-sm btn-outline btn-sign-out" (click)="auth.logout()">
-          <app-icon [iconName]="icons.signOut"></app-icon>
+          <app-icon [iconName]="'signOut'"></app-icon>
           Salir
         </button>
       </li>

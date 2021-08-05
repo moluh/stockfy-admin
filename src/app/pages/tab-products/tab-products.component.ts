@@ -38,7 +38,7 @@ const ATTR_LIST = [
   styleUrls: ['./tab-products.component.scss'],
 })
 export class TabProductsComponent implements OnInit {
-  icons = icons;
+  
   formData: FormData;
   csvFile: File;
   progreso: string = '';

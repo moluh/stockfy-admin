@@ -1,45 +1,59 @@
-<div class="row">
-    <div class="col-sm-12 col-md-12 col-lg-12 mt-2">
-      <button class="btn btn-sm btn-outline-danger float-right ml-2" (click)="goTo()" type="button">
+<form [formGroup]="expenseForm" (ngSubmit)="send()">
+  <div id="row" class="row">
+    <div class="col-sm-12 col-md-4 col-lg-4">
+      <label for="monto">Monto *</label>
+      <input
+        id="monto"
+        class="form-control form-control-sm"
+        type="number"
+        placeholder="Monto.."
+        formControlName="monto"
+      />
+      <!-- <small *ngIf="nombreNoValido" class="text-danger">Nombre Inválido</small> -->
+    </div>
+
+    <div class="col-sm-12 col-md-4 col-lg-4">
+      <label for="descripcion">Descripción *</label>
+      <input
+        id="descripcion"
+        class="form-control form-control-sm"
+        type="text"
+        placeholder="Descripcion.."
+        formControlName="descripcion"
+      />
+      <!-- <small *ngIf="nombreNoValido" class="text-danger">Nombre Inválido</small> -->
+    </div>
+
+    <div class="col-sm-12 col-md-4 col-lg-4">
+      <label for="fecha">Fecha</label>
+      <input
+        id="fecha"
+        class="form-control form-control-sm"
+        type="date"
+        formControlName="fecha"
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 d-flex justify-content-end">
+      <button
+        id="save"
+        class="btn btn-sm btn-outline-success float-right ml-2"
+        [disabled]="expenseForm.invalid"
+        type="submit"
+      >
+        <app-icon [iconName]="'save'" class="icons"></app-icon>
+        Guardar
+      </button>
+      <button type="button" hidden #closeModal data-dismiss="modal"></button>
+      <button
+        class="btn btn-sm btn-outline-danger ml-3"
+        (click)="goTo()"
+        type="button"
+      >
+        <app-icon [iconName]="'arrowLeft'" class="icons"></app-icon>
         Volver
       </button>
     </div>
   </div>
-  
-  <form [formGroup]="expenseForm" (ngSubmit)="send()">
-  
-    <div id="row" class="row">
-      <div class="col-sm-12 col-md-4 col-lg-4">
-        <label for="monto">Monto *</label>
-        <input id="monto" class="form-control form-control-sm" type="number" placeholder="Monto.."
-          formControlName="monto" />
-        <!-- <small *ngIf="nombreNoValido" class="text-danger">Nombre Inválido</small> -->
-      </div>
-  
-      <div class="col-sm-12 col-md-4 col-lg-4">
-        <label for="descripcion">Descripción *</label>
-        <input id="descripcion" class="form-control form-control-sm" type="text" placeholder="Descripcion.."
-          formControlName="descripcion" />
-        <!-- <small *ngIf="nombreNoValido" class="text-danger">Nombre Inválido</small> -->
-      </div>
-  
-      <div class="col-sm-12 col-md-4 col-lg-4">
-        <label for="fecha">Fecha</label>
-        <input id="fecha" class="form-control form-control-sm" type="date"
-          formControlName="fecha" />
-        <!-- <small *ngIf="nombreNoValido" class="text-danger">Nombre Inválido</small> -->
-      </div>
-    </div>
-    <!-- fecha?: Date;
-    descripcion?: string;
-    monto?: number; -->
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-12 mt-5">
-        <button id="save" class="btn btn-sm btn-outline-success float-right ml-2" [disabled]="expenseForm.invalid" type="submit">
-          Guardar
-        </button>
-        <button type="button" hidden #closeModal data-dismiss="modal"></button>
-      </div>
-    </div>
-  
-  </form>
+</form>

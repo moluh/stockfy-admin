@@ -6,6 +6,7 @@ import { DataSourceService } from 'src/app/services/data.source.service';
 import { TabsServices } from 'src/app/services/tabs.service';
 import { ToastService } from 'src/app/services/toasts.service';
 import { UsersService } from 'src/app/services/users.service';
+import { icons } from 'src/assets/icons';
 
 @Component({
   selector: 'app-add-edit-users',

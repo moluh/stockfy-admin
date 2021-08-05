@@ -20,7 +20,7 @@ dayjs.extend(utc);
   styleUrls: ['./movements.component.scss'],
 })
 export class MovementsComponent implements OnInit {
-  icons = icons;
+  
   pag = new QueryPaginator();
   movement: Movements = new Movements();
   movements: Movements[] = [];

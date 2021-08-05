@@ -8,6 +8,7 @@ import { ClientsService } from 'src/app/services/clients.service';
 import { DataSourceService } from 'src/app/services/data.source.service';
 import { TabsServices } from 'src/app/services/tabs.service';
 import { ToastService } from 'src/app/services/toasts.service';
+import { icons } from 'src/assets/icons';
 
 const ATTR_LIST = [
   'nombre',
@@ -25,6 +26,7 @@ const ATTR_LIST = [
   styleUrls: ['./tab-clientes.component.scss'],
 })
 export class TabClientesComponent implements OnInit {
+  
   @Input() blockButtons: boolean = false;
   // Filters atributes
   attr_selected: string = ATTR_LIST[0];

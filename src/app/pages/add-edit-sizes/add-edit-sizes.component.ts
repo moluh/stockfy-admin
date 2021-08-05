@@ -6,6 +6,7 @@ import { SizesService } from 'src/app/services/sizes.service';
 import { DataSourceService } from 'src/app/services/data.source.service';
 import { TabsServices } from 'src/app/services/tabs.service';
 import { ToastService } from 'src/app/services/toasts.service';
+import { icons } from 'src/assets/icons';
 
 @Component({
   selector: 'app-add-edit-sizes',

@@ -10,6 +10,9 @@ import { DatesService } from 'src/app/services/dates.service';
 import { MovementsService } from 'src/app/services/movements.service';
 import { PaymentsService } from 'src/app/services/payments.service';
 import { ToastService } from 'src/app/services/toasts.service';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 const ATTR_LIST = [
   'id',
@@ -346,6 +349,103 @@ export class MovementsListComponent implements OnInit {
     } else {
       this._pag.setBlockBtn(false);
       this.movements = res.data;
+    }
+  }
+
+  getDocumentDefinition() {
+    return {
+      content: [
+        {
+          text: 'Experience',
+          style: 'header',
+        },
+        {
+          columns: [
+            [
+              {
+                text: "jobTitle",
+                style: 'jobTitle',
+              },
+              {
+                text: "employer",
+              },
+              {
+                text: "jobDescription",
+              },
+            ],
+            {
+              text: 'Experience : 9 Months',
+              alignment: 'right',
+            },
+          ],
+        },
+        {
+          text: 'Education',
+          style: 'header',
+        },{
+          table: {
+            widths: ['*', '*', '*', '*'],
+            body: [
+              [
+                {
+                  text: 'Degree',
+                  style: 'tableHeader',
+                },
+                {
+                  text: 'College',
+                  style: 'tableHeader',
+                },
+                {
+                  text: 'Passing Year',
+                  style: 'tableHeader',
+                },
+                {
+                  text: 'Result',
+                  style: 'tableHeader',
+                },
+              ],
+            ],
+          },
+        }
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 20, 0, 10],
+          decoration: 'underline',
+        },
+        name: {
+          fontSize: 16,
+          bold: true,
+        },
+        jobTitle: {
+          fontSize: 14,
+          bold: true,
+          italics: true,
+        },
+        tableHeader: {
+          bold: true,
+        },
+      },
+    };
+  }
+
+  generatePdf(action = 'open') {
+    const documentDefinition = this.getDocumentDefinition();
+    switch (action) {
+      case 'open':
+        pdfMake.createPdf(documentDefinition).open();
+        break;
+      case 'print':
+        pdfMake.createPdf(documentDefinition).print();
+        break;
+      case 'download':
+        pdfMake.createPdf(documentDefinition).download();
+        break;
+      default:
+        pdfMake.createPdf(documentDefinition).open();
+        break;
     }
   }
 }

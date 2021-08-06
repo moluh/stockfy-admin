@@ -113,7 +113,7 @@
           class="btn btn-sm btn-outline-secondary"
           (click)="applyFilter()"
         >
-          <app-icon [iconName]="'filter'" ></app-icon>
+          <app-icon [iconName]="'filter'"></app-icon>
           Aplicar filtro
         </button>
         <button
@@ -121,7 +121,7 @@
           class="btn btn-sm btn-outline-secondary"
           (click)="removeFilter()"
         >
-          <app-icon [iconName]="'trash'" ></app-icon>
+          <app-icon [iconName]="'trash'"></app-icon>
           Remover filtro
         </button>
       </div>
@@ -435,6 +435,44 @@
                 </div>
               </div>
             </form>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="shadow-sm card action-buttons">
+            <button
+              (click)="generatePdf('open')"
+              class="
+                btn btn-primary
+                d-flex
+                align-items-center
+                justify-content-center
+              "
+            >
+              <span>Open PDF</span>
+            </button>
+            <button
+              (click)="generatePdf('download')"
+              class="
+                btn btn-primary
+                d-flex
+                align-items-center
+                justify-content-center
+              "
+            >
+              <span>Download PDF</span>
+            </button>
+            <button
+              (click)="generatePdf('print')"
+              class="
+                btn btn-primary
+                d-flex
+                align-items-center
+                justify-content-center
+              "
+            >
+              <span>Print PDF</span>
+            </button>
           </div>
         </div>
       </div>

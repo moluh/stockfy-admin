@@ -53,7 +53,7 @@
           class="btn btn-sm btn-outline-secondary"
           (click)="applyFilter()"
         >
-          <app-icon [iconName]="'filter'" class="icons"></app-icon>
+          <app-icon [iconName]="'filter'" ></app-icon>
           Aplicar filtro
         </button>
       </div>
@@ -62,7 +62,7 @@
           class="btn btn-sm btn-outline-primary float-right"
           (click)="goTo()"
         >
-          <app-icon [iconName]="'plus'" class="icons"></app-icon>
+          <app-icon [iconName]="'plus'" ></app-icon>
           Nuevo
         </button>
       </div>
@@ -91,14 +91,14 @@
                   class="btn btn-primary btn-sm m-1"
                   title="Editar"
                 >
-                  <app-icon [iconName]="'eye'" class="icons"></app-icon>
+                  <app-icon [iconName]="'eye'" ></app-icon>
                 </button>
                 <button
                   *ngIf="!blockButtons"
                   class="btn btn-danger btn-sm btn-acciones"
                   title="Al archivar, dejará de estar disponible para modificaciones, pero no se eliminará"
                 >
-                  <app-icon [iconName]="'archive'" class="icons"></app-icon>
+                  <app-icon [iconName]="'archive'" ></app-icon>
                 </button>
                 <button
                   *ngIf="blockButtons"

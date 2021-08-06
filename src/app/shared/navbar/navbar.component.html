@@ -22,9 +22,10 @@
       </li>
 
       <li class="ml-3">
-        <a *ngIf="usuario.role === 'ADMIN'" class="navbar-brand"> Admin: {{ usuario.nombre }} </a>
-        <a *ngIf="usuario.role === 'USUARIO'" class="navbar-brand"> {{ usuario.nombre }} </a>
+        <a *ngIf="usuario.role === 'ADMIN' && usuario.nombre" class="navbar-brand"> Admin: {{ usuario.nombre + ' ' + usuario.apellido }} </a>
+        <a *ngIf="usuario.role === 'USUARIO' && usuario.nombre" class="navbar-brand"> {{ usuario.nombre + ' ' + usuario.apellido }} </a>
       </li>
+      
 
       <li class="sign-out">
         <button class="btn btn-sm btn-outline btn-sign-out" (click)="auth.logout()">

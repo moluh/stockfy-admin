@@ -19,11 +19,12 @@ ul {
 .ul-mobile{
   position: absolute;
   background-color: white;
-  z-index: 999;
-  border-radius: 5px;
-  border-width: 2px;
-  border-style: double;
+  z-index: 9999;
   padding: 10px;
+  width: 90%;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: double;
   border-color: $primary-color;
 }
 

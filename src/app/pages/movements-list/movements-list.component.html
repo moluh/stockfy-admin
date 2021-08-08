@@ -143,7 +143,9 @@
           <tbody>
             <tr *ngFor="let movement of movements">
               <td>{{ movement.id }}</td>
-              <td>{{ movement.fecha | date: "medium" }}</td>
+              <td>
+                {{ movement.fecha | date: "dd-MM-YYYY" }} {{ movement.hora }}
+              </td>
               <td>
                 {{ movement.cliente.nombre + " " + movement.cliente.apellido }}
               </td>
@@ -213,55 +215,93 @@
 >
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content p-4 text-center">
+      <div class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card">
+        <div class="row">
+          <div class="col-sm-12 col-md-4 col-lg-4">
+            <b> # </b> {{ movementSelected.id }}
+          </div>
+          <div class="col-sm-12 col-md-4 col-lg-4">
+            <b> Fecha/Hora </b>
+            {{ movementSelected.fecha | date: "dd-MM-YYYY" }}
+            {{ movementSelected.hora }}
+          </div>
+          <div class="col-sm-12 col-md-4 col-lg-4">
+            <b> Cliente </b> {{ movementSelected?.cliente?.nombre }}
+            {{ movementSelected?.cliente?.apellido }}
+          </div>
+        </div>
+      </div>
+      <div class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card">
+        <div class="row">
+          <div class="col-sm-12 col-md-4 col-lg-4">
+            <b> Estado </b>
+            {{
+              (movementSelected.estado === "p"
+                ? "Pendiente"
+                : movementSelected.estado === "c"
+                ? "Completado"
+                : "Anulado"
+              ) | uppercase
+            }}
+          </div>
+          <div class="col-sm-12 col-md-4 col-lg-4">
+            <b> Total </b>
+            {{ movementSelected.total | currency: "ARS":"symbol":"1.0" }}
+          </div>
+          <div class="col-sm-12 col-md-4 col-lg-4">
+            <b> Saldo </b>
+            {{ movementSelected.saldo | currency: "ARS":"symbol":"1.0" }}
+          </div>
+        </div>
+      </div>
+      <div class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card">
+        <b> Modo de pago</b> {{ movementSelected.modo_pago | uppercase }}
+      </div>
+      <div
+        *ngIf="movementSelected.comentario !== ''"
+        class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card"
+      >
+        <b> Descripción </b> {{ movementSelected.comentario | uppercase }}
+      </div>
       <div class="row">
+        <div class="m-2 col-md-12 d-flex flex-row justify-content-around">
+          <button
+            (click)="generatePdf('open')"
+            class="
+              btn btn-primary
+              d-flex
+              align-items-center
+              justify-content-center
+            "
+          >
+            <span>Abrir PDF</span>
+          </button>
+          <button
+            (click)="generatePdf('download')"
+            class="
+              btn btn-primary
+              d-flex
+              align-items-center
+              justify-content-center
+            "
+          >
+            <span>Descargar</span>
+          </button>
+          <button
+            (click)="generatePdf('print')"
+            class="
+              btn btn-primary
+              d-flex
+              align-items-center
+              justify-content-center
+            "
+          >
+            <span>Imprimir</span>
+          </button>
+        </div>
+
         <div class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card">
-          <div class="row">
-            <div class="col-sm-12 col-md-4 col-lg-4">
-              <b> # </b> {{ movementSelected.id }}
-            </div>
-            <div class="col-sm-12 col-md-4 col-lg-4">
-              <b> Fecha/Hora: </b> {{ movementSelected.fecha | date: "medium" }}
-            </div>
-            <div class="col-sm-12 col-md-4 col-lg-4">
-              <b> Cliente: </b> {{ movementSelected?.cliente?.nombre }}
-              {{ movementSelected?.cliente?.apellido }}
-            </div>
-          </div>
-        </div>
-        <div class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card">
-          <div class="row">
-            <div class="col-sm-12 col-md-4 col-lg-4">
-              <b> Estado: </b>
-              {{
-                (movementSelected.estado === "p"
-                  ? "Pendiente"
-                  : movementSelected.estado === "c"
-                  ? "Completado"
-                  : "Anulado"
-                ) | uppercase
-              }}
-            </div>
-            <div class="col-sm-12 col-md-4 col-lg-4">
-              <b> Total: </b>
-              {{ movementSelected.total | currency: "ARS":"symbol":"1.0" }}
-            </div>
-            <div class="col-sm-12 col-md-4 col-lg-4">
-              <b> Saldo: </b>
-              {{ movementSelected.saldo | currency: "ARS":"symbol":"1.0" }}
-            </div>
-          </div>
-        </div>
-        <div class="mt-3 col-md-6 col-sm-6 col-lg-6 shadow card">
-          <b> Modo de pago:</b> {{ movementSelected.modo_pago | uppercase }}
-        </div>
-        <div
-          *ngIf="movementSelected.comentario !== ''"
-          class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card"
-        >
-          <b> Descripción: </b> {{ movementSelected.comentario | uppercase }}
-        </div>
-        <div class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card">
-          <b> Artículos: </b>
+          <b> Artículos </b>
           <div class="table-responsive text-center">
             <table class="table table-sm table-hover">
               <thead class="thead-dark">
@@ -270,7 +310,6 @@
                 <th>Cantidad</th>
                 <th>Precio</th>
                 <th>Sub Total</th>
-                <!-- <th> Precio oferta </th> -->
               </thead>
               <tbody>
                 <tr *ngFor="let art of movementSelected.movimiento_lineas">
@@ -283,9 +322,11 @@
                     {{ art.precio_venta | currency: "ARS":"symbol":"2.0" }}
                   </td>
                   <td>
-                    {{ art.cantidad * art.precio_venta | currency: "ARS":"symbol":"2.0" }}
+                    {{
+                      art.cantidad * art.precio_venta
+                        | currency: "ARS":"symbol":"2.0"
+                    }}
                   </td>
-                  <!-- <td>{{ art.precio_oferta | currency:'ARS':'symbol':'2.0' }} </td> -->
                 </tr>
               </tbody>
             </table>
@@ -316,8 +357,9 @@
                   <td>
                     {{ pago?.monto | currency: "ARS":"symbol":"1.0" }}
                   </td>
-                  <td>{{ pago?.fecha | date: "medium" }}</td>
-                  <!-- <td>{{ pago?.monto_recargo | currency:'ARS':'symbol':'1.0' }} </td> -->
+                  <td>
+                    {{ pago?.fecha | date: "dd-MM-YYYY" }} {{ pago?.hora }}
+                  </td>
                   <td>{{ pago?.tasa_interes + "%" }}</td>
                   <td>{{ pago?.ganancia | currency: "ARS":"symbol":"1.0" }}</td>
                   <td>
@@ -443,44 +485,6 @@
                 </div>
               </div>
             </form>
-          </div>
-        </div>
-
-        <div class="col-md-12">
-          <div class="shadow-sm card action-buttons">
-            <button
-              (click)="generatePdf('open')"
-              class="
-                btn btn-primary
-                d-flex
-                align-items-center
-                justify-content-center
-              "
-            >
-              <span>Open PDF</span>
-            </button>
-            <button
-              (click)="generatePdf('download')"
-              class="
-                btn btn-primary
-                d-flex
-                align-items-center
-                justify-content-center
-              "
-            >
-              <span>Download PDF</span>
-            </button>
-            <button
-              (click)="generatePdf('print')"
-              class="
-                btn btn-primary
-                d-flex
-                align-items-center
-                justify-content-center
-              "
-            >
-              <span>Print PDF</span>
-            </button>
           </div>
         </div>
       </div>

@@ -128,6 +128,7 @@
           class="form-control form-control-sm"
           [(ngModel)]="delivery"
           (keyup)="calculateTotal()"
+          (change)="calculateTotal()"
           placeholder="$"
         />
       </div>
@@ -150,6 +151,7 @@
             class="form-control form-control-sm"
             [(ngModel)]="discount"
             (keyup)="calculateTotal()"
+            (change)="calculateTotal()"
             placeholder="$"
           />
         </div>

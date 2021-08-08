@@ -193,9 +193,20 @@ export class PrintMovementService {
                         text: dayjs(p.fecha).format('DD-MM-YYYY'),
                         style: 'tableDescription',
                       },
-                      { text: `%${p.tasa_interes}`, style: 'tableDescription' },
                       {
-                        text: `$${p.ganancia.toFixed(2)}`,
+                        text: `${
+                          p.tasa_interes !== undefined
+                            ? `$ ${p.tasa_interes.toFixed(2)}`
+                            : '-'
+                        }`,
+                        style: 'tableDescription',
+                      },
+                      {
+                        text: `${
+                          p.ganancia !== undefined
+                            ? `$ ${p.ganancia.toFixed(2)}`
+                            : '-'
+                        }`,
                         style: 'tableDescription',
                       },
                     ];
@@ -231,6 +242,8 @@ export class PrintMovementService {
   }
 
   generatePdf(action = 'open', movement) {
+    console.log('movemnt', movement);
+
     const documentDefinition = this.getDocumentDefinition(movement);
     switch (action) {
       case 'open':

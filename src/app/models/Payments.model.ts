@@ -2,7 +2,8 @@ export class Payments {
     
     id?: number;
     monto?: number;
-    fecha?: Date;
+    fecha?: Date | string;
+    hora?: Date | string;
     ganancia?: number;
     interes?: boolean;
     tasa_interes?: number;

@@ -356,76 +356,211 @@ export class MovementsListComponent implements OnInit {
     return {
       content: [
         {
-          text: 'Experience',
+          text: 'Datos del movimiento',
           style: 'header',
         },
+
         {
-          columns: [
-            [
-              {
-                text: "jobTitle",
-                style: 'jobTitle',
-              },
-              {
-                text: "employer",
-              },
-              {
-                text: "jobDescription",
-              },
-            ],
-            {
-              text: 'Experience : 9 Months',
-              alignment: 'right',
-            },
-          ],
-        },
-        {
-          text: 'Education',
-          style: 'header',
-        },{
+          //  layout: 'noBorders',
           table: {
-            widths: ['*', '*', '*', '*'],
+            headerRows: 0,
+            widths: ['25%', '70%'],
             body: [
               [
+                { text: 'ID', style: 'detailDescription' },
                 {
-                  text: 'Degree',
-                  style: 'tableHeader',
+                  text: `${this.movementSelected.id}`,
+                  style: 'detailDescription',
                 },
+              ],
+              [
+                { text: 'Fecha/Hora ', style: 'detailDescription' },
                 {
-                  text: 'College',
-                  style: 'tableHeader',
+                  text: `${dayjs(this.movementSelected.fecha).format('DD-MM-YYYY')} ${this.movementSelected.hora}`,
+                  style: 'detailDescription',
                 },
+              ],
+              [
+                { text: 'Cliente', style: 'detailDescription' },
                 {
-                  text: 'Passing Year',
-                  style: 'tableHeader',
+                  text: `${this.movementSelected.cliente.nombre} ${this.movementSelected.cliente.apellido}`,
+                  style: 'detailDescription',
                 },
+              ],
+              [
+                { text: 'Estado', style: 'detailDescription' },
                 {
-                  text: 'Result',
-                  style: 'tableHeader',
+                  text: `${
+                    this.movementSelected.estado === 'c'
+                      ? 'COMPLETADO'
+                      : this.movementSelected.estado === 'p'
+                      ? 'PENDIENTE'
+                      : 'ANULADO'
+                  }`,
+                  style: 'detailDescription',
+                },
+              ],
+              [
+                { text: 'Total', style: 'detailDescription' },
+                {
+                  text: `$ ${this.movementSelected.total.toFixed(2)}`,
+                  style: 'detailDescription',
+                },
+              ],
+              [
+                { text: 'Saldo', style: 'detailDescription' },
+                {
+                  text: `${
+                    this.movementSelected.saldo !== null
+                      ? `$${this.movementSelected.saldo.toFixed(2)}`
+                      : '-'
+                  }`,
+                  style: 'detailDescription',
+                },
+              ],
+              [
+                { text: 'Modo de pago', style: 'detailDescription' },
+                {
+                  text: `${
+                    this.movementSelected.modo_pago === 'ctacte'
+                      ? 'CUENTA CORRIENTE'
+                      : this.movementSelected.modo_pago === 'efectivo'
+                      ? 'EFECTIVO'
+                      : 'TARJETA'
+                  }`,
+                  style: 'detailDescription',
                 },
               ],
             ],
           },
-        }
+        },
+
+        {
+          text: 'Productos',
+          style: 'header',
+        },
+        {
+          table: {
+            headerRows: 1,
+            widths: ['auto', '55%', 'auto', '15%', '15%'],
+            body: [
+              [
+                {
+                  text: 'ID',
+                  style: 'tableHeader',
+                },
+                {
+                  text: 'Título',
+                  style: 'tableHeader',
+                },
+                {
+                  text: 'Cant.',
+                  style: 'tableHeader',
+                },
+                {
+                  text: 'Precio',
+                  style: 'tableHeader',
+                },
+                {
+                  text: 'Sub Total',
+                  style: 'tableHeader',
+                },
+              ],
+              ...this.movementSelected.movimiento_lineas.map((p) => {
+                return [
+                  { text: p.id_producto, style: 'tableDescription' },
+                  { text: p.nombre, style: 'tableDescription' },
+                  { text: p.cantidad, style: 'tableDescription' },
+                  {
+                    text: `$${p.precio_venta.toFixed(2)}`,
+                    style: 'tableDescription',
+                  },
+                  {
+                    text: `$${(p.cantidad * p.precio_venta).toFixed(2)}`,
+                    style: 'tableDescription',
+                  },
+                ];
+              }),
+            ],
+          },
+        },
+        this.movementSelected.pagos.length > 0
+          ? {
+              text: 'Pagos',
+              style: 'header',
+            }
+          : {
+              text: '',
+              style: 'header',
+            },
+        this.movementSelected.pagos.length > 0
+          ? {
+              table: {
+                headerRows: 1,
+                widths: ['auto', '23%', '23%', '23%', '23%'],
+                body: [
+                  [
+                    {
+                      text: 'ID',
+                      style: 'tableHeader',
+                    },
+                    {
+                      text: 'Monto',
+                      style: 'tableHeader',
+                    },
+                    {
+                      text: 'Fecha',
+                      style: 'tableHeader',
+                    },
+                    {
+                      text: 'Interés',
+                      style: 'tableHeader',
+                    },
+                    {
+                      text: 'Ganancia',
+                      style: 'tableHeader',
+                    },
+                  ],
+                  ...this.movementSelected.pagos.map((p) => {
+                    return [
+                      { text: p.pago_nro, style: 'tableDescription' },
+                      {
+                        text: `$${p.monto.toFixed(2)}`,
+                        style: 'tableDescription',
+                      },
+                      { text: dayjs(p.fecha).format('DD-MM-YYYY'), style: 'tableDescription' },
+                      { text: `%${p.tasa_interes}`, style: 'tableDescription' },
+                      {
+                        text: `$${p.ganancia.toFixed(2)}`,
+                        style: 'tableDescription',
+                      },
+                    ];
+                  }),
+                ],
+              },
+            }
+          : '',
       ],
       styles: {
         header: {
           fontSize: 18,
           bold: true,
-          margin: [0, 20, 0, 10],
-          decoration: 'underline',
-        },
-        name: {
-          fontSize: 16,
-          bold: true,
-        },
-        jobTitle: {
-          fontSize: 14,
-          bold: true,
-          italics: true,
+          margin: [0, 10, 0, 10],
+          // decoration: 'underline',
+          alignment: 'center',
         },
         tableHeader: {
           bold: true,
+          alignment: 'center',
+        },
+        tableDescription: {
+          alignment: 'center',
+          margin: [0, 2, 0, 2],
+        },
+        detailDescription: {
+          fontSize: 14,
+          margin: [0, 2, 0, 2],
+          alignment: 'center',
         },
       },
     };

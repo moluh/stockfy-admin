@@ -267,7 +267,9 @@
               <thead class="thead-dark">
                 <th>#</th>
                 <th>Título</th>
-                <th>Precio venta</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Sub Total</th>
                 <!-- <th> Precio oferta </th> -->
               </thead>
               <tbody>
@@ -275,7 +277,13 @@
                   <td>{{ art.id_producto }}</td>
                   <td>{{ art.nombre }}</td>
                   <td>
+                    {{ art.cantidad }}
+                  </td>
+                  <td>
                     {{ art.precio_venta | currency: "ARS":"symbol":"2.0" }}
+                  </td>
+                  <td>
+                    {{ art.cantidad * art.precio_venta | currency: "ARS":"symbol":"2.0" }}
                   </td>
                   <!-- <td>{{ art.precio_oferta | currency:'ARS':'symbol':'2.0' }} </td> -->
                 </tr>

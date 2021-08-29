@@ -75,6 +75,7 @@
               <th scope="col">ID</th>
               <th scope="col">Nombre/Apellido</th>
               <th scope="col">Tel.</th>
+              <th scope="col">Domicilio</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
@@ -83,7 +84,7 @@
               <td>{{ client.id }}</td>
               <td>{{ client.nombre + " " + client.apellido }}</td>
               <td>{{ client.telefono }}</td>
-              <td>{{ client.telefono }}</td>
+              <td>{{ client.domicilio }}</td>
               <td>
                 <button
                   *ngIf="!blockButtons"

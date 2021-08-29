@@ -6,6 +6,7 @@ interface Response {
   ok: boolean;
   data: Object | Array<any>;
   message: string;
+  error?: string;
 }
 
 @Injectable({
@@ -31,7 +32,7 @@ export class ApiService {
     if (res['status'] === "ok")
       this._toast.toastSuccess(text, title)
     else if (res['status'] === "failed")
-      this._toast.toastError('Ocurrió un error', `${res['message']}`)
+      this._toast.toastError(res['error'], `Error:`)
   }
 
   handleError(res: Response, title: string, text: string) {

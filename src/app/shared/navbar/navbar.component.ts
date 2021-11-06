@@ -9,10 +9,9 @@ import { icons } from 'src/assets/icons';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-
   icons = icons;
   side: boolean = true;
   ulMobile: boolean = false;
@@ -21,27 +20,31 @@ export class NavbarComponent implements OnInit, OnDestroy {
   usuario: Users;
 
   constructor(public auth: AuthService, public _side: SidebarService) {
-
-    this.comSubs = this.auth.getUser().subscribe(
-      (user: Users) => {
-        if (user == null) { return; }
+    this.comSubs = this.auth.getUser().subscribe({
+      next: (user: Users) => {
+        console.log('user',user);
+        
+        if (user === null) 
+          return
+        
         this.usuario = user;
       },
-      err => {
-        console.log('Error', err);
-      });
+      error: () => {},
+    });
 
     this._side.setShowSide(true);
-
   }
 
-  setUlMobile(){
+  setUlMobile() {
     this.ulMobile = !this.ulMobile;
   }
 
   ngOnInit() {
-    this.isLogged$ = this.auth.returnAsObs()
-      .pipe(map((val) => { return val }))
+    this.isLogged$ = this.auth.returnAsObs().pipe(
+      map((val) => {
+        return val;
+      })
+    );
   }
 
   setSide() {
@@ -52,5 +55,4 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.comSubs.unsubscribe();
   }
-
 }

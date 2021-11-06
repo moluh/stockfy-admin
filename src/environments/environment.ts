@@ -8,7 +8,7 @@ export const ENVIRONMENT: any = {
       url: 'http://localhost:3000/api/v1'
     },
     prod: {
-      url: 'http://168.197.49.19/api/v1'
+      url: 'https://morettilucas.com.ar/api/v1'
     }
   }
 };

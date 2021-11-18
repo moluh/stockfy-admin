@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Users } from 'src/app/models/Users.model';
 import { ToastService } from '../toasts.service';
 import { HttpOptions } from '../httpOptions';
@@ -13,51 +13,41 @@ export const TOKEN: string = '_zD';
 export let TOKEN_ORIGINAL: string = 'token_original';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   public url: string = this._api.getApiUrl() + '/login';
   httpOptions = HttpOptions.httpOptions;
 
-  isLoginSubject = new BehaviorSubject<boolean>(this.isLoggedIn())
+  isLoginSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
   usuarioSubject = new BehaviorSubject<Users>(this.returnUser());
 
   constructor(
-    private http: HttpClient, 
-    private router: Router, 
-    private _toast: ToastService, 
+    private http: HttpClient,
+    private router: Router,
+    private _toast: ToastService,
     private _api: ApiService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService
+  ) {}
 
-  }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public returnAsObs(): Observable<boolean> {
     return this.isLoginSubject.asObservable();
   }
 
   public isLoggedIn(token?: string): boolean {
-    if (!token) {
-      token = sessionStorage.getItem(TOKEN);
-    }
-    if (!token) {
-      return this.logout();
-    }
+    if (!token) token = sessionStorage.getItem(TOKEN);
+
+    if (!token) return this.logout();
 
     const date: Date = this.getTokenExpirationDate(token);
 
-    if (date === undefined) {
-      return true;
-    }
+    if (date === undefined) return true;
 
-    if (!(date.valueOf() > new Date().valueOf())) {
+    if (!(date.valueOf() > new Date().valueOf()))
       return this.logout('Tu sesión expiró, ingresa nuevamente');
-    } else {
-      return true;
-    }
+    else return true;
   }
 
   public getUser(): Observable<Users> {
@@ -65,85 +55,70 @@ export class AuthService {
   }
 
   public returnUser(): Users {
-    let u: Users;
-    let T: string = sessionStorage.getItem(TOKEN);
-    if (T == null)
-      return null;
-    else
-      u = jwt_decode(T);
-    return u;
+    let user: Users;
+    const TOKEN_: string = sessionStorage.getItem(TOKEN);
+    if (TOKEN_ === null) return null;
+    else user = jwt_decode(TOKEN_);
+    return user;
   }
 
-  public returnIdUsuario(): Promise<number> {
-    let u: Users;
-    let T: string = sessionStorage.getItem(TOKEN);
-    return new Promise((resolve, reject) => {
-      if (T == null)
-        return null;
-      else
-        u = jwt_decode(T);
-      resolve(u.id);
-    });
-  }
+  // public returnIdUsuario(): Promise<number> {
+  //   let user: Users;
+  //   const TOKEN_: string = sessionStorage.getItem(TOKEN);
+  //   return new Promise((resolve, reject) => {
+  //     if (TOKEN_ === null) return null;
+  //     else user = jwt_decode(TOKEN_);
+  //     resolve(user.id);
+  //   });
+  // }
 
-  public returnRole(): Promise<string> {
-    let u: Users;
-    let T: string = sessionStorage.getItem(TOKEN);
-    return new Promise<any>((resolve, reject) => {
-      if (T == null)
-        return null;
-      else
-        u = jwt_decode(T);
-      resolve(u.role);
-    });
-  }
+  // public returnRole(): Promise<string> {
+  //   let user: Users;
+  //   const TOKEN_: string = sessionStorage.getItem(TOKEN);
+  //   if (TOKEN_ === null) return Promise.reject(null);
+  //   user = jwt_decode(TOKEN_);
+  //   return Promise.resolve(user.role);
+  // }
 
-  public returnToken(): Promise<string> {
-    let T: string = sessionStorage.getItem(TOKEN);
-    return new Promise((resolve, reject) => {
-      resolve(T);
-    });
-  }
+  // public returnToken(): Promise<string> {
+  //   const TOKEN_: string = sessionStorage.getItem(TOKEN);
+  //   return Promise.resolve(TOKEN_);
+  // }
 
   public login(credentials: any): void {
-    this.http.post(`${this.url}`, credentials, this.httpOptions).subscribe(
-      (data: any) => {
-        console.log(data);
-        
+    this.http.post(`${this.url}`, credentials, this.httpOptions).subscribe({
+      next: (data: any) => {
         if (!data.isLogged) {
-          this.isLoginSubject.next(false)
+          this.isLoginSubject.next(false);
           return;
-        }
-        else {
-          const t: any = jwt_decode(data.token)
-          const u: any = { id: t.id, nombre: t.nombre, role: t.role }
+        } else {
+          const TOKEN_: any = jwt_decode(data.token);
+          const user: Users = { ...TOKEN_ };
 
           sessionStorage.setItem(TOKEN, data.token);
           TOKEN_ORIGINAL = data.token;
 
           this.isLoginSubject.next(true);
-          this.usuarioSubject.next(u)
-          u.role === "ADMIN" 
-           ? this.router.navigate(['/dashboard'])
-           : this.router.navigate(['/ventas'])
+          this.usuarioSubject.next(user);
+          user.role === 'ADMIN'
+            ? this.router.navigate(['/dashboard'])
+            : this.router.navigate(['/ventas']);
         }
       },
-      err => {
+      error: (err) => {
         // this._toast.toastError(err.error.error,'')
-        this.toastr.error(err.error.error,'')
+        this.toastr.error(err.error.error, '');
         console.log('Error: ', err.error.error);
-      }
-    );
+      },
+    });
   }
 
   public logout(msg?: string): boolean {
-    this.router.navigate(['/login'])
-      .then(() => {
-        sessionStorage.removeItem(TOKEN);
-        if (msg)
-          this._toast.toastError(msg,'');
-        this.isLoginSubject.next(false)
-      })
+    this.router.navigate(['/login']).then(() => {
+      sessionStorage.removeItem(TOKEN);
+      if (msg) this._toast.toastError(msg, '');
+      this.isLoginSubject.next(false);
+    });
 
     return false;
   }
@@ -151,12 +126,10 @@ export class AuthService {
   getTokenExpirationDate(token: string): Date {
     const decoded: any = jwt_decode(token);
     if (decoded.exp === undefined) {
-      return null
+      return null;
     }
     const date = new Date(0);
     date.setUTCSeconds(decoded.exp);
     return date;
   }
-
-
 }

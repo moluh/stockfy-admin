@@ -9,6 +9,7 @@ import { ClientsService } from 'src/app/services/clients.service';
 import { DatesService } from 'src/app/services/dates.service';
 import { MovementsService } from 'src/app/services/movements.service';
 import { PaymentsService } from 'src/app/services/payments.service';
+import { PrintMovementService } from 'src/app/services/print-movement.service';
 import { ToastService } from 'src/app/services/toasts.service';
 
 const ATTR_LIST = [
@@ -51,7 +52,8 @@ export class MovementsListComponent implements OnInit {
     private _payments: PaymentsService,
     private _date: DatesService,
     private _clients: ClientsService,
-    private _pag: PaginacionService
+    private _pag: PaginacionService,
+    private _print: PrintMovementService
   ) {
     this.createForm();
   }
@@ -347,5 +349,9 @@ export class MovementsListComponent implements OnInit {
       this._pag.setBlockBtn(false);
       this.movements = res.data;
     }
+  }
+
+  generatePdf(action: string = 'open') {
+    this._print.generatePdf(action, this.movementSelected);
   }
 }

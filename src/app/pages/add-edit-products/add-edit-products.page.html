@@ -249,7 +249,7 @@
           (click)="addSizeToTallesFormArray(size); isEditing = true"
         >
           <button type="button" class="btn btn-sm btn-primary">
-            <app-icon [iconName]="'plus'" class="icons"></app-icon>
+            <app-icon [iconName]="'plus'" ></app-icon>
             {{ size.talle }}
           </button>
         </li>
@@ -269,7 +269,7 @@
             class="btn btn-sm btn-danger"
             (click)="removeSizeFromTallesFormArray(i); isEditing = true"
           >
-            <app-icon [iconName]="'trash'" class="icons"></app-icon>
+            <app-icon [iconName]="'trash'" ></app-icon>
             {{ talle.value['talle'] }}
           </button>
           <input type="text" [formControlName]="i" hidden />
@@ -291,12 +291,12 @@
         <app-icon
           *ngIf="!enableEdit"
           [iconName]="'lock'"
-          class="icons"
+          
         ></app-icon>
         <app-icon
           *ngIf="enableEdit"
           [iconName]="'lockOpen'"
-          class="icons"
+          
         ></app-icon>
         {{ enableEdit ? "Deshabilitar" : "Editar" }}
       </button>
@@ -305,7 +305,7 @@
         [disabled]="productForm.disabled || productForm.invalid"
         type="submit"
       >
-        <app-icon [iconName]="'save'" class="icons"></app-icon>
+        <app-icon [iconName]="'save'" ></app-icon>
         Guardar
       </button>
       <button
@@ -313,7 +313,7 @@
         (click)="goTo()"
         type="button"
       >
-        <app-icon [iconName]="'arrowLeft'" class="icons"></app-icon>
+        <app-icon [iconName]="'arrowLeft'" ></app-icon>
         Volver
       </button>
     </div>

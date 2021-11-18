@@ -1,7 +1,12 @@
 @import 'src/assets/styles/variables.scss';
 
-.icons {
-  margin-left: 9px;
+.li-icon {    
+  width: 20px;
+  margin-left: 10px;
+}
+
+.li-descrip {
+  width: auto;
 }
 
 .ped-icon {
@@ -52,6 +57,7 @@ div::-webkit-scrollbar {
   position: absolute;
   z-index: 999;
   border-radius: 5px;
+  padding: 0px;
 }
 
 .collapsed {

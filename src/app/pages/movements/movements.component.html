@@ -35,7 +35,7 @@
           (click)="validateProductToPush()"
           (keyup.enter)="validateProductToPush()"
         >
-          <app-icon [iconName]="'plus'" class="icons"></app-icon>
+          <app-icon [iconName]="'plus'" ></app-icon>
         </button>
       </div>
       <!-- *ngIf="showFilter" -->
@@ -128,6 +128,7 @@
           class="form-control form-control-sm"
           [(ngModel)]="delivery"
           (keyup)="calculateTotal()"
+          (change)="calculateTotal()"
           placeholder="$"
         />
       </div>
@@ -150,6 +151,7 @@
             class="form-control form-control-sm"
             [(ngModel)]="discount"
             (keyup)="calculateTotal()"
+            (change)="calculateTotal()"
             placeholder="$"
           />
         </div>
@@ -167,7 +169,7 @@
           data-toggle="modal"
           data-target="#selectClient"
         >
-          <app-icon [iconName]="'search'" class="icons"></app-icon>
+          <app-icon [iconName]="'search'" ></app-icon>
           <!-- Seleccionar -->
         </button>
       </div>
@@ -179,7 +181,7 @@
           data-toggle="modal"
           data-target="#addClient"
         >
-          <app-icon [iconName]="'plus'" class="icons"></app-icon>
+          <app-icon [iconName]="'plus'" ></app-icon>
           <!-- Nuevo -->
         </button>
       </div>
@@ -236,12 +238,12 @@
             <app-icon
               *ngIf="!showDescription"
               [iconName]="'chevDown'"
-              class="icons"
+              
             ></app-icon>
             <app-icon
               *ngIf="showDescription"
               [iconName]="'chevUp'"
-              class="icons"
+              
             ></app-icon>
           </label>
           <textarea
@@ -295,7 +297,7 @@
                     class="btn btn-sm btn-block btn-danger"
                     (click)="deleteProduct(prod)"
                   >
-                    <app-icon [iconName]="'times'" class="icons"></app-icon>
+                    <app-icon [iconName]="'times'" ></app-icon>
                   </button>
                 </td>
               </tr>

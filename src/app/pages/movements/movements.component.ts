@@ -12,6 +12,7 @@ import { ToastService } from 'src/app/services/toasts.service';
 import * as dayjs from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
 import { icons } from 'src/assets/icons';
+import { PrintMovementService } from 'src/app/services/print-movement.service';
 dayjs.extend(utc);
 
 @Component({
@@ -20,7 +21,6 @@ dayjs.extend(utc);
   styleUrls: ['./movements.component.scss'],
 })
 export class MovementsComponent implements OnInit {
-  
   pag = new QueryPaginator();
   movement: Movements = new Movements();
   movements: Movements[] = [];
@@ -50,7 +50,8 @@ export class MovementsComponent implements OnInit {
     private _movements: MovementsService,
     private _products: ProductsService,
     public _dataSource: DataSourceService,
-    private _toast: ToastService
+    private _toast: ToastService,
+    private _print: PrintMovementService
   ) {
     this.checkStateMovement();
   }
@@ -211,19 +212,36 @@ export class MovementsComponent implements OnInit {
     this.movement.fecha = dayjs(new Date()).format('YYYY-MM-DD');
     this.movement.hora = dayjs(new Date()).format('HH:mm:ss');
 
-    if (this.delivery) this.movement.pagos.push({ monto: this.delivery });
+    if (this.delivery)
+      this.movement.pagos.push({
+        monto: this.delivery,
+        fecha: dayjs(new Date()).format('YYYY-MM-DD'),
+        hora: dayjs(new Date()).format('HH:mm:ss'),
+      });
 
     this._toast
-      .sweetConfirm('¿Confirmar venta?', '')
+      .sweetConfirm('¿Confirmar movimiento?', '')
       .then((res) => {
         if (res)
           this._movements.post(this.movement).subscribe(
-            (res: any) => {
-              if (res.ok) {
-                this._toast.sweetSuccess('¡Movimiento cargado!', '');
-                this.clean();
+            (movement: any) => {
+              if (movement.ok) {
+                // this._toast.sweetSuccess('¡Movimiento cargado!', '');
+                this._toast
+                  .sweetConfirm('¿Desea imprimir el movimiento?', '')
+                  .then((res) => {
+                    if (res) {
+                      this._print.generatePdf('print', movement.data);
+                    }
+                    setTimeout(() => {
+                      this.clean();
+                    }, 3000);
+                  });
               } else {
-                this._toast.toastError('Ocurrió un error.', res.userMessage);
+                this._toast.toastError(
+                  'Ocurrió un error.',
+                  movement.userMessage
+                );
               }
             },
             (error) => {
@@ -270,7 +288,6 @@ export class MovementsComponent implements OnInit {
 
   isValidMovement() {
     this.movement.cliente = this._dataSource.simpleObject;
-    console.log('this.movement.cliente', this.movement.cliente);
 
     if (
       !this.movement.movimiento_lineas ||
@@ -289,6 +306,11 @@ export class MovementsComponent implements OnInit {
       (this.delivery === null || this.delivery === undefined)
     )
       return this._toast.toastAlert('Complete el monto de la entrega', '');
+    else if (this.salesType === 'ctacte' && this.delivery > this.totalOfSale)
+      return this._toast.toastAlert(
+        'La entrega no puede ser mayor al total',
+        ''
+      );
     else if (
       (this.isDiscountAvailable && !this.discount) ||
       this.discount === 0

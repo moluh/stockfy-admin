@@ -1,12 +1,12 @@
 <div id="mySidenav" class="sidenav">
-  <div
+  <ul
     [ngClass]="{
       fadeInLeft: showDescrip,
       fadeInRight: !showDescrip
     }"
     class="animated fadeInLeft"
   >
-    <p
+    <li
       (click)="urlActive = 'dashboard'"
       class="dir d-flex align-items-center"
       [routerLink]="['/dashboard']"
@@ -17,11 +17,15 @@
       *ngIf="usuario.role === 'ADMIN'"
       routerLinkActive="router-link-active"
     >
-      <app-icon [iconName]="'home'" class="icons"></app-icon>
-      <span *ngIf="showDescrip"> Dashboard </span>
-    </p>
+      <div class="li-icon">
+        <app-icon [iconName]="'home'" [iconSize]="15"></app-icon>
+      </div>
+      <div *ngIf="showDescrip" class="li-descrip">
+        <span> Dashboard </span>
+      </div>
+    </li>
 
-    <p
+    <li
       (click)="urlActive = 'ventas'"
       class="dir d-flex align-items-center"
       [routerLink]="['/ventas']"
@@ -30,11 +34,15 @@
         collapsed: !showDescrip
       }"
     >
-      <app-icon [iconName]="'ventas'" class="icons"></app-icon>
-      <span *ngIf="showDescrip"> Ventas </span>
-    </p>
+      <div class="li-icon">
+        <app-icon [iconName]="'ventas'" [iconSize]="15"></app-icon>
+      </div>
+      <div *ngIf="showDescrip" class="li-descrip">
+        <span> Ventas </span>
+      </div>
+    </li>
 
-    <p
+    <li
       (click)="urlActive = 'movimientos-lista'"
       class="dir d-flex align-items-center"
       [routerLink]="['/movimientos-lista']"
@@ -43,11 +51,20 @@
         collapsed: !showDescrip
       }"
     >
-      <app-icon [iconName]="'movementList'" class="icons"></app-icon>
-      <span *ngIf="showDescrip"> Movimientos lista </span>
-    </p>
+      <div class="li-icon">
+        <app-icon
+          [iconName]="'movementList'"
+          [iconSize]="15"
+          style="margin-left: 4px"
+        ></app-icon>
+      </div>
 
-    <p
+      <div *ngIf="showDescrip" class="li-descrip">
+        <span> Movimientos lista </span>
+      </div>
+    </li>
+
+    <li
       *ngIf="usuario.role === 'ADMIN'"
       (click)="urlActive = 'productos'"
       class="dir d-flex align-items-center"
@@ -58,11 +75,20 @@
       }"
       (click)="showTable()"
     >
-      <app-icon [iconName]="'products'" class="icons"></app-icon>
-      <span *ngIf="showDescrip"> Productos </span>
-    </p>
+      <div class="li-icon">
+        <app-icon
+          [iconName]="'products'"
+          [iconSize]="15"
+          style="margin-left: 2px"
+        ></app-icon>
+      </div>
 
-    <p
+      <div *ngIf="showDescrip" class="li-descrip">
+        <span> Productos </span>
+      </div>
+    </li>
+
+    <li
       *ngIf="usuario.role === 'ADMIN'"
       (click)="urlActive = 'gastos'"
       class="dir d-flex align-items-center"
@@ -72,11 +98,19 @@
         collapsed: !showDescrip
       }"
     >
-      <app-icon [iconName]="'expenses'" class="icons"></app-icon>
-      <span *ngIf="showDescrip"> Gastos </span>
-    </p>
+      <div class="li-icon">
+        <app-icon
+          [iconName]="'expenses'"
+          [iconSize]="15"
+          style="margin-left: 4px"
+        ></app-icon>
+      </div>
+      <div *ngIf="showDescrip" class="li-descrip">
+        <span> Gastos </span>
+      </div>
+    </li>
 
-    <p
+    <li
       *ngIf="usuario.role === 'ADMIN'"
       (click)="urlActive = 'usuarios'"
       class="dir d-flex align-items-center"
@@ -87,11 +121,16 @@
       }"
       (click)="showTable()"
     >
-      <app-icon [iconName]="'users'" class="icons"></app-icon>
-      <span *ngIf="showDescrip"> Usuarios </span>
-    </p>
+      <div class="li-icon">
+        <app-icon [iconName]="'users'" [iconSize]="15"></app-icon>
+      </div>
 
-    <p
+      <div *ngIf="showDescrip" class="li-descrip">
+        <span> Usuarios </span>
+      </div>
+    </li>
+
+    <li
       *ngIf="usuario.role === 'ADMIN'"
       (click)="urlActive = 'estadisticas'"
       class="dir d-flex align-items-center"
@@ -101,11 +140,16 @@
         collapsed: !showDescrip
       }"
     >
-      <app-icon [iconName]="'stats'" class="icons"></app-icon>
-      <span *ngIf="showDescrip"> Estadísticas </span>
-    </p>
+      <div class="li-icon">
+        <app-icon [iconName]="'stats'" [iconSize]="15"></app-icon>
+      </div>
 
-    <p
+      <div *ngIf="showDescrip" class="li-descrip">
+        <span> Estadísticas </span>
+      </div>
+    </li>
+
+    <!-- <li
       *ngIf="usuario.role === 'ADMIN'"
       (click)="urlActive = 'configuraciones'"
       class="dir d-flex align-items-center"
@@ -115,8 +159,13 @@
         collapsed: !showDescrip
       }"
     >
-      <app-icon [iconName]="'config'" class="icons"></app-icon>
-      <span *ngIf="showDescrip"> Configuraciones </span>
-    </p>
-  </div>
+      <div class="li-icon">
+        <app-icon [iconName]="'config'" [iconSize]="15"></app-icon>
+      </div>
+
+      <div *ngIf="showDescrip" class="li-descrip">
+        <span> Configuraciones </span>
+      </div>
+    </li> -->
+  </ul>
 </div>

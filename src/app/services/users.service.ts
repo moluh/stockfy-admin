@@ -31,11 +31,15 @@ export class UsersService {
   }
 
   public hasAdminRole(roles: Role[]) {
-    return roles.some(r => r.role === "ADMIN")
+    if (roles)
+      return roles.some(r => r.role === "ADMIN")
+    return false;
   }
 
   public hasUserRole(roles: Role[]) {
-    return roles.some(r => r.role === "USUARIO")
+    if (roles)
+      return roles.some(r => r.role === "USUARIO")
+    return false;
   }
 
   public passUser(user: Users): void {

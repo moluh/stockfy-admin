@@ -77,9 +77,10 @@ export class AuthService {
 
           this.isLoginSubject.next(true);
           this.usuarioSubject.next(user);
-          user.roles.some(r => r.role === "ADMIN")
-            ? this.router.navigate(['/dashboard'])
-            : this.router.navigate(['/ventas']);
+          if (user.roles)
+            user.roles.some(r => r.role === "ADMIN")
+              ? this.router.navigate(['/dashboard'])
+              : this.router.navigate(['/ventas']);
         }
       },
       error: (err) => {
@@ -102,9 +103,9 @@ export class AuthService {
 
   getTokenExpirationDate(token: string): Date {
     const decoded: any = jwt_decode(token);
-    if (decoded.exp === undefined) 
+    if (decoded.exp === undefined)
       return null;
-    
+
     const date = new Date(0);
     date.setUTCSeconds(decoded.exp);
     return date;

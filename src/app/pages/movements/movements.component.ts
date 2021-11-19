@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Clients } from 'src/app/models/Clients.model';
 import { Movements } from 'src/app/models/Movements.model';
 import { Payments } from 'src/app/models/Payments.model';
 import { Products } from 'src/app/models/Products.model';
@@ -13,6 +12,7 @@ import * as dayjs from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
 import { icons } from 'src/assets/icons';
 import { PrintMovementService } from 'src/app/services/print-movement.service';
+import { Users } from 'src/app/models/Users.model';
 dayjs.extend(utc);
 
 @Component({
@@ -26,7 +26,7 @@ export class MovementsComponent implements OnInit {
   movements: Movements[] = [];
   products: Movements[] = [];
   foundProduct: Products = null;
-  client: Observable<Clients>;
+  user: Observable<Users>;
   payment: Payments = {};
 
   attribute: string = 'nombre';
@@ -207,7 +207,7 @@ export class MovementsComponent implements OnInit {
     this.movement.total = this.totalOfSale;
     this.movement.comentario = this.commentary;
     this.movement.modo_pago = this.salesType;
-    this.movement.cliente = this._dataSource.simpleObject;
+    this.movement.usuario = this._dataSource.simpleObject;
     this.movement.pagos = [];
     this.movement.fecha = dayjs(new Date()).format('YYYY-MM-DD');
     this.movement.hora = dayjs(new Date()).format('HH:mm:ss');
@@ -287,7 +287,7 @@ export class MovementsComponent implements OnInit {
   }
 
   isValidMovement() {
-    this.movement.cliente = this._dataSource.simpleObject;
+    this.movement.usuario = this._dataSource.simpleObject;
 
     if (
       !this.movement.movimiento_lineas ||
@@ -295,12 +295,12 @@ export class MovementsComponent implements OnInit {
     )
       return this._toast.toastAlert('Cargue al menos un producto', '');
     else if (
-      this.movement?.cliente === undefined ||
-      this.movement?.cliente === null
+      this.movement?.usuario === undefined ||
+      this.movement?.usuario === null
     )
-      return this._toast.toastAlert('Cargue el cliente', '');
-    else if (Object.entries(this.movement?.cliente).length === 0)
-      return this._toast.toastAlert('Cargue el cliente', '');
+      return this._toast.toastAlert('Cargue el usuario', '');
+    else if (Object.entries(this.movement?.usuario).length === 0)
+      return this._toast.toastAlert('Cargue el usuario', '');
     else if (
       this.salesType === 'CTACTE' &&
       (this.delivery === null || this.delivery === undefined)

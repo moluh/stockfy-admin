@@ -147,7 +147,7 @@
                 {{ movement.fecha | date: "dd-MM-YYYY" }} {{ movement.hora }}
               </td>
               <td>
-                {{ movement.cliente.nombre + " " + movement.cliente.apellido }}
+                {{ movement.usuario.nombre + " " + movement.usuario.apellido }}
               </td>
               <td>
                 {{
@@ -226,8 +226,8 @@
             {{ movementSelected.hora }}
           </div>
           <div class="col-sm-12 col-md-4 col-lg-4">
-            <b> Cliente </b> {{ movementSelected?.cliente?.nombre }}
-            {{ movementSelected?.cliente?.apellido }}
+            <b> Cliente </b> {{ movementSelected?.usuario?.nombre }}
+            {{ movementSelected?.usuario?.apellido }}
           </div>
         </div>
       </div>

@@ -44,7 +44,7 @@ export class PrintMovementService {
               [
                 { text: 'Cliente', style: 'detailDescription' },
                 {
-                  text: `${movement.cliente.nombre} ${movement.cliente.apellido}`,
+                  text: `${movement.usuario.nombre} ${movement.usuario.apellido}`,
                   style: 'detailDescription',
                 },
               ],

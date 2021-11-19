@@ -189,7 +189,7 @@
         <p *ngIf="_dataSource?.simpleObject">
           {{
             !_dataSource.simpleObject?.nombre
-              ? "Seleccione un cliente"
+              ? "Seleccione un usuario"
               : _dataSource.simpleObject?.nombre +
                 " " +
                 _dataSource.simpleObject?.apellido
@@ -208,8 +208,8 @@
     >
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content p-4">
-          <app-title-section [title]="'Buscar cliente'"></app-title-section>
-          <app-tab-clientes [blockButtons]="true"></app-tab-clientes>
+          <app-title-section [title]="'Buscar usuario'"></app-title-section>
+          <app-tab-users></app-tab-users>
         </div>
       </div>
     </div>
@@ -224,8 +224,8 @@
     >
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content p-4">
-          <app-title-section [title]="'Agregar cliente'"></app-title-section>
-          <app-add-edit-clientes [canGoBack]="false"></app-add-edit-clientes>
+          <app-title-section [title]="'Agregar usuario'"></app-title-section>
+          <app-add-edit-users></app-add-edit-users>
         </div>
       </div>
     </div>

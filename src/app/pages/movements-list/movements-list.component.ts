@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as dayjs from 'dayjs';
 import { PaginacionService } from 'src/app/components/paginacion/paginacion.service';
-import { Clients } from 'src/app/models/Clients.model';
 import { Movements } from 'src/app/models/Movements.model';
 import { QueryPaginator } from 'src/app/models/QueryPaginator';
-import { ClientsService } from 'src/app/services/clients.service';
+import { Users } from 'src/app/models/Users.model';
 import { DatesService } from 'src/app/services/dates.service';
 import { MovementsService } from 'src/app/services/movements.service';
 import { PaymentsService } from 'src/app/services/payments.service';
 import { PrintMovementService } from 'src/app/services/print-movement.service';
 import { ToastService } from 'src/app/services/toasts.service';
+import { UsersService } from 'src/app/services/users.service';
 
 const ATTR_LIST = [
   'id',
@@ -35,7 +35,7 @@ export class MovementsListComponent implements OnInit {
   attr_selected: string = ATTR_LIST[0];
   id_filter_list: number = null;
   client_selected: number = 0;
-  clients: Clients[] = [];
+  users: Users[] = [];
   state: boolean = true;
   movements: Movements[] = [];
   movementSelected: Movements = <Movements>{};
@@ -51,7 +51,7 @@ export class MovementsListComponent implements OnInit {
     private _movements: MovementsService,
     private _payments: PaymentsService,
     private _date: DatesService,
-    private _clients: ClientsService,
+    private _users: UsersService,
     private _pag: PaginacionService,
     private _print: PrintMovementService
   ) {
@@ -335,7 +335,7 @@ export class MovementsListComponent implements OnInit {
 
   // todo: crear un servicio que devuelva solo los ids, nombres y apellidos
   getClients() {
-    this._clients.getAll();
+    this._users.getAll();
   }
 
   setData(res) {

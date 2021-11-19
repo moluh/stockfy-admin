@@ -1,6 +1,6 @@
-import { Clients } from "./Clients.model";
 import { MovementsLines } from "./MovementsLines";
 import { Payments } from "./Payments.model";
+import { Users } from "./Users.model";
 
 export class Movements {
     id: number;
@@ -10,7 +10,7 @@ export class Movements {
     estado: string;
     total: number;
     modo_pago: string;
-    cliente: Clients;
+    usuario: Users;
     movimiento_lineas: MovementsLines[];
     saldo: number;
     pagos: Payments[];

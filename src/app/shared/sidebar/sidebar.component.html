@@ -114,7 +114,7 @@
       *ngIf="_users.hasAdminRole(usuario.roles)"
       (click)="urlActive = 'usuarios'"
       class="dir d-flex align-items-center"
-      [routerLink]="['/usuarios/tab-clientes']"
+      [routerLink]="['/usuarios/tab-usuarios']"
       [ngClass]="{
         active: urlActive === 'usuarios',
         collapsed: !showDescrip

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 const TABS = [
-  { id: "clientes", name: "Clientes" },
   { id: "usuarios", name: "Usuarios" }
 ]
 
@@ -13,7 +12,7 @@ const TABS = [
 })
 export class UsersPage implements OnInit {
 
-  title: string = "Clientes";
+  title: string = "Usuarios";
   tabName: string = "";
   tabList: any[] = TABS;
 
@@ -32,7 +31,7 @@ export class UsersPage implements OnInit {
     // si viene un valor(hace click en una tab) o no..
     value
       ? this.tabName = value
-      : this.tabName = "Clientes";
+      : this.tabName = "Usuarios";
 
     const tab = this.tabList.find(tab => tab.name === this.tabName).id;
     this._router.navigate([`/usuarios/tab-${tab}`], { relativeTo: this._route, skipLocationChange: false })

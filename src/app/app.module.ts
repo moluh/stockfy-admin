@@ -43,8 +43,6 @@ import { TabProvidersComponent } from './pages/tab-providers/tab-providers.compo
 import { AddEditProvidersComponent } from './pages/add-edit-providers/add-edit-providers.component';
 import { AddEditUsersComponent } from './pages/add-edit-users/add-edit-users.component';
 import { MovementsComponent } from './pages/movements/movements.component';
-import { AddEditClientesComponent } from './pages/add-edit-clientes/add-edit-clientes.component';
-import { TabClientesComponent } from './pages/tab-clientes/tab-clientes.component';
 import { MovementsListComponent } from './pages/movements-list/movements-list.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { ConfigurationsComponent } from './pages/configurations/configurations.component';
@@ -79,8 +77,6 @@ import { AddEditExpensesComponent } from './pages/add-edit-expenses/add-edit-exp
     AddEditProvidersComponent,
     AddEditUsersComponent,
     MovementsComponent,
-    AddEditClientesComponent,
-    TabClientesComponent,
     MovementsListComponent,
     StatisticsComponent,
     ConfigurationsComponent,

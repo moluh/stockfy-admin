@@ -17,8 +17,6 @@ import { TabProvidersComponent } from './pages/tab-providers/tab-providers.compo
 import { TabUsersComponent } from './pages/tab-users/tab-users.component';
 import { AddEditUsersComponent } from './pages/add-edit-users/add-edit-users.component';
 import { MovementsComponent } from './pages/movements/movements.component';
-import { TabClientesComponent } from './pages/tab-clientes/tab-clientes.component';
-import { AddEditClientesComponent } from './pages/add-edit-clientes/add-edit-clientes.component';
 import { MovementsListComponent } from './pages/movements-list/movements-list.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { ConfigurationsComponent } from './pages/configurations/configurations.component';
@@ -110,16 +108,6 @@ const routes: Routes = [
           {
             path: 'add-edit-usuarios',
             component: AddEditUsersComponent
-          }
-        ]
-      },
-      {
-        path: 'tab-clientes',
-        component: TabClientesComponent,
-        children: [
-          {
-            path: 'add-edit-clientes',
-            component: AddEditClientesComponent
           }
         ]
       },

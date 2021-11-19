@@ -113,16 +113,16 @@
           (change)="checkSalesType()"
           [(ngModel)]="salesType"
         >
-          <option value="efectivo" selected>Efectivo</option>
-          <option value="ctacte">Cuenta corriente</option>
-          <option value="tarjeta">Tarjeta</option>
+          <option value="EFECTIVO" selected>Efectivo</option>
+          <option value="CTACTE">Cuenta corriente</option>
+          <option value="TARJETA">Tarjeta</option>
         </select>
       </div>
-      <!-- *ngIf="movement.estado === 'p'" -->
+      <!-- *ngIf="movement.estado === 'PENDIENTE'" -->
       <div class="col-sm-12 col-md-4 col-lg-4">
         <label for="delivery">Entrega:</label>
         <input
-          [disabled]="movement.estado !== 'p'"
+          [disabled]="movement.estado !== 'PENDIENTE'"
           id="delivery"
           type="number"
           class="form-control form-control-sm"

@@ -6,6 +6,7 @@ import { SidebarService } from 'src/app/services/sidebar.service';
 import { map } from 'rxjs/operators';
 import { icons } from 'src/assets/icons';
 import { TabsServices } from 'src/app/services/tabs.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -31,7 +32,8 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     public auth: AuthService,
     private _showSide: SidebarService,
-    private _tabs: TabsServices
+    private _tabs: TabsServices,
+    public _users: UsersService
   ) {
 
     this.comSubs = this.auth.getUser().subscribe(

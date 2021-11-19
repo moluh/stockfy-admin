@@ -33,7 +33,7 @@ export class MovementsComponent implements OnInit {
   text: string = '';
   title: string = 'Ventas';
   eanCode: string;
-  salesType: string = 'efectivo';
+  salesType: string = 'EFECTIVO';
   commentary: string = '';
 
   quantity: number = null;
@@ -88,7 +88,7 @@ export class MovementsComponent implements OnInit {
   }
 
   calculateBalance() {
-    this.movement.estado === 'p'
+    this.movement.estado === 'PENDIENTE'
       ? (this.movement.saldo = this.totalOfSale - this.delivery)
       : (this.movement.saldo = null);
   }
@@ -302,11 +302,11 @@ export class MovementsComponent implements OnInit {
     else if (Object.entries(this.movement?.cliente).length === 0)
       return this._toast.toastAlert('Cargue el cliente', '');
     else if (
-      this.salesType === 'ctacte' &&
+      this.salesType === 'CTACTE' &&
       (this.delivery === null || this.delivery === undefined)
     )
       return this._toast.toastAlert('Complete el monto de la entrega', '');
-    else if (this.salesType === 'ctacte' && this.delivery > this.totalOfSale)
+    else if (this.salesType === 'CTACTE' && this.delivery > this.totalOfSale)
       return this._toast.toastAlert(
         'La entrega no puede ser mayor al total',
         ''
@@ -334,17 +334,17 @@ export class MovementsComponent implements OnInit {
    * *************************
    */
   checkStateMovement() {
-    this.salesType === 'ctacte'
-      ? (this.movement.estado = 'p')
-      : (this.movement.estado = 'c');
+    this.salesType === 'CTACTE'
+      ? (this.movement.estado = 'PENDIENTE')
+      : (this.movement.estado = 'COMPLETADO');
   }
 
   checkSalesType() {
-    if (this.salesType === 'ctacte') {
-      this.movement.estado = 'p';
+    if (this.salesType === 'CTACTE') {
+      this.movement.estado = 'PENDIENTE';
       this.movement.pagos = [];
     } else {
-      this.movement.estado = 'c';
+      this.movement.estado = 'COMPLETADO';
     }
 
     this.calculateBalance();

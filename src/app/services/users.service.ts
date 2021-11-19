@@ -7,6 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { HandleErrorService } from './handle-error.service';
 import { Users } from '../models/Users.model';
 import { ApiService } from './api.service';
+import { Role } from '../models/Role';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,14 @@ export class UsersService {
     private http: HttpClient, private _api: ApiService,
     private he: HandleErrorService,
     private router: Router) {
+  }
+
+  public hasAdminRole(roles: Role[]) {
+    return roles.some(r => r.role === "ADMIN")
+  }
+
+  public hasUserRole(roles: Role[]) {
+    return roles.some(r => r.role === "USUARIO")
   }
 
   public passUser(user: Users): void {

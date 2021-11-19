@@ -52,9 +52,9 @@ export class PrintMovementService {
                 { text: 'Estado', style: 'detailDescription' },
                 {
                   text: `${
-                    movement.estado === 'c'
+                    movement.estado === 'COMPLETADO'
                       ? 'COMPLETADO'
-                      : movement.estado === 'p'
+                      : movement.estado === 'PENDIENTE'
                       ? 'PENDIENTE'
                       : 'ANULADO'
                   }`,
@@ -83,9 +83,9 @@ export class PrintMovementService {
                 { text: 'Modo de pago', style: 'detailDescription' },
                 {
                   text: `${
-                    movement.modo_pago === 'ctacte'
+                    movement.modo_pago === 'CTACTE'
                       ? 'CUENTA CORRIENTE'
-                      : movement.modo_pago === 'efectivo'
+                      : movement.modo_pago === 'EFECTIVO'
                       ? 'EFECTIVO'
                       : 'TARJETA'
                   }`,

@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { SidebarService } from 'src/app/services/sidebar.service';
 import { Users } from 'src/app/models/Users.model';
 import { icons } from 'src/assets/icons';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-navbar',
@@ -19,7 +20,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isLogged$: Observable<boolean>;
   usuario: Users;
 
-  constructor(public auth: AuthService, public _side: SidebarService) {
+  constructor(public auth: AuthService, public _side: SidebarService,
+    public _users: UsersService) {
     this.comSubs = this.auth.getUser().subscribe({
       next: (user: Users) => {
         console.log('user',user);

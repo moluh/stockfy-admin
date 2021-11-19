@@ -31,13 +31,13 @@
 
       <li class="ml-3">
         <a
-          *ngIf="usuario.role === 'ADMIN' && usuario.nombre"
+          *ngIf="_users.hasAdminRole(usuario.roles) && usuario.nombre"
           class="navbar-brand"
         >
           Admin: {{ usuario.nombre + " " + usuario.apellido }}
         </a>
         <a
-          *ngIf="usuario.role === 'USUARIO' && usuario.nombre"
+          *ngIf="_users.hasUserRole(usuario.roles) && usuario.nombre"
           class="navbar-brand"
         >
           {{

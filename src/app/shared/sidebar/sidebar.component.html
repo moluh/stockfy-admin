@@ -14,7 +14,7 @@
         active: urlActive === 'dashboard',
         collapsed: !showDescrip
       }"
-      *ngIf="usuario.role === 'ADMIN'"
+      *ngIf="_users.hasAdminRole(usuario.roles)"
       routerLinkActive="router-link-active"
     >
       <div class="li-icon">
@@ -65,7 +65,7 @@
     </li>
 
     <li
-      *ngIf="usuario.role === 'ADMIN'"
+      *ngIf="_users.hasAdminRole(usuario.roles)"
       (click)="urlActive = 'productos'"
       class="dir d-flex align-items-center"
       [routerLink]="['/productos/tab-productos']"
@@ -89,7 +89,7 @@
     </li>
 
     <li
-      *ngIf="usuario.role === 'ADMIN'"
+      *ngIf="_users.hasAdminRole(usuario.roles)"
       (click)="urlActive = 'gastos'"
       class="dir d-flex align-items-center"
       [routerLink]="['/gastos']"
@@ -111,7 +111,7 @@
     </li>
 
     <li
-      *ngIf="usuario.role === 'ADMIN'"
+      *ngIf="_users.hasAdminRole(usuario.roles)"
       (click)="urlActive = 'usuarios'"
       class="dir d-flex align-items-center"
       [routerLink]="['/usuarios/tab-clientes']"
@@ -131,7 +131,7 @@
     </li>
 
     <li
-      *ngIf="usuario.role === 'ADMIN'"
+      *ngIf="_users.hasAdminRole(usuario.roles)"
       (click)="urlActive = 'estadisticas'"
       class="dir d-flex align-items-center"
       [routerLink]="['/estadisticas']"
@@ -150,7 +150,7 @@
     </li>
 
     <!-- <li
-      *ngIf="usuario.role === 'ADMIN'"
+      *ngIf="_users.hasAdminRole(usuario.roles)"
       (click)="urlActive = 'configuraciones'"
       class="dir d-flex align-items-center"
       [routerLink]="['/configuraciones']"

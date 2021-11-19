@@ -28,9 +28,9 @@ export class AuthService {
     private _toast: ToastService,
     private _api: ApiService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   public returnAsObs(): Observable<boolean> {
     return this.isLoginSubject.asObservable();
@@ -62,29 +62,6 @@ export class AuthService {
     return user;
   }
 
-  // public returnIdUsuario(): Promise<number> {
-  //   let user: Users;
-  //   const TOKEN_: string = sessionStorage.getItem(TOKEN);
-  //   return new Promise((resolve, reject) => {
-  //     if (TOKEN_ === null) return null;
-  //     else user = jwt_decode(TOKEN_);
-  //     resolve(user.id);
-  //   });
-  // }
-
-  // public returnRole(): Promise<string> {
-  //   let user: Users;
-  //   const TOKEN_: string = sessionStorage.getItem(TOKEN);
-  //   if (TOKEN_ === null) return Promise.reject(null);
-  //   user = jwt_decode(TOKEN_);
-  //   return Promise.resolve(user.role);
-  // }
-
-  // public returnToken(): Promise<string> {
-  //   const TOKEN_: string = sessionStorage.getItem(TOKEN);
-  //   return Promise.resolve(TOKEN_);
-  // }
-
   public login(credentials: any): void {
     this.http.post(`${this.url}`, credentials, this.httpOptions).subscribe({
       next: (data: any) => {
@@ -100,7 +77,7 @@ export class AuthService {
 
           this.isLoginSubject.next(true);
           this.usuarioSubject.next(user);
-          user.role === 'ADMIN'
+          user.roles.some(r => r.role === "ADMIN")
             ? this.router.navigate(['/dashboard'])
             : this.router.navigate(['/ventas']);
         }
@@ -125,9 +102,9 @@ export class AuthService {
 
   getTokenExpirationDate(token: string): Date {
     const decoded: any = jwt_decode(token);
-    if (decoded.exp === undefined) {
+    if (decoded.exp === undefined) 
       return null;
-    }
+    
     const date = new Date(0);
     date.setUTCSeconds(decoded.exp);
     return date;

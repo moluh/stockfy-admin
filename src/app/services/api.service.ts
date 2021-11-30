@@ -1,19 +1,20 @@
-import { Injectable } from "@angular/core";
-import { ENVIRONMENT, PRODUCTION } from "src/environments/environment";
-import { ToastService } from "./toasts.service";
+import { Injectable } from '@angular/core';
+import { ENVIRONMENT, PRODUCTION } from 'src/environments/environment';
+import { ToastService } from './toasts.service';
 
 interface Response {
   ok: boolean;
+  status: number;
   data: Object | Array<any>;
   message: string;
   error?: string;
+  userMessage?: string;
 }
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ApiService {
-
   production: boolean;
   api: any = {};
 
@@ -23,32 +24,27 @@ export class ApiService {
   }
 
   getApiUrl(): string {
-    return this.production
-      ? this.api.prod.url
-      : this.api.dev.url;
+    return this.production ? this.api.prod.url : this.api.dev.url;
   }
 
   handleSuccess(res: Response, title: string, text: string) {
-    if (res['status'] === "ok")
-      this._toast.toastSuccess(text, title)
-    else if (res['status'] === "failed")
-      this._toast.toastError(res['error'], `Error:`)
+    if (res.ok) this._toast.toastSuccess(text, title);
+    else this._toast.toastError(res['error'], `Error:`);
   }
 
   handleError(res: Response, title: string, text: string) {
-    this.production
-      ? this._toast.toastError('Intente nuevamente', 'Error en la respuesta del servidor')
-      : this._toast.toastError(text, title);
+    this._toast.toastError('Error', res.userMessage);
+    // this.production
+    //   ? this._toast.toastError('Error', res.userMessage)
+    //   : this._toast.toastError(text, title);
 
     this.log(res);
   }
 
   log(res: Response) {
-    !this.production
-      ? console.log("[ ===> Response ERROR: <=== ] \n ", res.message, " \n")
-      : console.log("[ ===> Response ERROR: <=== ] \n ", res, " \n")
+    if (!this.production)
+      console.log('[ ===> Response ERROR: <=== ] \n ', res, ' \n');
   }
-
 
   /**
    * Todos los datos devueltos en el cuerpo del error deben estar en formato json
@@ -133,5 +129,4 @@ export class ApiService {
     return errorResponse;
   }
    */
-
 }

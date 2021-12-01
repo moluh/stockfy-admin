@@ -196,8 +196,8 @@ export class AddEditProductsPage implements OnInit {
   fillDefaultValues() {
     if ((this.typeForm = 'new')) {
       this.productForm.controls['marca'].get('id').setValue(1);
-      this.productForm.controls['categoria_uno'].get('id').setValue(1);
-      this.productForm.controls['categoria_dos'].get('id').setValue(1);
+      // this.productForm.controls['categoria_uno'].get('id').setValue(1);
+      // this.productForm.controls['categoria_dos'].get('id').setValue(1);
       this.productForm.controls['proveedor'].get('id').setValue(1);
     }
   }

@@ -1,15 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ENVIRONMENT, PRODUCTION } from 'src/environments/environment';
+import { ApiResponse } from '../models/ApiResponse.model';
 import { ToastService } from './toasts.service';
-
-interface Response {
-  ok: boolean;
-  status: number;
-  data: Object | Array<any>;
-  message: string;
-  error?: string;
-  userMessage?: string;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -27,13 +19,13 @@ export class ApiService {
     return this.production ? this.api.prod.url : this.api.dev.url;
   }
 
-  handleSuccess(res: Response, title: string, text: string) {
+  handleSuccess(res: ApiResponse, title: string, text: string) {
     if (res.ok) this._toast.toastSuccess(text, title);
-    else this._toast.toastError(res['error'], `Error:`);
+    else this._toast.toastError(res.error, `Error:`);
   }
 
-  handleError(res: Response, title: string, text: string) {
-    this._toast.toastError('Error', res.userMessage);
+  handleError(res: ApiResponse | any, title: string, text: string) {
+    this._toast.toastError('Error', res.error.error);
     // this.production
     //   ? this._toast.toastError('Error', res.userMessage)
     //   : this._toast.toastError(text, title);
@@ -41,9 +33,8 @@ export class ApiService {
     this.log(res);
   }
 
-  log(res: Response) {
-    if (!this.production)
-      console.log('[ ===> Response ERROR: <=== ] \n ', res, ' \n');
+  log(res: ApiResponse) {
+    if (!this.production) console.log('[Response ERROR]\n ', res, ' \n');
   }
 
   /**

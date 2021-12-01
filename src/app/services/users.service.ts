@@ -7,7 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { HandleErrorService } from './handle-error.service';
 import { Users } from '../models/Users.model';
 import { ApiService } from './api.service';
-import { Role } from '../models/Role';
+import { Role } from '../models/Role.model';
 
 @Injectable({
   providedIn: 'root'
@@ -111,8 +111,8 @@ export class UsersService {
   public post(user: Users): Observable<Users> {
     return this.http.post<Users>(`${this.url}s`, user, this.httpOptions)
       .pipe(
-        map(res => { return <Users>res }),
-        catchError(this.he.handleError)
+        map(res => { return <Users>res })
+        // catchError(this.he.handleError)
       );
   }
 

@@ -74,6 +74,7 @@ export class TabUsersComponent implements OnInit {
     this.pag.attribute = this.attr_selected;
     this.pag.text = this.searchText;
     this.pag.isActive = this.isActive;
+    this.pag.role = this.rol_selected;
     this.getPaginatedByTxtAndFilter();
   }
 

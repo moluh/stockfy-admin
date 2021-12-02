@@ -3,8 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PaginacionService } from 'src/app/components/paginacion/paginacion.service';
 import { Users } from 'src/app/models/Users.model';
+import { ApiService } from 'src/app/services/api.service';
 import { DataSourceService } from 'src/app/services/data.source.service';
 import { TabsServices } from 'src/app/services/tabs.service';
+import { ToastService } from 'src/app/services/toasts.service';
 import { UsersService } from 'src/app/services/users.service';
 import { QueryPaginator } from '../../models/QueryPaginator';
 
@@ -43,13 +45,16 @@ export class TabUsersComponent implements OnInit {
   users: any[] = [];
   pag = new QueryPaginator();
 
+  isFiltering: boolean = false;
+
   constructor(
     private _users: UsersService,
     private _pag: PaginacionService,
     private _dataSource: DataSourceService,
     private _router: Router,
     private _route: ActivatedRoute,
-    private _tabs: TabsServices
+    private _tabs: TabsServices,
+    private _api: ApiService
   ) {
     this.showTable$ = this._tabs.observerShowTable();
     this._tabs.setShowTable(true);
@@ -57,24 +62,24 @@ export class TabUsersComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  removeFilter() {
+    this.isFiltering = false;
+    this.reset();
+  }
+
   applyFilter() {
+    // this._pag.setPag(0);
+    this.isFiltering = true;
     this.pag.pageNro = 0;
     this.pag.attribute = this.attr_selected;
     this.pag.text = this.searchText;
-    this.pag.role = this.rol_selected;
     this.pag.isActive = this.isActive;
     this.getPaginatedByTxtAndFilter();
   }
 
-  log() {
-    // Filters atributes
-    console.log('attr_selected', this.attr_selected);
-    // Filters roles
-    console.log('rol_selected', this.rol_selected);
-    // Flag rol active
-    console.log('isActive', this.isActive);
-    // Search filter input
-    console.log('searchText', this.searchText);
+  reset(event?: any) {
+    this._pag.setPag(0);
+    this.isFiltering ? this.getPaginatedByTxtAndFilter() : this.getPaginated();
   }
 
   pageChanged(event: { pageNro: number; pageSize: number }) {
@@ -87,18 +92,10 @@ export class TabUsersComponent implements OnInit {
   }
 
   getPaginated() {
-    this._users.getPaginated(this.pag.pageNro, this.pag.pageSize).subscribe(
-      (res: Users[]) => {
-        if (!res['ok']) return;
-        if (!res['data'] || res['data'].length === 0) {
-          this._pag.setBlockBtn(true);
-        } else {
-          this._pag.setBlockBtn(false);
-          this.users = res['data'];
-        }
-      },
-      (err) => console.log(err)
-    );
+    this._users.getPaginated(this.pag.pageNro, this.pag.pageSize).subscribe({
+      next: (res: Users[]) => this.setData(res),
+      error: (err) => console.log(err),
+    });
   }
 
   getPaginatedByTxtAndFilter() {
@@ -111,20 +108,30 @@ export class TabUsersComponent implements OnInit {
         this.pag.role,
         this.pag.isActive
       )
-      .subscribe(
-        (res: Users[]) => {
-          if (!res['ok']) return;
-          this.users = [];
-          if (!res['data'] || res['data'].length === 0) {
-            this._pag.setBlockBtn(true);
-          } else {
-            this._pag.setBlockBtn(false);
-            this.users = res['data'];
-          }
-        },
-        (err) => console.log(err)
-      );
+      .subscribe({
+        next: (res: Users[]) => this.setData(res),
+        error: (err) => console.log(err),
+      });
   }
+
+  setData(res) {
+    this.users = [];
+    this.users = res.data;
+    if (!res.ok) return this._api.handleError(res,"","");
+    else if (res.data.length === 0) {
+      this._pag.setBlockBtn(true);
+      return this._api.handleAlert(res,'No se encontraron clientes', '');
+    } else {
+      return this._pag.setBlockBtn(false);
+    }
+  }
+
+  
+  // next: (resp: any) => {
+  //   this._api.handleSuccess(resp, '¡Guardado!', ``);
+  //   this.hideModal();
+  // },
+  // error: (err) => this._api.handleError(err, 'Ocurrió un error', ``),
 
   goTo(user?) {
     this._dataSource.simpleObject = user;

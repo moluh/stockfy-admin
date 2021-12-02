@@ -23,12 +23,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(public auth: AuthService, public _side: SidebarService,
     public _users: UsersService) {
     this.comSubs = this.auth.getUser().subscribe({
-      next: (user: Users) => {
-        console.log('user',user);
-        
+      next: (user: Users) => {        
         if (user === null) 
-          return
-        
+          return;        
         this.usuario = user;
       },
       error: () => {},

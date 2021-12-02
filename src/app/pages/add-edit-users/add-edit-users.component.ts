@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Role } from 'src/app/models/Role.model';
@@ -15,6 +15,7 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./add-edit-users.component.scss'],
 })
 export class AddEditUsersComponent implements OnInit {
+  @ViewChild('closeModal') private closeModal: ElementRef;
   @Input() isNewUserFromSells: boolean = false;
   userForm: FormGroup;
   isEditing: boolean = false;
@@ -93,8 +94,8 @@ export class AddEditUsersComponent implements OnInit {
   }
 
   addRoleToFormArray(role) {
-    console.log('add.. role:',role);
-    
+    console.log('add.. role:', role);
+
     if (this.roles.value.some((el) => el.id === role.id))
       return this._toast.toastAlert('Ya se encuentra agregado', '');
     this.roles.push(this._fb.control(role));
@@ -173,6 +174,10 @@ export class AddEditUsersComponent implements OnInit {
     return c1 && c2 ? c1 === c2 : c1 === c2;
   }
 
+  public hideModal() {
+    this.closeModal.nativeElement.click();
+  }
+
   update() {
     this._toast
       .sweetConfirm('Confirmar cambios', '¿Desea guardar los cambios?')
@@ -195,8 +200,10 @@ export class AddEditUsersComponent implements OnInit {
       .then((res) => {
         if (res)
           this._users.post(this.userForm.value).subscribe({
-            next: (resp: any) =>
-              this._api.handleSuccess(resp, '¡Guardado!', ``),
+            next: (resp: any) => {
+              this._api.handleSuccess(resp, '¡Guardado!', ``);
+              this.hideModal();
+            },
             error: (err) => this._api.handleError(err, 'Ocurrió un error', ``),
           });
       })

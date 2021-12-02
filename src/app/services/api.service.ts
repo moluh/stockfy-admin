@@ -20,17 +20,17 @@ export class ApiService {
   }
 
   handleSuccess(res: ApiResponse, title: string, text: string) {
-    if (res.ok) this._toast.toastSuccess(text, title);
-    else this._toast.toastError(res.error, `Error:`);
+    this._toast.toastSuccess(text, title);
   }
 
   handleError(res: ApiResponse | any, title: string, text: string) {
     this._toast.toastError('Error', res.error.error);
-    // this.production
-    //   ? this._toast.toastError('Error', res.userMessage)
-    //   : this._toast.toastError(text, title);
-
     this.log(res);
+  }
+
+  handleAlert(res: ApiResponse | any, title: string, text: string) {
+    if (res.ok) this._toast.toastAlert(text, title);
+    else this._toast.toastAlert(res.error.error, title);
   }
 
   log(res: ApiResponse) {

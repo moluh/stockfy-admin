@@ -81,7 +81,7 @@ export class UsersService {
       .set('pageNro', pageNro.toString())
       .set('attribute', attribute)
       .set('text', text)
-      .set('role', role)
+      .set('roles', role)
       .set('isActive', isActive.toString());
 
     return this.http.get<Users[]>(`${this.url}s/paginado/filter`, { params })

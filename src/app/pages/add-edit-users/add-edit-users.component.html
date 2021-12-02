@@ -77,12 +77,14 @@
         <app-icon [iconName]="'save'"></app-icon>
         Guardar
       </button>
-      <div *ngif="!isNewUserFromSells">
-        <button class="btn btn-sm btn-outline-danger float-right ml-2" (click)="goTo()" type="button">
-          <app-icon [iconName]="'arrowLeft'"></app-icon>
-          Volver
-        </button>
-      </div>
+
+      <button type="button" hidden #closeModal data-dismiss="modal"></button>
+
+      <button *ngif="!isNewUserFromSells" class="btn btn-sm btn-outline-danger float-right ml-2" (click)="goTo()"
+        type="button">
+        <app-icon [iconName]="'arrowLeft'"></app-icon>
+        Volver
+      </button>
 
     </div>
   </div>

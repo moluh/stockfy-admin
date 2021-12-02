@@ -231,7 +231,7 @@ export class MovementsComponent implements OnInit {
                   .sweetConfirm('¿Desea imprimir el movimiento?', '')
                   .then((res) => {
                     if (res) {
-                      this._print.generatePdf('print', movement.data);
+                      this._print.generatePdf('print', movement.data[0]);
                     }
                     setTimeout(() => {
                       this.clean();

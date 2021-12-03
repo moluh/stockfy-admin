@@ -233,10 +233,10 @@ export class MovementsComponent implements OnInit {
                     if (res) {
                       this._print.generatePdf('print', movement.data[0]);
                     }
-                    setTimeout(() => {
-                      this.clean();
-                    }, 3000);
                   });
+                setTimeout(() => {
+                  this.clean();
+                }, 2000);
               } else {
                 this._toast.toastError(
                   'Ocurrió un error.',

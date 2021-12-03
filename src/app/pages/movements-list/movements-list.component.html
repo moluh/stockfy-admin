@@ -352,6 +352,7 @@
                 <th>Acciones</th>
               </thead>
               <tbody>
+                {{ movementSelected | json }}
                 <tr *ngFor="let pago of movementSelected.pagos">
                   <td>{{ pago?.pago_nro }}</td>
                   <td>

@@ -109,14 +109,14 @@ export class MovementsListComponent implements OnInit {
       )
       .then((res) => {
         if (res)
-          this._payments.delete(payment).subscribe(
-            (res) => {
+          this._payments.delete(payment).subscribe({
+            next: (res) => {
               this._toast.sweetAlert('¡Pago eliminado!', '');
               this.getMovement();
               this.getMovements();
             },
-            (err) => console.log(err)
-          );
+            error: (err) => console.log(err),
+          });
       })
       .catch((err) => console.log(err));
   }
@@ -278,41 +278,44 @@ export class MovementsListComponent implements OnInit {
   }
 
   getMovement() {
-    this._movements.get(this.movementSelected.id).subscribe(
-      (res: Movements[] | any) => {
-        if (res.ok) this.movementSelected = res.data;
+    this._movements.get(this.movementSelected.id).subscribe({
+      next: (res: Movements[] | any) => {
+        if (res.ok) this.movementSelected = res.data[0];
       },
-      (err) => console.log(err)
-    );
+      error: (err) => this._toast.toastError("",""),
+    });
   }
 
-  changeState(movementId, state) {
-    let msg = {
+  getTextForChangeState(state) {
+    return {
       title:
-        state === 'a'
+        state === 'ANULADO'
           ? '¿Mover a movimientos ANULADOS?'
-          : state === 'p'
+          : state === 'PENDIENTE'
           ? '¿Mover a movimientos PENDIENTES?'
           : '¿Mover a movimientos COMPLETADOS?',
 
       text:
-        state === 'a'
+        state === 'ANULADO'
           ? 'El movimiento no se eliminará, solo dejará impactar en las estadísticas.'
-          : state === 'p'
+          : state === 'PENDIENTE'
           ? 'El movimiento pasa a estar pendiente de finalización.'
           : 'El movimiento pasa a estar completado.',
     };
+  }
 
+  changeState(movementId, state) {
+    let msg = this.getTextForChangeState(state);
     this._toast
       .sweetConfirm(msg.title, msg.text)
       .then((res) => {
         if (res)
-          this._movements.changeState(movementId, state).subscribe(
-            (res) => {
+          this._movements.changeState(movementId, state).subscribe({
+            next: (res) => {
               this.getMovements();
             },
-            (err) => console.log(err)
-          );
+            error: (err) => console.log(err),
+          });
       })
       .catch((err) => console.log(err));
   }
@@ -339,16 +342,18 @@ export class MovementsListComponent implements OnInit {
   }
 
   setData(res) {
+    console.log('res', res);
+    console.log('this.movements 1', this.movements);
+
     if (!res.ok || res.data.length === 0) {
       this._pag.setBlockBtn(true);
       this.movements = [];
-    } else if (!Array.isArray(res.data)) {
-      this._pag.setBlockBtn(false);
-      this.movements = Array.from([res.data]);
     } else {
       this._pag.setBlockBtn(false);
       this.movements = res.data;
     }
+    console.log('this.movements 2', this.movements);
+    console.log('===================');
   }
 
   generatePdf(action: string = 'open') {

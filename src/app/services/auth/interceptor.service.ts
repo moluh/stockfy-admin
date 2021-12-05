@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { TOKEN, TOKEN_ORIGINAL, AuthService } from './auth.service';
+import { TOKEN, AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,27 +14,19 @@ export class InterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const token: string = sessionStorage.getItem(TOKEN);
-    const token_original: string = TOKEN_ORIGINAL;
-
     // console.log(`
     // \n Peticion: 
     // \n [URL]: ${req.url} 
     // \n [BODY]: ${req.body} 
     // \n [METHOD]: ${req.method} 
-    // `);
-    
+    // `);    
 
-    // Comprobamos si hay token
+    const token: string = sessionStorage.getItem(TOKEN);
+
     if (token) {
       const request = req.clone({
         headers: req.headers.set('Authorization', 'Bearer ' + token)
       });
-
-      // Comprobamos si es el original y no se lo modificó
-      // if (token !== token_original) {
-      //   this.auth.logout();
-      // }
 
       return next.handle(request).pipe(
         catchError((err: HttpErrorResponse) => {

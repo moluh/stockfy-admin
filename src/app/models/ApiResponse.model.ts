@@ -1,7 +1,7 @@
 export interface ApiResponse {
   ok: boolean;
   status: number;
-  data: Object | Array<any>;
+  data: any[];
   message: string;
   error?: string;
   userMessage?: string;

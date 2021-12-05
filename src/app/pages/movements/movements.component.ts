@@ -198,7 +198,6 @@ export class MovementsComponent implements OnInit {
         (data: any) => (this.products = data.data),
         (error) => {
           this._toast.toastError('Ocurrió un error.', '');
-          console.log(error);
         }
       );
   }

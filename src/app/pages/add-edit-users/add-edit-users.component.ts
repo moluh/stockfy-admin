@@ -94,8 +94,6 @@ export class AddEditUsersComponent implements OnInit {
   }
 
   addRoleToFormArray(role) {
-    console.log('add.. role:', role);
-
     if (this.roles.value.some((el) => el.id === role.id))
       return this._toast.toastAlert('Ya se encuentra agregado', '');
     this.roles.push(this._fb.control(role));

@@ -196,7 +196,6 @@ export class TabProductsComponent implements OnInit {
   }
 
   setData(res) {
-    console.log('res',res);
     
     this.products = [];
     this.products = res.data;
@@ -210,7 +209,7 @@ export class TabProductsComponent implements OnInit {
 
   onUploadFile(event) {
     this.csvFile = <File>event.target.files[0];
-    console.log(this.csvFile.name);
+    // console.log(this.csvFile.name);
 
     this.formData = new FormData();
     this.formData.append('file', this.csvFile, this.csvFile.name);

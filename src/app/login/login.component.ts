@@ -8,13 +8,12 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   LoginForm = this.fb.group({
     password: ['', Validators.required],
-    username: ['',],
+    username: [''],
     //email: ['',],
   });
 
@@ -25,22 +24,18 @@ export class LoginComponent implements OnInit {
   showUser: boolean = true;
   showEmail: boolean = true;
 
-
   constructor(
     private fb: FormBuilder,
     public auth: AuthService,
     private router: Router
   ) {
-
     this.isLogged$ = this.auth.returnAsObs().pipe(
       map((val) => {
-        if (val) {
-          console.log('Logueado!');
-          this.router.navigate(['/ventas'])
-        }
-        return val;
-      }));
+        if (val) this.router.navigate(['/ventas']);
 
+        return val;
+      })
+    );
   }
 
   ngOnInit() {
@@ -55,8 +50,5 @@ export class LoginComponent implements OnInit {
     // this.logSubs.unsubscribe();
   }
 
-  checkForm() {
-
-  }
-
+  checkForm() {}
 }

@@ -80,7 +80,7 @@
 
       <button type="button" hidden #closeModal data-dismiss="modal"></button>
 
-      <button *ngif="!isNewUserFromSells" class="btn btn-sm btn-outline-danger float-right ml-2" (click)="goTo()"
+      <button *ngIf="!isNewUserFromSells" class="btn btn-sm btn-outline-danger float-right ml-2" (click)="goTo()"
         type="button">
         <app-icon [iconName]="'arrowLeft'"></app-icon>
         Volver

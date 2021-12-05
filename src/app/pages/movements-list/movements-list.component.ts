@@ -341,10 +341,7 @@ export class MovementsListComponent implements OnInit {
     this._users.getAll();
   }
 
-  setData(res) {
-    console.log('res', res);
-    console.log('this.movements 1', this.movements);
-
+  setData(res) {    
     if (!res.ok || res.data.length === 0) {
       this._pag.setBlockBtn(true);
       this.movements = [];
@@ -352,8 +349,7 @@ export class MovementsListComponent implements OnInit {
       this._pag.setBlockBtn(false);
       this.movements = res.data;
     }
-    console.log('this.movements 2', this.movements);
-    console.log('===================');
+    
   }
 
   generatePdf(action: string = 'open') {

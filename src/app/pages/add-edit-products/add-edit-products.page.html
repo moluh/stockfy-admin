@@ -1,90 +1,52 @@
 <form [formGroup]="productForm" (ngSubmit)="send()">
-  <div class="row border p-2 m-4">
-    <div class="col-sm-12 col-md-5 col-lg-5">
-      <label for="nombre">* Nombre</label>
-      <input
-        id="nombre"
-        class="form-control form-control-sm"
-        type="text"
-        placeholder="Nombre"
-        formControlName="nombre"
-        [class.is-invalid]="nameInvalid"
-        (change)="isEditing = true"
-      />
+  <div class="row p-2 m-4">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <label for="nombre">Nombre <b class="text-danger">*</b></label>
+      <input id="nombre" class="form-control form-control-sm" type="text" placeholder="Nombre" formControlName="nombre"
+        [class.is-invalid]="nameInvalid" (change)="isEditing = true" />
       <!-- <small *ngIf="nombreNoValido" class="text-danger">Nombre Inválido</small> -->
     </div>
 
-    <div class="col-sm-12 col-md-5 col-lg-5">
+    <div class="col-sm-12 col-md-12 col-lg-12 mt-2">
       <label for="descrip">Descripción</label>
-      <input
-        id="descrip"
-        class="form-control form-control-sm"
-        type="text"
-        placeholder="Descripción"
-        formControlName="descripcion"
-        [class.is-invalid]="descriptionInvalid"
-        (change)="isEditing = true"
-      />
+      <textarea id="descrip" class="form-control form-control-sm" type="text" placeholder="Descripción"
+        formControlName="descripcion" (change)="isEditing = true">
+      </textarea>
       <!-- <small *ngIf="descripNoValida" class="text-danger">Descripción Inválido</small> -->
     </div>
 
-    <div class="col-sm-12 col-md-2 col-lg-2">
-      <label for="stock_actual">* Stock actual</label>
-      <input
-        id="stock_actual"
-        class="form-control form-control-sm"
-        type="number"
-        placeholder="Stock"
-        formControlName="stock_actual"
-        [class.is-invalid]="stockInvalid"
-        (change)="isEditing = true"
-      />
+    <div class="col-sm-12 col-md-3 col-lg-3 mt-2">
+      <label for="stock_actual">Stock actual <b class="text-danger">*</b></label>
+      <input id="stock_actual" class="form-control form-control-sm" type="number" placeholder="Stock"
+        formControlName="stock_actual" [class.is-invalid]="stockInvalid" (change)="isEditing = true" />
       <!-- <small *ngIf="stockInvalid" class="text-danger">Stock Inválido</small> -->
     </div>
 
     <div class="col-sm-6 col-md-2 col-lg-2 mt-2">
-      <label for="pc">Costo</label>
-      <input
-        id="pc"
-        class="form-control form-control-sm"
-        type="number"
-        formControlName="precio_costo"
-        (change)="isEditing = true"
-      />
+      <label for="pv">Venta <b class="text-danger">*</b> </label>
+      <input id="pv" class="form-control form-control-sm" type="number" formControlName="precio_venta"
+        (change)="isEditing = true" [class.is-invalid]="precioVentaInvalid" />
     </div>
+    
     <div class="col-sm-6 col-md-2 col-lg-2 mt-2">
-      <label for="pv">Venta</label>
-      <input
-        id="pv"
-        class="form-control form-control-sm"
-        type="number"
-        formControlName="precio_venta"
-        (change)="isEditing = true"
-      />
+      <label for="pc">Costo</label>
+      <input id="pc" class="form-control form-control-sm" type="number" formControlName="precio_costo"
+        (change)="isEditing = true" />
     </div>
+    
     <div class="col-sm-6 col-md-2 col-lg-2 mt-2">
       <label for="rebaja">Rebaja</label>
-      <input
-        id="rebaja"
-        class="form-control form-control-sm"
-        type="number"
-        formControlName="rebaja"
-        (change)="isEditing = true"
-      />
+      <input id="rebaja" class="form-control form-control-sm" type="number" formControlName="rebaja"
+        (change)="isEditing = true" />
     </div>
   </div>
 
-  <div class="row border p-2 m-4">
+  <div class="row p-2 m-4">
     <div class="col-sm-12 col-md-3 col-lg-3">
       <div formGroupName="marca">
-        <label for="marca"> Marca:</label>
-        <select
-          [compareWith]="compareBrand"
-          id="marca"
-          class="form-control form-control-sm"
-          formControlName="id"
-          (change)="isEditing = true"
-        >
+        <label for="marca"> Marca <b class="text-danger">*</b></label>
+        <select [compareWith]="compareBrand" id="marca" class="form-control form-control-sm" formControlName="id"
+          (change)="isEditing = true">
           <option *ngFor="let brand of brands" [ngValue]="brand.id">
             {{ brand.marca }}
           </option>
@@ -93,49 +55,10 @@
     </div>
 
     <div class="col-sm-12 col-md-3 col-lg-3">
-      <div formGroupName="categoria_uno">
-        <label for="categoryOne"> Categoría 1:</label>
-        <select
-          [compareWith]="compareCategory"
-          id="categoryOne"
-          class="form-control form-control-sm"
-          formControlName="id"
-          (change)="isEditing = true"
-        >
-          <option *ngFor="let category of categories" [ngValue]="category.id">
-            {{ category.categoria }}
-          </option>
-        </select>
-      </div>
-    </div>
-
-    <div class="col-sm-12 col-md-3 col-lg-3">
-      <div formGroupName="categoria_dos">
-        <label for="categoryTwo"> Categoría 2:</label>
-        <select
-          [compareWith]="compareCategory"
-          id="categoryTwo"
-          class="form-control form-control-sm"
-          formControlName="id"
-          (change)="isEditing = true"
-        >
-          <option *ngFor="let category of categories" [ngValue]="category.id">
-            {{ category.categoria }}
-          </option>
-        </select>
-      </div>
-    </div>
-
-    <div class="col-sm-12 col-md-3 col-lg-3">
       <div formGroupName="proveedor">
-        <label for="provider"> Proveedor:</label>
-        <select
-          [compareWith]="compareCategory"
-          id="provider"
-          class="form-control form-control-sm"
-          formControlName="id"
-          (change)="isEditing = true"
-        >
+        <label for="provider"> Proveedor <b class="text-danger">*</b></label>
+        <select [compareWith]="compareCategory" id="provider" class="form-control form-control-sm" formControlName="id"
+          (change)="isEditing = true">
           <option *ngFor="let provider of providers" [ngValue]="provider.id">
             {{ provider.proveedor }}
           </option>
@@ -144,114 +67,58 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="col-sm-12 col-md-3 col-lg-3">
-        <div class="form-check">
-          <input
-            formControlName="archivado"
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="archivado"
-            (change)="isEditing = true"
-          />
-          <label class="form-check-label" for="archivado"> Archivado </label>
-        </div>
+  <div class="row p-2 m-4">
+    <div class="col-sm-12 col-md-3 col-lg-3">
+      <div class="form-check">
+        <input formControlName="archivado" class="form-check-input" type="checkbox" value="" id="archivado"
+          (change)="isEditing = true" />
+        <label class="form-check-label" for="archivado">
+          Archivado
+        </label>
       </div>
     </div>
 
-    <div class="col-md-6">
-      <div class="col-sm-12 col-md-3 col-lg-3">
-        <div class="form-check">
-          <input
-            [(ngModel)]="hasSizes"
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="hasSizes"
-            (change)="isEditing = true"
-            [ngModelOptions]="{standalone: true}"
-          />
-          <label class="form-check-label" for="hasSizes"> Talles </label>
-        </div>
-      </div>
-
-      <div class="col-sm-12 col-md-3 col-lg-3">
-        <div class="form-check">
-          <input
-            [(ngModel)]="hasSpecifications"
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="hasSpecifications"
-            (change)="isEditing = true"
-            [ngModelOptions]="{standalone: true}"
-          />
-          <label class="form-check-label" for="hasSpecifications">
-            Especificaciones
-          </label>
-        </div>
+    <div class="col-sm-12 col-md-3 col-lg-3">
+      <div class="form-check">
+        <input [(ngModel)]="hasSizes" class="form-check-input" type="checkbox" value="" id="hasSizes"
+          (change)="isEditing = true" [ngModelOptions]="{standalone: true}" />
+        <label class="form-check-label" for="hasSizes">
+          Talles
+        </label>
       </div>
     </div>
+
+    <div class="col-sm-12 col-md-3 col-lg-3">
+      <div class="form-check">
+        <input [(ngModel)]="hasCategories" class="form-check-input" type="checkbox" value="" id="hasCategories"
+          (change)="isEditing = true" [ngModelOptions]="{standalone: true}" />
+        <label class="form-check-label" for="hasCategories">
+          Categorías
+        </label>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-3 col-lg-3">
+      <div class="form-check">
+        <input [(ngModel)]="hasSpecifications" class="form-check-input" type="checkbox" value="" id="hasSpecifications"
+          (change)="isEditing = true" [ngModelOptions]="{standalone: true}" />
+        <label class="form-check-label" for="hasSpecifications">
+          Especificaciones
+        </label>
+      </div>
+    </div>
+
   </div>
 
-  <div class="row border p-2 m-4" *ngIf="hasSpecifications">
-    <div class="col-sm-6 col-md-2 col-lg-2">
-      <label for="alto">Alto</label>
-      <input
-        id="alto"
-        class="form-control form-control-sm"
-        type="number"
-        formControlName="alto"
-        (change)="isEditing = true"
-      />
-    </div>
-    <div class="col-sm-6 col-md-2 col-lg-2">
-      <label for="ancho">Ancho</label>
-      <input
-        id="ancho"
-        class="form-control form-control-sm"
-        type="number"
-        formControlName="ancho"
-        (change)="isEditing = true"
-      />
-    </div>
-    <div class="col-sm-6 col-md-2 col-lg-2">
-      <label for="peso">Peso</label>
-      <input
-        id="peso"
-        class="form-control form-control-sm"
-        type="number"
-        formControlName="peso"
-        (change)="isEditing = true"
-      />
-    </div>
-    <div class="col-sm-6 col-md-2 col-lg-2">
-      <label for="profundidad">Profundidad</label>
-      <input
-        id="profundidad"
-        class="form-control form-control-sm"
-        type="number"
-        formControlName="profundidad"
-        (change)="isEditing = true"
-      />
-    </div>
-  </div>
 
-  <div class="row border p-2 m-4" *ngIf="hasSizes">
+  <div class="row p-2 m-4" *ngIf="hasSizes">
     <div class="col-sm-6 col-md-5 col-lg-5">
       <label for="disponible_sizes">Talles disponibles</label>
       <ul class="list-group" id="disponible_sizes">
-        <li
-          class="list-group-item"
-          *ngFor="let size of sizesArray"
-          (click)="addSizeToTallesFormArray(size); isEditing = true"
-        >
-          <button type="button" class="btn btn-sm btn-primary">
-            <app-icon [iconName]="'plus'" ></app-icon>
-            {{ size.talle }}
-          </button>
+        <li class="list-group-item" *ngFor="let size of sizesArray"
+          (click)="addSizeToTallesFormArray(size); isEditing = true">
+          <app-icon [iconName]="'plus'"></app-icon>
+          {{ size.talle }}
         </li>
       </ul>
     </div>
@@ -259,61 +126,92 @@
     <div class="col-sm-6 col-md-5 col-lg-5">
       <label for="loaded_sizes">Talles cargados:</label>
       <ul class="list-group" id="loaded_sizes">
-        <li
-          class="list-group-item"
-          *ngFor="let talle of talles.controls; let i=index"
-          formArrayName="talles"
-        >
-          <button
-            type="button"
-            class="btn btn-sm btn-danger"
-            (click)="removeSizeFromTallesFormArray(i); isEditing = true"
-          >
-            <app-icon [iconName]="'trash'" ></app-icon>
-            {{ talle.value['talle'] }}
-          </button>
+        <li (click)="removeSizeFromTallesFormArray(i); isEditing = true" class="list-group-item"
+          *ngFor="let talle of talles.controls; let i=index" formArrayName="talles">
+          <app-icon [iconName]="'trash'"></app-icon>
+          {{ talle.value['talle'] }}
           <input type="text" [formControlName]="i" hidden />
         </li>
       </ul>
     </div>
   </div>
 
+
+  <div class="row p-2 m-4" *ngIf="hasCategories">
+    <div class="col-sm-6 col-md-5 col-lg-5">
+      <label for="disponible_sizes">Categorías disponibles</label>
+      <ul class="list-group" id="disponible_sizes">
+        <li (click)="addCategoriasToCategoriasFormArray(category); isEditing = true"
+          class="list-group-item list-group-item-action" *ngFor="let category of categoriesArray">
+          <app-icon [iconName]="'plus'"></app-icon>
+          {{ category.categoria }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-sm-6 col-md-5 col-lg-5">
+      <label for="loaded_categorias">Categorías cargadas:</label>
+      <ul class="list-group" id="loaded_categorias">
+        <li (click)="removeCategoriaFromCategoriasFormArray(i); isEditing = true"
+          class="list-group-item list-group-item-action" *ngFor="let categoria of categorias.controls; let i=index"
+          formArrayName="categorias">
+          <app-icon [iconName]="'trash'"></app-icon>
+          {{ categoria.value['categoria'] }}
+          <input type="text" [formControlName]="i" hidden />
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row p-2 m-4" *ngIf="hasSpecifications">
+    <div class="col-sm-6 col-md-2 col-lg-2">
+      <label for="alto">Alto</label>
+      <input id="alto" class="form-control form-control-sm" type="number" formControlName="alto"
+        (change)="isEditing = true" />
+    </div>
+    <div class="col-sm-6 col-md-2 col-lg-2">
+      <label for="ancho">Ancho</label>
+      <input id="ancho" class="form-control form-control-sm" type="number" formControlName="ancho"
+        (change)="isEditing = true" />
+    </div>
+    <div class="col-sm-6 col-md-2 col-lg-2">
+      <label for="peso">Peso</label>
+      <input id="peso" class="form-control form-control-sm" type="number" formControlName="peso"
+        (change)="isEditing = true" />
+    </div>
+    <div class="col-sm-6 col-md-2 col-lg-2">
+      <label for="profundidad">Profundidad</label>
+      <input id="profundidad" class="form-control form-control-sm" type="number" formControlName="profundidad"
+        (change)="isEditing = true" />
+    </div>
+  </div>
+
+
+
+  <div class="row p-2 m-4">
+    <div class="col-sm-12 col-md-12 col-lg-12 mt-2">
+      <label for="descrip_html">Descripción Web</label>
+      <textarea id="descrip_html" class="form-control form-control-sm" type="text" placeholder="Descripción Web"
+        formControlName="descripcion_html" (change)="isEditing = true">
+      </textarea>
+    </div>
+  </div>
+
   <div class="row">
-    <div
-      class="mt-3 mb-3 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-end"
-    >
-      <button
-        *ngIf="typeForm === 'edit'"
-        type="button"
-        class="btn btn-sm btn-outline-secondary"
-        (click)="enableDisble()"
-      >
-        <app-icon
-          *ngIf="!enableEdit"
-          [iconName]="'lock'"
-          
-        ></app-icon>
-        <app-icon
-          *ngIf="enableEdit"
-          [iconName]="'lockOpen'"
-          
-        ></app-icon>
+    <div class="mt-3 mb-3 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-end">
+      <button *ngIf="typeForm === 'edit'" type="button" class="btn btn-sm btn-outline-secondary"
+        (click)="enableDisable()">
+        <app-icon *ngIf="!enableEdit" [iconName]="'lock'"></app-icon>
+        <app-icon *ngIf="enableEdit" [iconName]="'lockOpen'"></app-icon>
         {{ enableEdit ? "Deshabilitar" : "Editar" }}
       </button>
-      <button
-        class="btn btn-sm btn-outline-success ml-2"
-        [disabled]="productForm.disabled || productForm.invalid"
-        type="submit"
-      >
-        <app-icon [iconName]="'save'" ></app-icon>
+      <button class="btn btn-sm btn-outline-success ml-2" [disabled]="productForm.disabled || productForm.invalid"
+        type="submit">
+        <app-icon [iconName]="'save'"></app-icon>
         Guardar
       </button>
-      <button
-        class="btn btn-sm btn-outline-danger ml-2"
-        (click)="goTo()"
-        type="button"
-      >
-        <app-icon [iconName]="'arrowLeft'" ></app-icon>
+      <button class="btn btn-sm btn-outline-danger ml-2" (click)="goTo()" type="button">
+        <app-icon [iconName]="'arrowLeft'"></app-icon>
         Volver
       </button>
     </div>

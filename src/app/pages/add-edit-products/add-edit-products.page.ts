@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Brands } from 'src/app/models/Brands.model';
 import { Categories } from 'src/app/models/Categories.model';
@@ -31,12 +26,13 @@ export class AddEditProductsPage implements OnInit {
   enableEdit: boolean = false;
   productForm: FormGroup;
   typeForm: string; // si edita o agrega uno nuevo
-  categories: Categories[] = [];
+  categoriesArray: Categories[] = [];
   providers: Providers[] = [];
   brands: Brands[] = [];
   sizesArray: Sizes[] = [];
   hasSizes: boolean = false;
   hasSpecifications: boolean = false;
+  hasCategories: boolean = false;
 
   constructor(
     private _fb: FormBuilder,
@@ -52,7 +48,7 @@ export class AddEditProductsPage implements OnInit {
     private _api: ApiService
   ) {
     this.createForm();
-    this.enableDisble();
+    this.enableDisable();
     this.getCategories();
     this.getBrands();
     this.getSizes();
@@ -71,21 +67,32 @@ export class AddEditProductsPage implements OnInit {
      *  */
     if (this._dataSource.simpleObject?.id) {
       this.typeForm = 'edit';
-      this.productForm.reset(this._dataSource.simpleObject);
-      this.productForm.setControl(
-        'talles',
-        this._fb.array(this._dataSource.simpleObject.talles)
-      );
-      this._dataSource.simpleObject.talles.length > 0
-        ? (this.hasSizes = true)
-        : (this.hasSizes = false);
-      this.checkIfHasSpecifications();
+      this.loadForm(this._dataSource.simpleObject);
     } else {
       this.typeForm = 'new';
     }
 
     // limpiamos la data del objeto del servicio
     this._dataSource.simpleObject = undefined;
+  }
+
+  loadForm(product) {
+    this.productForm.reset(product);
+
+    this.productForm.setControl('talles', this._fb.array(product.talles));
+    product.talles.length > 0
+      ? (this.hasSizes = true)
+      : (this.hasSizes = false);
+
+    this.productForm.setControl(
+      'categorias',
+      this._fb.array(product.categorias)
+    );
+    product.categorias.length > 0
+      ? (this.hasCategories = true)
+      : (this.hasCategories = false);
+
+    this.checkIfHasSpecifications();
   }
 
   checkIfHasSpecifications() {
@@ -99,18 +106,22 @@ export class AddEditProductsPage implements OnInit {
     else this.hasSpecifications = false;
   }
 
+  send() {
+    this.productForm.get('id').value === '' ? this.post() : this.update();
+  }
+
   update() {
     this._toast
       .sweetConfirm('Confirmar cambios', '¿Desea guardar los cambios?')
       .then((res) => {
         if (res)
-          this._products.update(this.productForm.value).subscribe(
-            (res: Products | any) => {
+          this._products.update(this.productForm.value).subscribe({
+            next: (res: Products | any) => {
               this.isEditing = false;
               this._api.handleSuccess(res, '¡Guardado!', ``);
             },
-            (err) => this._api.handleError(err, 'Ocurrió un error', ``)
-          );
+            error: (err) => this._api.handleError(err, 'Ocurrió un error', ``),
+          });
       });
   }
 
@@ -119,17 +130,23 @@ export class AddEditProductsPage implements OnInit {
       .sweetConfirm('Guardar', '¿Desea guardar el producto?')
       .then((res) => {
         if (res)
-          this._products.post(this.productForm.value).subscribe(
-            (res: Products | any) => {
+          this._products.post(this.productForm.value).subscribe({
+            next: (res: Products | any) => {
               this.isEditing = false;
               this._api.handleSuccess(res, '¡Guardado!', ``);
+              setTimeout(() => {
+                this.productForm.reset();
+                this._router
+                  .navigate(['/productos/tab-productos'])
+                  .then(() => this._tabs.setShowTable(true));
+              }, 1500);
             },
-            (err) => this._api.handleError(err, 'Ocurrió un error', ``)
-          );
+            error: (err) => this._api.handleError(err, 'Ocurrió un error', ``),
+          });
       });
   }
 
-  enableDisble() {
+  enableDisable() {
     this.enableEdit
       ? Object.values(this.productForm.controls).forEach((control) => {
           //if (control.get('marca') === null)
@@ -144,45 +161,33 @@ export class AddEditProductsPage implements OnInit {
   }
 
   createForm() {
-    this.productForm = this._fb.group(
-      {
-        id: [''],
-        nombre: [''],
-        precio_costo: [],
-        precio_venta: [],
-        sku: [''],
-        stock_actual: ['', [Validators.required]],
-        unidad: [1],
-        proveedor: this._fb.group({
-          id: ['', [Validators.required]],
-          proveedor: [''],
-        }),
-        marca: this._fb.group({ id: ['', [Validators.required]], marca: [''] }),
-        categoria_uno: this._fb.group({
-          id: ['', [Validators.required]],
-          categoria: [''],
-        }),
-        categoria_dos: this._fb.group({
-          id: ['', [Validators.required]],
-          categoria: [''],
-        }),
-        colores: this._fb.array([this._fb.control('')]),
-        descripcion: [''],
-        disponible: [true],
-        archivado: [true],
-        imagenes: this._fb.array([]),
-        talles: this._fb.array([]),
-        rebaja: [],
-        alto: [],
-        ancho: [],
-        peso: [],
-        profundidad: [],
-      }
-      // ,
-      //   {
-      //     validator: this._validator.samePasswords('pass1', 'pass2')
-      //   } as AbstractControlOptions
-    );
+    this.productForm = this._fb.group({
+      id: [''],
+      nombre: ['', [Validators.required]],
+      descripcion: [''],
+      descripcion_html: [''],
+      precio_costo: [],
+      precio_venta: [null, [Validators.required]],
+      rebaja: [],
+      sku: [''],
+      stock_actual: ['', [Validators.required]],
+      unidad: [1],
+      proveedor: this._fb.group({
+        id: ['', [Validators.required]],
+        proveedor: [''],
+      }),
+      marca: this._fb.group({ id: ['', [Validators.required]], marca: [''] }),
+      colores: this._fb.array([this._fb.control('')]),
+      disponible: [true],
+      archivado: [false],
+      imagenes: this._fb.array([]),
+      talles: this._fb.array([]),
+      categorias: this._fb.array([]),
+      alto: [],
+      ancho: [],
+      peso: [],
+      profundidad: [],
+    });
   }
 
   compareBrand(c1: any, c2: any): boolean {
@@ -196,8 +201,6 @@ export class AddEditProductsPage implements OnInit {
   fillDefaultValues() {
     if ((this.typeForm = 'new')) {
       this.productForm.controls['marca'].get('id').setValue(1);
-      // this.productForm.controls['categoria_uno'].get('id').setValue(1);
-      // this.productForm.controls['categoria_dos'].get('id').setValue(1);
       this.productForm.controls['proveedor'].get('id').setValue(1);
     }
   }
@@ -219,7 +222,9 @@ export class AddEditProductsPage implements OnInit {
       .then(() => this._tabs.setShowTable(true));
   }
 
-  /** Obtención de datos  */
+  /**
+   * Obtención de datos
+   */
   getProviders() {
     this._providers
       .getAll()
@@ -235,7 +240,7 @@ export class AddEditProductsPage implements OnInit {
   getCategories() {
     this._categories
       .getAll()
-      .subscribe((res: Categories[]) => (this.categories = res['data']));
+      .subscribe((res: Categories[]) => (this.categoriesArray = res['data']));
   }
 
   getSizes() {
@@ -244,44 +249,13 @@ export class AddEditProductsPage implements OnInit {
     });
   }
 
-  get talles() {
-    return this.productForm.get('talles') as FormArray;
-  }
-
-  addSizeToTallesFormArray(size) {
-    if (this.talles.value.some((el) => el.id === size.id))
-      this._toast.toastAlert('Ya se encuentra agregado', '');
-    else this.talles.push(this._fb.control(size));
-
-    /**
-     * Ejemplo para carga de un array de formArray
-     * res['data'].forEach(talle => { this.talles.push(this._fb.control(talle)) })
-     *
-     * o tambien:
-     * this.productForm.setControl('talles', this.fb.array(res['data']));
-     *
-     */
-  }
-
-  removeSizeFromTallesFormArray(i) {
-    this.talles.removeAt(i);
-  }
-
-  send() {
-    this.productForm.get('id').value === '' ? this.post() : this.update();
-  }
-
+  /**
+   * Form controls status
+   */
   get nameInvalid() {
     return (
       this.productForm.get('nombre').invalid &&
       this.productForm.get('nombre').touched
-    );
-  }
-
-  get descriptionInvalid() {
-    return (
-      this.productForm.get('descripcion').invalid &&
-      this.productForm.get('descripcion').touched
     );
   }
 
@@ -290,5 +264,52 @@ export class AddEditProductsPage implements OnInit {
       this.productForm.get('stock_actual').invalid &&
       this.productForm.get('stock_actual').touched
     );
+  }
+
+  get precioVentaInvalid() {
+    return (
+      this.productForm.get('precio_venta').invalid &&
+      this.productForm.get('precio_venta').touched
+    );
+  }
+
+  /**
+   * Categories functions
+   */
+  get categorias() {
+    return this.productForm.get('categorias') as FormArray;
+  }
+
+  addCategoriasToCategoriasFormArray(cat) {
+    if (this.categorias.value.some((el) => el.id === cat.id))
+      this._toast.toastAlert('Ya se encuentra agregada', '');
+    else this.categorias.push(this._fb.control(cat));
+  }
+
+  removeCategoriaFromCategoriasFormArray(i) {
+    this.categorias.removeAt(i);
+  }
+
+  /**
+   * Sizes functions
+   */
+  get talles() {
+    return this.productForm.get('talles') as FormArray;
+  }
+
+  addSizeToTallesFormArray(size) {
+    /**
+     * Ejemplo para carga de un array de formArray
+     * res['data'].forEach(talle => { this.talles.push(this._fb.control(talle)) })
+     * o tambien:
+     * this.productForm.setControl('talles', this.fb.array(res['data']));
+     */
+    if (this.talles.value.some((el) => el.id === size.id))
+      this._toast.toastAlert('Ya se encuentra agregado', '');
+    else this.talles.push(this._fb.control(size));
+  }
+
+  removeSizeFromTallesFormArray(i) {
+    this.talles.removeAt(i);
   }
 }

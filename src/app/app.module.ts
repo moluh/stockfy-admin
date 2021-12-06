@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';  
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -51,6 +51,8 @@ import { TabSizesComponent } from './pages/tab-sizes/tab-sizes.component';
 import { AddEditSizesComponent } from './pages/add-edit-sizes/add-edit-sizes.component';
 import { ExpensesComponent } from './pages/expenses/expenses.component';
 import { AddEditExpensesComponent } from './pages/add-edit-expenses/add-edit-expenses.component';
+import { StoreModule } from '@ngrx/store';
+import { movementReducer } from './store/reducers/movement.reducer';
 
 @NgModule({
   declarations: [
@@ -84,7 +86,7 @@ import { AddEditExpensesComponent } from './pages/add-edit-expenses/add-edit-exp
     TabSizesComponent,
     AddEditSizesComponent,
     ExpensesComponent,
-    AddEditExpensesComponent
+    AddEditExpensesComponent,
   ],
   imports: [
     CommonModule,
@@ -93,7 +95,7 @@ import { AddEditExpensesComponent } from './pages/add-edit-expenses/add-edit-exp
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule, // required animations 
+    BrowserAnimationsModule, // required animations
     FontAwesomeModule,
     ToastrModule.forRoot({
       // ToastrModule added
@@ -101,7 +103,10 @@ import { AddEditExpensesComponent } from './pages/add-edit-expenses/add-edit-exp
       positionClass: 'toast-bottom-left',
       preventDuplicates: true,
     }),
-    ChartsModule
+    ChartsModule,
+    StoreModule.forRoot({
+      movement: movementReducer,
+    }),
   ],
   exports: [],
   providers: [

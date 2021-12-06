@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { Movements } from 'src/app/models/Movements.model';
 import { Payments } from 'src/app/models/Payments.model';
 import { Products } from 'src/app/models/Products.model';
@@ -13,6 +14,7 @@ import * as utc from 'dayjs/plugin/utc';
 import { icons } from 'src/assets/icons';
 import { PrintMovementService } from 'src/app/services/print-movement.service';
 import { Users } from 'src/app/models/Users.model';
+import { increment, decrement, reset } from 'src/app/store/actions/movement.action';
 dayjs.extend(utc);
 
 @Component({
@@ -46,14 +48,31 @@ export class MovementsComponent implements OnInit {
   showDescription: boolean = false;
   showFilter: boolean = false;
 
+  count$: Observable<number>;
+
   constructor(
     private _movements: MovementsService,
     private _products: ProductsService,
     public _dataSource: DataSourceService,
     private _toast: ToastService,
-    private _print: PrintMovementService
+    private _print: PrintMovementService,
+    private store: Store<{ movement: number }>
   ) {
     this.checkStateMovement();
+    this.count$ = store.select('movement');
+  }  
+
+
+  increment() {
+    this.store.dispatch(increment());
+  }
+
+  decrement() {
+    this.store.dispatch(decrement());
+  }
+
+  resetA() {
+    this.store.dispatch(reset());
   }
 
   ngOnInit(): void {

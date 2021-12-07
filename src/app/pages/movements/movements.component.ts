@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { map, Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Movements } from 'src/app/models/Movements.model';
 import { Payments } from 'src/app/models/Payments.model';
@@ -11,10 +11,11 @@ import { ProductsService } from 'src/app/services/products.service';
 import { ToastService } from 'src/app/services/toasts.service';
 import * as dayjs from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
-import { icons } from 'src/assets/icons';
 import { PrintMovementService } from 'src/app/services/print-movement.service';
 import { Users } from 'src/app/models/Users.model';
-import { increment, decrement, reset } from 'src/app/store/actions/movement.action';
+import { changeStateEditing } from 'src/app/store/actions/isEditing.action';
+import { IsEditingService } from 'src/app/services/is-editing.service';
+import { Editing } from 'src/app/interfaces/isEdting.interface';
 dayjs.extend(utc);
 
 @Component({
@@ -47,32 +48,24 @@ export class MovementsComponent implements OnInit {
   isCurrentAccount: boolean = false;
   showDescription: boolean = false;
   showFilter: boolean = false;
-
-  count$: Observable<number>;
+  isEditingForm: Editing = <Editing>{};
 
   constructor(
     private _movements: MovementsService,
     private _products: ProductsService,
     public _dataSource: DataSourceService,
     private _toast: ToastService,
+    private _isEditing: IsEditingService,
     private _print: PrintMovementService,
-    private store: Store<{ movement: number }>
+    private store: Store<{ movement: number; isEditing: boolean }>
   ) {
     this.checkStateMovement();
-    this.count$ = store.select('movement');
-  }  
-
-
-  increment() {
-    this.store.dispatch(increment());
+    this.isEditingForm = { isEditing: false, component: 'Movimientos' };
+    _isEditing.setIsEditingForm(this.isEditingForm)
   }
 
-  decrement() {
-    this.store.dispatch(decrement());
-  }
-
-  resetA() {
-    this.store.dispatch(reset());
+  changeStateForm(isEditing: boolean) {
+    this.store.dispatch(changeStateEditing({ isEditing, component: 'Movimientos' }));
   }
 
   ngOnInit(): void {

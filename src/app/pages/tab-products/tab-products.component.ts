@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { PaginacionService } from 'src/app/components/paginacion/paginacion.service';
 import { Products } from 'src/app/models/Products.model';
 import { QueryPaginator } from 'src/app/models/QueryPaginator';

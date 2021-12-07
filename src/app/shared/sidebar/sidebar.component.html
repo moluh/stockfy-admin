@@ -7,9 +7,8 @@
     class="animated fadeInLeft"
   >
     <li
-      (click)="urlActive = 'dashboard'"
+      (click)="goTo('dashboard'); urlActive = 'dashboard'"
       class="dir d-flex align-items-center"
-      [routerLink]="['/dashboard']"
       [ngClass]="{
         active: urlActive === 'dashboard',
         collapsed: !showDescrip
@@ -26,9 +25,8 @@
     </li>
 
     <li
-      (click)="urlActive = 'ventas'"
+      (click)="goTo('ventas'); urlActive = 'ventas'"
       class="dir d-flex align-items-center"
-      [routerLink]="['/ventas']"
       [ngClass]="{
         active: urlActive === 'ventas',
         collapsed: !showDescrip
@@ -43,9 +41,8 @@
     </li>
 
     <li
-      (click)="urlActive = 'movimientos-lista'"
+      (click)="goTo('movimientos-lista'); urlActive = 'movimientos-lista'"
       class="dir d-flex align-items-center"
-      [routerLink]="['/movimientos-lista']"
       [ngClass]="{
         active: urlActive === 'movimientos-lista',
         collapsed: !showDescrip
@@ -66,9 +63,8 @@
 
     <li
       *ngIf="_users.hasAdminRole(usuario.roles)"
-      (click)="urlActive = 'productos'"
+      (click)="goTo('productos'); urlActive = 'productos'"
       class="dir d-flex align-items-center"
-      [routerLink]="['/productos/tab-productos']"
       [ngClass]="{
         active: urlActive === 'productos',
         collapsed: !showDescrip
@@ -90,9 +86,8 @@
 
     <li
       *ngIf="_users.hasAdminRole(usuario.roles)"
-      (click)="urlActive = 'gastos'"
+      (click)="goTo('gastos'); urlActive = 'gastos'"
       class="dir d-flex align-items-center"
-      [routerLink]="['/gastos']"
       [ngClass]="{
         active: urlActive === 'gastos',
         collapsed: !showDescrip
@@ -112,9 +107,8 @@
 
     <li
       *ngIf="_users.hasAdminRole(usuario.roles)"
-      (click)="urlActive = 'usuarios'"
+      (click)="goTo('usuarios'); urlActive = 'usuarios'"
       class="dir d-flex align-items-center"
-      [routerLink]="['/usuarios/tab-usuarios']"
       [ngClass]="{
         active: urlActive === 'usuarios',
         collapsed: !showDescrip
@@ -132,9 +126,8 @@
 
     <li
       *ngIf="_users.hasAdminRole(usuario.roles)"
-      (click)="urlActive = 'estadisticas'"
+      (click)="goTo('estadisticas'); urlActive = 'estadisticas'"
       class="dir d-flex align-items-center"
-      [routerLink]="['/estadisticas']"
       [ngClass]="{
         active: urlActive === 'estadisticas',
         collapsed: !showDescrip

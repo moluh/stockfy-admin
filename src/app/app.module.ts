@@ -53,6 +53,7 @@ import { ExpensesComponent } from './pages/expenses/expenses.component';
 import { AddEditExpensesComponent } from './pages/add-edit-expenses/add-edit-expenses.component';
 import { StoreModule } from '@ngrx/store';
 import { movementReducer } from './store/reducers/movement.reducer';
+import { isEditingReducer } from './store/reducers/isEditing.reducer';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import { movementReducer } from './store/reducers/movement.reducer';
     ChartsModule,
     StoreModule.forRoot({
       movement: movementReducer,
+      isEditing: isEditingReducer,
     }),
   ],
   exports: [],

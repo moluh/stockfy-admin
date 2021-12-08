@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import * as dayjs from 'dayjs';
 import { PaginacionService } from 'src/app/components/paginacion/paginacion.service';
 import { Movements } from 'src/app/models/Movements.model';
 import { QueryPaginator } from 'src/app/models/QueryPaginator';
 import { Users } from 'src/app/models/Users.model';
-import { DatesService } from 'src/app/services/dates.service';
 import { MovementsService } from 'src/app/services/movements.service';
-import { PaymentsService } from 'src/app/services/payments.service';
 import { PrintMovementService } from 'src/app/services/print-movement.service';
 import { ToastService } from 'src/app/services/toasts.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -19,7 +17,7 @@ const ATTR_LIST = [
   'comentario',
   'estado',
   'modo_pago',
-  'cliente',
+  'usuario',
 ];
 
 @Component({
@@ -46,16 +44,12 @@ export class MovementsListComponent implements OnInit {
   isFiltering: boolean = false;
 
   constructor(
-    private _fb: FormBuilder,
     private _toast: ToastService,
     private _movements: MovementsService,
-    private _payments: PaymentsService,
-    private _date: DatesService,
     private _users: UsersService,
     private _pag: PaginacionService,
     private _print: PrintMovementService
   ) {
-    this.createForm();
   }
 
   ngOnInit(): void {}
@@ -64,86 +58,8 @@ export class MovementsListComponent implements OnInit {
     this.paymentForm.reset();
   }
 
-  isValidPayment() {
-    const hasProfit: boolean = this.paymentForm.controls['interes'].value;
-    const tasa: number = this.paymentForm.controls['tasa_interes'].value;
-    const monto: number = this.paymentForm.controls['monto'].value;
-    const fecha: Date = this.paymentForm.controls['fecha'].value;
-
-    if (hasProfit) {
-      if (tasa === 0 || tasa === undefined || tasa === null)
-        return this._toast.toastAlert('Complete el porcentaje de interés.', '');
-      if (monto === 0 || monto === undefined || monto === null)
-        return this._toast.toastAlert('Complete el monto del pago.', '');
-      if (fecha === undefined || fecha === null)
-        return this._toast.toastAlert('Complete la fecha del pago.', '');
-    }
-
-    if (this.movementSelected.saldo < monto)
-      return this._toast.toastAlert('El monto del pago supera el saldo.', '');
-
-    this.postPayment();
-  }
-
-  calculateProfit() {
-    const hasProfit: boolean = this.paymentForm.controls['interes'].value;
-    const tasa: number = this.paymentForm.controls['tasa_interes'].value;
-    const monto: number = this.paymentForm.controls['monto'].value;
-
-    if (tasa !== null && monto !== null)
-      this.paymentForm.controls['ganancia'].setValue(monto * (tasa / 100));
-    else this.paymentForm.controls['ganancia'].setValue(0);
-
-    if (!hasProfit) {
-      this.paymentForm.controls['ganancia'].setValue(0);
-      this.paymentForm.controls['tasa_interes'].setValue(0);
-    }
-  }
-
-  deletePayment(payment) {
-    payment.movimiento = this.movementSelected.id;
-    this._toast
-      .sweetConfirm(
-        '¿Eliminar pago?',
-        'Una vez eliminado no se podrá recuperar.'
-      )
-      .then((res) => {
-        if (res)
-          this._payments.delete(payment).subscribe({
-            next: (res) => {
-              this._toast.sweetAlert('¡Pago eliminado!', '');
-              this.getMovement();
-              this.getMovements();
-            },
-            error: (err) => console.log(err),
-          });
-      })
-      .catch((err) => console.log(err));
-  }
-
-  postPayment() {
-    this.paymentForm.controls['movimientoId'].setValue(
-      this.movementSelected.id
-    );
-    this.paymentForm.controls['pago_nro'].setValue(
-      this.movementSelected.pagos.length++
-    );
-
-    this._toast
-      .sweetConfirm('¿Confirmar pago?', '')
-      .then((res) => {
-        if (res)
-          this._payments.post(this.paymentForm.value).subscribe(
-            (res) => {
-              this._toast.sweetAlert('¡Pago agregado!', '');
-              this.getMovement();
-              this.getMovements();
-              this.clean();
-            },
-            (err) => console.log(err)
-          );
-      })
-      .catch((err) => console.log(err));
+  setMovementSelected(movement: Movements) {
+    this.movementSelected = movement;
   }
 
   removeFilter() {
@@ -161,7 +77,7 @@ export class MovementsListComponent implements OnInit {
   }
 
   checkAttrSelected() {
-    if (this.attr_selected === 'cliente') this.getClients();
+    if (this.attr_selected === 'usuario') this.getClients();
   }
 
   pageChanged(event: { pageNro: number; pageSize: number }) {
@@ -192,7 +108,7 @@ export class MovementsListComponent implements OnInit {
       case 'comentario':
         this.getPaginatedAndFilter();
         break;
-      case 'cliente':
+      case 'usuario':
         this.getPaginatedByClientId();
         break;
       case 'fecha':
@@ -207,10 +123,6 @@ export class MovementsListComponent implements OnInit {
       default:
         break;
     }
-  }
-
-  setSelectedMovement(movement: Movements) {
-    this.movementSelected = movement;
   }
 
   getPaginatedByClientId() {
@@ -318,22 +230,6 @@ export class MovementsListComponent implements OnInit {
           });
       })
       .catch((err) => console.log(err));
-  }
-
-  createForm() {
-    this.paymentForm = this._fb.group({
-      id: [''],
-      pago_nro: [],
-      monto: ['', [Validators.required, Validators.minLength(1)]],
-      fecha: [
-        this._date.getActualDate(),
-        [Validators.required, Validators.minLength(1)],
-      ],
-      tasa_interes: [null],
-      interes: [true],
-      ganancia: [0],
-      movimientoId: [],
-    });
   }
 
   // todo: crear un servicio que devuelva solo los ids, nombres y apellidos

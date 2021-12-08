@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpOptions } from './httpOptions';
 import { map, catchError } from 'rxjs/operators';
 import { HandleErrorService } from './handle-error.service';
 import { Movements } from '../models/Movements.model';
 import { ApiService } from './api.service';
+import { Store } from '@ngrx/store';
+import { selectMovement } from '../store/actions/movementSelected.action';
 
 @Injectable({
   providedIn: 'root',
@@ -14,14 +16,43 @@ import { ApiService } from './api.service';
 export class MovementsService {
   public url: string = this._api.getApiUrl() + '/movimiento';
   httpOptions = HttpOptions.httpOptions;
-  private movimientos: Movements[] = null;
+
+  movementSelected$: Observable<any>;
+  movementSelectedSub: Subscription;
+  // movementSubject = new BehaviorSubject<Movements>(this.getMovementSelected());
 
   constructor(
     private http: HttpClient,
     private _api: ApiService,
     private he: HandleErrorService,
-    private router: Router
-  ) {}
+    private store: Store<{ movementSelected: Movements }>
+  ) {
+    
+    this.movementSelected$ = this.store.select('movementSelected');
+    this.movementSelectedSub = this.movementSelected$.subscribe();
+  }
+
+  setMovementSelected(data: Movements | any) {
+    // console.log('data in set mov.. {...data}:',{...data});    
+    this.store.dispatch(selectMovement({...data}));
+  }
+
+  getMovementSelected() {
+    let resp: Movements = <Movements>{}
+
+    this.movementSelectedSub = this.movementSelected$.subscribe({
+      next: (res) => {
+        this.movementSelectedSub.unsubscribe();
+        resp = res;
+      },
+    });
+    
+    return resp;
+  }  
+
+  // public getMovementSelectedObservable(): Observable<Movements> {
+  //   return this.movementSubject.asObservable();
+  // }
 
   public getPaginated(
     pageNro: number,

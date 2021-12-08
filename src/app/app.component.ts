@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     this.isLogged$ = this.auth.returnAsObs().pipe(
       map((val) => {
         if (val)
-          router.navigate(['add-edit-products']);
+          router.navigate(['dashboard']);
         return val;
       }))
 

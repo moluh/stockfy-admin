@@ -21,12 +21,17 @@ registerLocaleData(localeEsAr, 'es-Ar');
 //HTTP SERVICE.
 import { InterceptorService } from './services/auth/interceptor.service';
 
+// Store
+import { movementSelectedReducer } from './store/reducers/movementSelected.reducer';
+import { isEditingReducer } from './store/reducers/isEditing.reducer';
+import { userSelectedReducer } from './store/reducers/userSelected.reducer';
+
+// Components
 import { AppComponent } from './app.component';
 import { UsersPage } from './pages/users/users.page';
 import { ProductsPage } from './pages/products/products.page';
 import { AddEditProductsPage } from './pages/add-edit-products/add-edit-products.page';
 import { PaginacionComponent } from './components/paginacion/paginacion.component';
-
 import { FooterComponent } from './shared/footer/footer.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
@@ -54,8 +59,8 @@ import { TabSizesComponent } from './pages/tab-sizes/tab-sizes.component';
 import { AddEditSizesComponent } from './pages/add-edit-sizes/add-edit-sizes.component';
 import { ExpensesComponent } from './pages/expenses/expenses.component';
 import { AddEditExpensesComponent } from './pages/add-edit-expenses/add-edit-expenses.component';
-import { movementSelectedReducer } from './store/reducers/movementSelected.reducer';
-import { isEditingReducer } from './store/reducers/isEditing.reducer';
+import { AddEditPaymentsComponent } from './pages/add-edit-payments/add-edit-payments.component';
+import { SeeMovementComponent } from './pages/see-movement/see-movement.component';
 
 
 @NgModule({
@@ -91,6 +96,8 @@ import { isEditingReducer } from './store/reducers/isEditing.reducer';
     AddEditSizesComponent,
     ExpensesComponent,
     AddEditExpensesComponent,
+    AddEditPaymentsComponent,
+    SeeMovementComponent,
   ],
   imports: [
     CommonModule,
@@ -110,6 +117,7 @@ import { isEditingReducer } from './store/reducers/isEditing.reducer';
     ChartsModule,
     StoreModule.forRoot({
       movementSelected: movementSelectedReducer,
+      userSelected: userSelectedReducer,
       isEditing: isEditingReducer,
     }),
     StoreDevtoolsModule.instrument({

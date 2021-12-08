@@ -105,11 +105,12 @@ export class MovementsComponent implements OnInit {
       : (this.movement.saldo = null);
   }
 
-  reset() {
+  resetProduct() {
     this.foundProduct = null;
     this.quantity = null;
     this.eanCode = '';
     document.getElementById('eanCode').focus();
+    this.changeStateForm(true);
   }
 
   clean() {
@@ -119,6 +120,7 @@ export class MovementsComponent implements OnInit {
     this.totalOfSale = null;
     this.discount = null;
     this.delivery = null;
+    this.changeStateForm(false);
   }
 
   /**
@@ -140,7 +142,7 @@ export class MovementsComponent implements OnInit {
     });
 
     this.calculateTotal();
-    this.reset();
+    this.resetProduct();
   }
 
   showHideDescription(state = null) {

@@ -7,6 +7,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { ChartsModule } from 'ng2-charts';
+import { PRODUCTION } from 'src/environments/environment';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 // PIPE ESPAÑOL
 import { LOCALE_ID } from '@angular/core';
@@ -51,9 +54,9 @@ import { TabSizesComponent } from './pages/tab-sizes/tab-sizes.component';
 import { AddEditSizesComponent } from './pages/add-edit-sizes/add-edit-sizes.component';
 import { ExpensesComponent } from './pages/expenses/expenses.component';
 import { AddEditExpensesComponent } from './pages/add-edit-expenses/add-edit-expenses.component';
-import { StoreModule } from '@ngrx/store';
-import { movementReducer } from './store/reducers/movement.reducer';
+import { movementSelectedReducer } from './store/reducers/movementSelected.reducer';
 import { isEditingReducer } from './store/reducers/isEditing.reducer';
+
 
 @NgModule({
   declarations: [
@@ -106,8 +109,13 @@ import { isEditingReducer } from './store/reducers/isEditing.reducer';
     }),
     ChartsModule,
     StoreModule.forRoot({
-      movement: movementReducer,
+      movementSelected: movementSelectedReducer,
       isEditing: isEditingReducer,
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: PRODUCTION, // Restrict extension to log-only mode
+      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
     }),
   ],
   exports: [],

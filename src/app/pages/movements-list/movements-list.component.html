@@ -144,7 +144,9 @@
             <tr *ngFor="let movement of movements">
               <td>{{ movement.id }}</td>
               <td>
-                {{ movement.fecha | date: "dd-MM-YYYY" }} {{ movement.hora }}
+                {{ movement.fecha | date: "dd/MM/YYYY" }}
+                <br />
+                {{ movement.hora.slice(0,5) }}
               </td>
               <td>
                 {{ movement.usuario.nombre + " " + movement.usuario.apellido }}

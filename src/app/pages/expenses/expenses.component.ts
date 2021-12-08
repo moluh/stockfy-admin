@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { PaginacionService } from 'src/app/components/paginacion/paginacion.service';
 import { Expenses } from 'src/app/models/Expenses.model';
 import { QueryPaginator } from 'src/app/models/QueryPaginator';
-import { Users } from 'src/app/models/Users.model';
 import { ApiService } from 'src/app/services/api.service';
 import { DataSourceService } from 'src/app/services/data.source.service';
 import { ExpensesService } from 'src/app/services/expenses.service';

@@ -45,11 +45,11 @@
     <div class="col-sm-6 col-md-6 col-lg-6 mt-3">
       <label for="roles_disponibles">ROLES</label>
       <ul class="list-group" id="roles_disponibles">
-        <li class="list-group-item" *ngFor="let role of rolesAvailable">
-          <button type="button" class="btn btn-sm btn-primary" (click)="addRoleToFormArray(role); isEditing = true">
-            <app-icon [iconName]="'plus'"></app-icon>
-            {{ role.role }}
-          </button>
+        <li class="list-group-item" *ngFor="let role of rolesAvailable"
+          (click)="addRoleToFormArray(role); isEditing = true">
+
+          <app-icon [iconName]="'plus'"></app-icon>
+          {{ role.role }}
         </li>
       </ul>
     </div>
@@ -57,11 +57,10 @@
     <div class="col-sm-6 col-md-6 col-lg-6 mt-3">
       <label for="loaded_sizes">Roles cargados</label>
       <ul class="list-group" id="loaded_sizes">
-        <li class="list-group-item" *ngFor="let role of roles.controls; let i=index" formArrayName="roles">
-          <button type="button" class="btn btn-sm btn-danger" (click)="removeRoleFromFormArray(i); isEditing = true">
-            <app-icon [iconName]="'trash'"></app-icon>
-            {{ role.value['role'] }}
-          </button>
+        <li class="list-group-item" *ngFor="let role of roles.controls; let i=index"
+          (click)="removeRoleFromFormArray(i); isEditing = true" formArrayName="roles">
+          <app-icon [iconName]="'trash'"></app-icon>
+          {{ role.value['role'] }}
           <input type="text" [formControlName]="i" hidden />
         </li>
       </ul>

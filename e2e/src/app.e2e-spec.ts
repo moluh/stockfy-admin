@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('control-stock-ng app is running!');
+    expect(page.getTitleText()).toEqual('stockfy-admin app is running!');
   });
 
   afterEach(async () => {

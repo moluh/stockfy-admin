@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "control-stock-ng": {
+    "stockfy-admin": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/control-stock-ng",
+            "outputPath": "dist/stockfy-admin",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,18 +72,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "control-stock-ng:build"
+            "browserTarget": "stockfy-admin:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "control-stock-ng:build:production"
+              "browserTarget": "stockfy-admin:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "control-stock-ng:build"
+            "browserTarget": "stockfy-admin:build"
           }
         },
         "test": {
@@ -120,18 +120,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "control-stock-ng:serve"
+            "devServerTarget": "stockfy-admin:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "control-stock-ng:serve:production"
+              "devServerTarget": "stockfy-admin:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "control-stock-ng",
+  "defaultProject": "stockfy-admin",
   "cli": {
     "analytics": "b54bd220-b07d-4bfa-a8b4-67b92e3cd9a1"
   }

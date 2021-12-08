@@ -1,5 +1,5 @@
 
-#  CONTROL STOCK ADMIN
+#  Stockfy Admin ADMIN
 
 
 ##  Pasos para levantar el entorno:

@@ -11,7 +11,7 @@ import { tap, map } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
 
-  title = 'Control Stock'
+  title = 'Stockfy Admin'
   isLogged$: Observable<boolean>;
 
   constructor(

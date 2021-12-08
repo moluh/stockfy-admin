@@ -23,7 +23,7 @@ dayjs.extend(utc);
   templateUrl: './movements.component.html',
   styleUrls: ['./movements.component.scss'],
 })
-export class MovementsComponent implements OnInit {
+export class MovementsComponent implements OnInit, OnDestroy {
   pag = new QueryPaginator();
   movement: Movements = new Movements();
   movements: Movements[] = [];
@@ -70,6 +70,10 @@ export class MovementsComponent implements OnInit {
 
   ngOnInit(): void {
     document.getElementById('eanCode').focus();
+  }
+
+  ngOnDestroy(): void {
+    this.changeStateForm(false)
   }
 
   thereIsStock(): Promise<boolean> {

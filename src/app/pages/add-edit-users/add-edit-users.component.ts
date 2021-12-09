@@ -1,9 +1,11 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Modules } from 'src/app/models/Modules.model';
 import { Role } from 'src/app/models/Role.model';
 import { ApiService } from 'src/app/services/api.service';
 import { DataSourceService } from 'src/app/services/data.source.service';
+import { ModulesService } from 'src/app/services/modules.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { TabsServices } from 'src/app/services/tabs.service';
 import { ToastService } from 'src/app/services/toasts.service';
@@ -20,6 +22,9 @@ export class AddEditUsersComponent implements OnInit {
   userForm: FormGroup;
   isEditing: boolean = false;
   rolesAvailable: Role[] = [];
+  modulosAvailable: Modules[] = [];
+  listaModulos: Modules[] = [];
+  typeForm: string = 'new';
 
   constructor(
     private _users: UsersService,
@@ -29,19 +34,30 @@ export class AddEditUsersComponent implements OnInit {
     private _toast: ToastService,
     private _tabs: TabsServices,
     private _dataSource: DataSourceService,
-    private _api: ApiService
+    private _api: ApiService,
+    private _modules: ModulesService
   ) {
     this.createForm();
     this.getRoles();
+    this.getModules();
   }
 
   ngOnInit(): void {
     // comprobamos si viene un id, es porque modifica, sino es uno nuevo
-    if (this._dataSource.simpleObject?.id)
-      this.userForm.reset(this._dataSource.simpleObject);
+    if (this._dataSource.simpleObject?.id) {
+      this.typeForm = 'edit';
+      this.loadForm(this._dataSource.simpleObject);
+    } else {
+      this.typeForm = 'new';
+      // limpiamos la data del objeto del servicio
+      this._dataSource.simpleObject = {};
+    }
+  }
 
-    // limpiamos la data del objeto del servicio
-    this._dataSource.simpleObject = {};
+  loadForm(user) {
+    this.userForm.reset(user);
+    this.userForm.setControl('roles', this._fb.array(user.roles));
+    this.userForm.setControl('modulos', this._fb.array(user.modulos));
   }
 
   get usernameNoValido() {
@@ -103,10 +119,59 @@ export class AddEditUsersComponent implements OnInit {
     this.roles.removeAt(i);
   }
 
+  get modulos() {
+    return this.userForm.get('modulos') as FormArray;
+  }
+
+  addModuleToFormArray(modulo) {
+    if (this.modulos.value.some((el) => el.id === modulo.id))
+      return this._toast.toastAlert('Ya se encuentra agregado', '');
+    this.modulos.push(this._fb.control(modulo));
+  }
+
+  removeModuleFromFormArray(i) {
+    this.modulos.removeAt(i);
+  }
+
   getRoles() {
-    this._role.getAll().subscribe((res: any) => {
-      this.rolesAvailable = res['data'];
+    this._role.getAll().subscribe({
+      next: (res: any) => {
+        this.rolesAvailable = res['data'];
+      },
+      error: (err) => {
+        console.log(err);
+      },
     });
+  }
+
+  getModules() {
+    this._modules.getAll().subscribe({
+      next: (res: any) => {
+        Object.assign(this.modulosAvailable, res.data);
+        const copyArray = res.data.map((e) => {
+          return { ...e };
+        });
+        this.transformModulos(copyArray);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  transformModulos(mods: Modules[]) {
+    // Elimina los permisos del modulo (_W, _R...)
+    mods = mods.map((m: Modules, i) => {
+      m.modulo = m.modulo.slice(0, -2);
+      return m;
+    });
+
+    this.listaModulos = [...new Map(mods.map((m) => [m.modulo, m])).values()];
+  }
+
+  checkIfWasAdded(modulo) {
+    if (this.modulos.value.some((el) => el.id === modulo.id))
+      return { selected: true };
   }
 
   createForm() {
@@ -136,6 +201,7 @@ export class AddEditUsersComponent implements OnInit {
         ],
       ],
       roles: this._fb.array([]), // Validators.required ????
+      modulos: this._fb.array([]), // Validators.required ????
       nombre: [
         '',
         [

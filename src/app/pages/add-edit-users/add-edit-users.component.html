@@ -43,7 +43,7 @@
 
     <!-- <div class="col-sm-12 col-md-4 col-lg-4 mt-3"> -->
     <div class="col-sm-6 col-md-6 col-lg-6 mt-3">
-      <label for="roles_disponibles">ROLES</label>
+      <label for="roles_disponibles">Roles</label>
       <ul class="list-group" id="roles_disponibles">
         <li class="list-group-item" *ngFor="let role of rolesAvailable"
           (click)="addRoleToFormArray(role); isEditing = true">
@@ -53,7 +53,6 @@
         </li>
       </ul>
     </div>
-
     <div class="col-sm-6 col-md-6 col-lg-6 mt-3">
       <label for="loaded_sizes">Roles cargados</label>
       <ul class="list-group" id="loaded_sizes">
@@ -61,6 +60,33 @@
           (click)="removeRoleFromFormArray(i); isEditing = true" formArrayName="roles">
           <app-icon [iconName]="'trash'"></app-icon>
           {{ role.value['role'] }}
+          <input type="text" [formControlName]="i" hidden />
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-sm-6 col-md-6 col-lg-6 mt-3">
+      <label for="modulos_disponibles" class="text-center">Módulos</label>
+      <ul class="list-group" id="modulos_disponibles" *ngFor="let item of listaModulos">
+        <small>{{ item.modulo }}</small>
+        <hr>
+        <div *ngFor="let modulo of modulosAvailable">
+          <li class="list-group-item" *ngIf="modulo.modulo.includes(item.modulo)"
+            (click)="addModuleToFormArray(modulo); isEditing = true" [ngClass]="checkIfWasAdded(modulo)">
+            <app-icon [iconName]="'plus'"></app-icon>
+            <small>{{ modulo.modulo }}</small>
+          </li>
+        </div>
+      </ul>
+    </div>
+
+    <div class="col-sm-6 col-md-6 col-lg-6 mt-3">
+      <label for="loaded_sizes">Módulos cargados</label>
+      <ul class="list-group" id="loaded_sizes">
+        <li class="list-group-item" *ngFor="let module of modulos.controls; let i=index"
+          (click)="removeModuleFromFormArray(i); isEditing = true" formArrayName="modulos">
+          <app-icon [iconName]="'trash'"></app-icon>
+          {{ module.value['modulo'] }}
           <input type="text" [formControlName]="i" hidden />
         </li>
       </ul>

@@ -13,7 +13,6 @@
         active: urlActive === 'dashboard',
         collapsed: !showDescrip
       }"
-      *ngIf="_users.hasSuperAdminRole(usuario.roles)"
       routerLinkActive="router-link-active"
     >
       <div class="li-icon">
@@ -62,7 +61,7 @@
     </li>
 
     <li
-      *ngIf="_users.hasSuperAdminRole(usuario.roles)"
+      *ngIf="_users.hasSuperAdminRole(usuario.roles) || _users.hasAdminRole(usuario.roles)"
       (click)="goTo('productos'); urlActive = 'productos'"
       class="dir d-flex align-items-center"
       [ngClass]="{
@@ -85,7 +84,7 @@
     </li>
 
     <li
-      *ngIf="_users.hasSuperAdminRole(usuario.roles)"
+      *ngIf="_users.hasSuperAdminRole(usuario.roles) || _users.hasAdminRole(usuario.roles)"
       (click)="goTo('gastos'); urlActive = 'gastos'"
       class="dir d-flex align-items-center"
       [ngClass]="{
@@ -106,7 +105,7 @@
     </li>
 
     <li
-      *ngIf="_users.hasSuperAdminRole(usuario.roles)"
+      *ngIf="_users.hasSuperAdminRole(usuario.roles) || _users.hasAdminRole(usuario.roles)"
       (click)="goTo('usuarios'); urlActive = 'usuarios'"
       class="dir d-flex align-items-center"
       [ngClass]="{
@@ -125,7 +124,7 @@
     </li>
 
     <li
-      *ngIf="_users.hasSuperAdminRole(usuario.roles)"
+      *ngIf="_users.hasSuperAdminRole(usuario.roles) || _users.hasAdminRole(usuario.roles)"
       (click)="goTo('estadisticas'); urlActive = 'estadisticas'"
       class="dir d-flex align-items-center"
       [ngClass]="{
@@ -142,8 +141,8 @@
       </div>
     </li>
 
-    <!-- <li
-      *ngIf="_users.hasSuperAdminRole(usuario.roles)"
+    <li
+      *ngIf="_users.hasSuperAdminRole(usuario.roles) || _users.hasAdminRole(usuario.roles)"
       (click)="urlActive = 'configuraciones'"
       class="dir d-flex align-items-center"
       [routerLink]="['/configuraciones']"
@@ -159,6 +158,6 @@
       <div *ngIf="showDescrip" class="li-descrip">
         <span> Configuraciones </span>
       </div>
-    </li> -->
+    </li>
   </ul>
 </div>

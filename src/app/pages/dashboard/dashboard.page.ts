@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { StatisticsService } from '../../services/statistics.service';
 import { icons } from 'src/assets/icons';
+import { UsersService } from 'src/app/services/users.service';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { Observable } from 'rxjs';
+import { Users } from 'src/app/models/Users.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,8 +14,19 @@ import { icons } from 'src/assets/icons';
 export class DashboardPage implements OnInit {
 
   icons = icons;
-
-  constructor(private _stats: StatisticsService) { }
+  comSubs: Subscription;
+  isLogged$: Observable<boolean>;
+  public usuario: Users;
+  
+  constructor(public _users: UsersService, private _auth: AuthService) { 
+    this.comSubs = this._auth.getUser().subscribe(
+      (user: Users) => {
+        if (user == null) return;
+        this.usuario = user;
+      },
+      (err) => console.log('Error', err)
+    );
+  }
 
   ngOnInit() {
   }

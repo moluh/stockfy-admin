@@ -12,7 +12,7 @@ export class IsEditingService {
   isEditing$: Observable<any>;
   isEditingSub: Subscription;
 
-  constructor(private store: Store<{ movement: number; isEditing: boolean }>) {
+  constructor(private store: Store<{ isEditing: boolean }>) {
     this.isEditing$ = this.store.select('isEditing');
     this.isEditingSub = this.isEditing$.subscribe();
   }

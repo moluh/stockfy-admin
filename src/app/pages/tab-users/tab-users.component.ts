@@ -21,7 +21,16 @@ const ATTR_LIST = [
   'roles',
   'activo',
 ];
-const ROLES_LIST = ['ADMIN', 'USUARIO', 'OPERARIO', 'INVITADO'];
+const ROLES_LIST = [
+  'SUPERADMIN',
+  'ADMIN',
+  'SUPERVISOR',
+  'EMPLEADO',
+  'EXTERNO',
+  'USUARIO',
+  'INVITADO',
+  'TESTER',
+];
 
 @Component({
   selector: 'app-tab-users',
@@ -118,16 +127,15 @@ export class TabUsersComponent implements OnInit {
   setData(res) {
     this.users = [];
     this.users = res.data;
-    if (!res.ok) return this._api.handleError(res,"","");
+    if (!res.ok) return this._api.handleError(res, '', '');
     else if (res.data.length === 0) {
       this._pag.setBlockBtn(true);
-      return this._api.handleAlert(res,'No se encontraron clientes', '');
+      return this._api.handleAlert(res, 'No se encontraron clientes', '');
     } else {
       return this._pag.setBlockBtn(false);
     }
   }
 
-  
   // next: (resp: any) => {
   //   this._api.handleSuccess(resp, '¡Guardado!', ``);
   //   this.hideModal();

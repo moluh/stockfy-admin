@@ -30,6 +30,12 @@ export class UsersService {
     private router: Router) {
   }
 
+  public hasSuperAdminRole(roles: Role[]) {
+    if (roles)
+      return roles.some(r => r.role === "SUPERADMIN")
+    return false;
+  }
+
   public hasAdminRole(roles: Role[]) {
     if (roles)
       return roles.some(r => r.role === "ADMIN")

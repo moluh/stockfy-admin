@@ -31,13 +31,19 @@
 
       <li class="ml-3">
         <a
-          *ngIf="_users.hasAdminRole(usuario.roles) && usuario.nombre"
+          *ngIf="_users.hasSuperAdminRole(usuario.roles)"
+          class="navbar-brand"
+        >
+          SuperAdmin: {{ usuario.nombre + " " + usuario.apellido }}
+        </a>
+        <a
+          *ngIf="_users.hasAdminRole(usuario.roles)"
           class="navbar-brand"
         >
           Admin: {{ usuario.nombre + " " + usuario.apellido }}
         </a>
         <a
-          *ngIf="_users.hasUserRole(usuario.roles) && usuario.nombre"
+          *ngIf="_users.hasUserRole(usuario.roles)"
           class="navbar-brand"
         >
           {{

@@ -59,6 +59,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
     private _print: PrintMovementService,
     private store: Store<{ movement: number; isEditing: boolean }>
   ) {
+    _dataSource.simpleObject = null;
     this.checkStateMovement();
     this.isEditingForm = { isEditing: false, component: 'Movimientos' };
     _isEditing.setIsEditingForm(this.isEditingForm)
@@ -229,7 +230,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
     this.movement.fecha = dayjs(new Date()).format('YYYY-MM-DD');
     this.movement.hora = dayjs(new Date()).format('HH:mm:ss');
 
-    if (this.delivery)
+    if (this.delivery && this.salesType === "CTACTE")
       this.movement.pagos.push({
         monto: this.delivery,
         fecha: dayjs(new Date()).format('YYYY-MM-DD'),

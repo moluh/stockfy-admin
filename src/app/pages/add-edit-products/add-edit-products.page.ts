@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Brands } from 'src/app/models/Brands.model';
@@ -15,13 +21,14 @@ import { ProvidersService } from 'src/app/services/providers.service';
 import { ToastService } from 'src/app/services/toasts.service';
 import { SizesService } from 'src/app/services/sizes.service';
 import { Sizes } from 'src/app/models/Sizes.model';
+import * as JsBarcode from 'jsbarcode';
 
 @Component({
   selector: 'app-add-edit-products',
   templateUrl: './add-edit-products.page.html',
   styleUrls: ['./add-edit-products.page.scss'],
 })
-export class AddEditProductsPage implements OnInit {
+export class AddEditProductsPage implements OnInit, AfterViewInit {
   isEditing: boolean = false;
   enableEdit: boolean = false;
   productForm: FormGroup;
@@ -33,6 +40,9 @@ export class AddEditProductsPage implements OnInit {
   hasSizes: boolean = false;
   hasSpecifications: boolean = false;
   hasCategories: boolean = false;
+  hasBarCodes: boolean = false;
+  @ViewChild('sku') private sku: ElementRef;
+  @ViewChild('ean') private ean: ElementRef;
 
   constructor(
     private _fb: FormBuilder,
@@ -74,6 +84,33 @@ export class AddEditProductsPage implements OnInit {
 
     // limpiamos la data del objeto del servicio
     this._dataSource.simpleObject = undefined;
+  }
+
+  ngAfterViewInit() {
+    let sku = 'SIN-CODIGOS'; 
+    let ean = '1234567890128';
+
+    if (this.typeForm === 'edit') {
+      sku = this.productForm.get('sku').value;
+      ean = this.productForm.get('ean').value;
+      this.hasBarCodes = true
+    } else {
+      this.hasBarCodes = false;
+    }
+
+    this.setBarCodes(sku, ean);
+  }
+
+  setBarCodes(sku: string, ean: string) {
+    JsBarcode(this.sku.nativeElement, sku, {
+      format: 'CODE128',
+      width: 2,
+    });
+
+    JsBarcode(this.ean.nativeElement, ean, {
+      format: 'EAN13',
+      width: 2,
+    });
   }
 
   loadForm(product) {

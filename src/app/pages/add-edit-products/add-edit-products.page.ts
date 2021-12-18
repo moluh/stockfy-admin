@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Brands } from 'src/app/models/Brands.model';
 import { Categories } from 'src/app/models/Categories.model';
@@ -82,23 +82,22 @@ export class AddEditProductsPage implements OnInit, AfterViewInit {
       this.typeForm = 'new';
     }
 
-    // limpiamos la data del objeto del servicio
-    this._dataSource.simpleObject = undefined;
   }
 
   ngAfterViewInit() {
     let sku = 'SIN-CODIGOS'; 
     let ean = '1234567890128';
-
     if (this.typeForm === 'edit') {
-      sku = this.productForm.get('sku').value;
-      ean = this.productForm.get('ean').value;
+      sku = this._dataSource.simpleObject.sku;
+      ean = this._dataSource.simpleObject.ean;      
       this.hasBarCodes = true
     } else {
       this.hasBarCodes = false;
     }
 
     this.setBarCodes(sku, ean);
+    // limpiamos la data del objeto del servicio
+    this._dataSource.simpleObject = undefined;
   }
 
   setBarCodes(sku: string, ean: string) {
@@ -207,6 +206,7 @@ export class AddEditProductsPage implements OnInit, AfterViewInit {
       precio_venta: [null, [Validators.required]],
       rebaja: [],
       sku: [''],
+      ean: [''],
       stock_actual: ['', [Validators.required]],
       unidad: [1],
       proveedor: this._fb.group({
@@ -214,7 +214,7 @@ export class AddEditProductsPage implements OnInit, AfterViewInit {
         proveedor: [''],
       }),
       marca: this._fb.group({ id: ['', [Validators.required]], marca: [''] }),
-      colores: this._fb.array([this._fb.control('')]),
+      // colores: this._fb.array([this._fb.control('')]),
       disponible: [true],
       archivado: [false],
       imagenes: this._fb.array([]),

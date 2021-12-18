@@ -1,10 +1,32 @@
 <form [formGroup]="productForm" (ngSubmit)="send()">
+    <input
+    id="id"
+    class="form-control form-control-sm"
+    type="text"
+    placeholder="id"
+    formControlName="id"
+    disabled
+  />
   <div class="row p-2 m-4">
     <div class="col-sm-12 col-md-6 col-lg-6">
       <svg id="sku" #sku></svg>
+      <input
+        id="sku"
+        class="form-control form-control-sm"
+        type="text"
+        placeholder="sku"
+        formControlName="sku"
+      />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
       <svg id="ean" #ean></svg>
+      <input
+        id="ean"
+        class="form-control form-control-sm"
+        type="text"
+        placeholder="ean"
+        formControlName="ean"
+      />
     </div>
   </div>
 

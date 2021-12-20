@@ -180,14 +180,14 @@
                 <th scope="col">Precio</th>
                 <!-- <th scope="col">Rebaja</th> -->
                 <th scope="col">Total</th>
-                <th scope="col">Acciones</th>
+                <th scope="col" style="width: 4%;">Acciones</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let prod of movement.movimiento_lineas">
+              <tr *ngFor="let prod of movement.movimiento_lineas; index as i">
                 <td>{{ prod.nombre }}</td>
                 <td>{{ prod.cantidad }}</td>
-                <td>
+                <td style="cursor: pointer;" (click)="changePrice(prod.id_producto, i)">
                   {{ prod.precio_venta | currency: "ARS":"symbol":"2.0" }}
                 </td>
                 <!-- <td>{{ prod.precio_oferta | currency:'ARS':'symbol':'2.0' }}</td> -->

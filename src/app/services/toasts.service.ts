@@ -1,50 +1,46 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import Swal, { SweetAlertOptions } from 'sweetalert2'
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ToastService {
-
-  constructor(
-    private toastr: ToastrService
-  ) { }
+  constructor(private toastr: ToastrService) {}
 
   public toastSuccess(msg1, msg2) {
-    this.toastr.success(`${msg1}`, `${msg2}`)
+    this.toastr.success(`${msg1}`, `${msg2}`);
   }
 
   public toastError(msg1, msg2) {
-    this.toastr.error(`${msg1}`, `${msg2}`)
+    this.toastr.error(`${msg1}`, `${msg2}`);
   }
 
   public toastAlert(msg1, msg2) {
-    this.toastr.info(`${msg1}`, `${msg2}`)
+    this.toastr.info(`${msg1}`, `${msg2}`);
   }
 
-
   public toastErrorSession(msg1, msg2) {
-    this.toastr.error(`${msg1}`, `${msg2}`)
+    this.toastr.error(`${msg1}`, `${msg2}`);
   }
 
   public sweetDelete(): Promise<any> {
     return new Promise((resolve, reject) => {
       Swal.fire({
         title: 'Eliminar',
-        text: "¿Realmente desea eliminar?",
+        text: '¿Realmente desea eliminar?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Sí',
-        cancelButtonText: 'No'
+        cancelButtonText: 'No',
       }).then((result) => {
         if (result.value) {
-          resolve(result.value)
+          resolve(result.value);
         }
       });
-    })
+    });
   }
 
   public sweetConfirm(title: string, text: string): Promise<any> {
@@ -57,13 +53,13 @@ export class ToastService {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Sí',
-        cancelButtonText: 'No'
+        cancelButtonText: 'No',
       }).then((result) => {
         if (result.value) {
-          resolve(result.value)
+          resolve(result.value);
         }
       });
-    })
+    });
   }
 
   public sweetSuccess(msg1, msg2) {
@@ -71,11 +67,10 @@ export class ToastService {
   }
 
   public sweetInterval(progreso: string) {
-
     Swal.fire(<SweetAlertOptions>{
       title: 'Cargando imagen..',
       html: `Por favor espere un momento. ${progreso}`,
-      timer: 2000
+      timer: 2000,
       // onBeforeOpen: () => {
       //   Swal.showLoading()
       // },
@@ -85,15 +80,36 @@ export class ToastService {
     }).then((result) => {
       /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {
-        console.log('I was closed by the timer')
+        console.log('I was closed by the timer');
       }
-    })
+    });
   }
 
-  public sweetAlert(msg1:string,msg2) {
+  public sweetAlert(msg1: string, msg2) {
     Swal.fire({
       title: msg1,
-      text: msg2
+      text: msg2,
+    });
+  }
+
+  public sweetInput(title: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      Swal.fire({
+        title,
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off',
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        showLoaderOnConfirm: true,
+        preConfirm: (input: string) => {
+          return input;
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        if (result.isConfirmed) resolve(result.value);
+      });
     });
   }
 }

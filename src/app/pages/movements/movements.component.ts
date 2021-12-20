@@ -62,11 +62,13 @@ export class MovementsComponent implements OnInit, OnDestroy {
     _dataSource.simpleObject = null;
     this.checkStateMovement();
     this.isEditingForm = { isEditing: false, component: 'Movimientos' };
-    _isEditing.setIsEditingForm(this.isEditingForm)
+    _isEditing.setIsEditingForm(this.isEditingForm);
   }
 
   changeStateForm(isEditing: boolean) {
-    this.store.dispatch(changeStateEditing({ isEditing, component: 'Movimientos' }));
+    this.store.dispatch(
+      changeStateEditing({ isEditing, component: 'Movimientos' })
+    );
   }
 
   ngOnInit(): void {
@@ -74,14 +76,17 @@ export class MovementsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.changeStateForm(false)
+    this.changeStateForm(false);
   }
 
   thereIsStock(): Promise<boolean> {
     return new Promise((resolve) => {
-      this.quantity > this.foundProduct.stock_actual
-        ? resolve(false)
-        : resolve(true);
+      if (this.foundProduct.stock_infinito) resolve(true);
+      else {
+        this.quantity > this.foundProduct.stock_actual
+          ? resolve(false)
+          : resolve(true);
+      }
     });
   }
 
@@ -133,6 +138,23 @@ export class MovementsComponent implements OnInit, OnDestroy {
    * User interactions
    * *************************
    */
+
+  async changePrice(idProduct: number, indexProduct: number) {
+    const newPrice = await this._toast.sweetInput('Valor del producto:');
+
+    const prodToReplace = this.movement.movimiento_lineas.find(
+      (prod) => prod.id_producto === idProduct
+    );
+
+    if (/^\d+$/.test(newPrice)) {
+      // check if it is a number
+      prodToReplace.precio_venta = parseFloat(newPrice);
+      this.calculateTotal();
+    } else {
+      this._toast.toastError('Ingrese un valor numérico', '');
+    }
+  }
+
   async addProductToMovement() {
     this.movement.movimiento_lineas.push({
       id_producto: this.foundProduct.id,
@@ -198,7 +220,6 @@ export class MovementsComponent implements OnInit, OnDestroy {
       },
       (error) => {
         this._toast.toastError('Ocurrió un error.', '');
-        console.log(error);
       }
     );
   }
@@ -230,7 +251,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
     this.movement.fecha = dayjs(new Date()).format('YYYY-MM-DD');
     this.movement.hora = dayjs(new Date()).format('HH:mm:ss');
 
-    if (this.delivery && this.salesType === "CTACTE")
+    if (this.delivery && this.salesType === 'CTACTE')
       this.movement.pagos.push({
         monto: this.delivery,
         fecha: dayjs(new Date()).format('YYYY-MM-DD'),
@@ -343,7 +364,8 @@ export class MovementsComponent implements OnInit, OnDestroy {
   }
 
   validateNumberInput(input) {
-    return typeof input === 'number' ? true : false;
+    return /^\d+$/.test(input);
+    // return typeof input === 'number' ? true : false;
   }
 
   /**

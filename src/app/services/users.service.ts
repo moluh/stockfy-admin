@@ -115,6 +115,8 @@ export class UsersService {
   }
 
   public post(user: Users): Observable<Users> {
+    delete user.id
+    user.activo = true;                            
     return this.http.post<Users>(`${this.url}s`, user, this.httpOptions)
       .pipe(
         map(res => { return <Users>res })

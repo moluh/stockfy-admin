@@ -35,7 +35,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
   attribute: string = 'nombre';
   text: string = '';
   title: string = 'Ventas';
-  eanCode: string;
+  barcode: string;
   salesType: string = 'EFECTIVO';
   commentary: string = '';
 
@@ -70,7 +70,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    document.getElementById('eanCode').focus();
+    document.getElementById('barcode').focus();
   }
 
   ngOnDestroy(): void {
@@ -113,8 +113,8 @@ export class MovementsComponent implements OnInit, OnDestroy {
   resetProduct() {
     this.foundProduct = null;
     this.quantity = null;
-    this.eanCode = '';
-    document.getElementById('eanCode').focus();
+    this.barcode = '';
+    document.getElementById('barcode').focus();
     this.changeStateForm(true);
   }
 
@@ -185,8 +185,8 @@ export class MovementsComponent implements OnInit, OnDestroy {
    * Petitions
    * *************************
    */
-  getProductByEanCode() {
-    this._products.getByEanCode(this.eanCode).subscribe(
+  getProductByCode() {
+    this._products.getByCodes(this.barcode).subscribe(
       (data: any) => {
         if (data.data.length === 0)
           return this._toast.toastError('No se encontró el artículo', '');

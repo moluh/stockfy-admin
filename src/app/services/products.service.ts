@@ -142,9 +142,9 @@ export class ProductsService {
       );
   }
 
-  public getByEanCode(ean: string): Observable<Products> {
+  public getByCodes(barcode: string): Observable<Products> {
     return this.http
-      .get<Products>(`${this.url}/ean/${ean}`, this.httpOptions)
+      .get<Products>(`${this.url}/barcode/${barcode}`, this.httpOptions)
       .pipe(
         map((res) => {
           return <Products>res;

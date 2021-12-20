@@ -5,7 +5,14 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Brands } from 'src/app/models/Brands.model';
 import { Categories } from 'src/app/models/Categories.model';
@@ -81,16 +88,15 @@ export class AddEditProductsPage implements OnInit, AfterViewInit {
     } else {
       this.typeForm = 'new';
     }
-
   }
 
   ngAfterViewInit() {
-    let sku = 'SIN-CODIGOS'; 
+    let sku = 'SIN-CODIGOS';
     let ean = '1234567890128';
     if (this.typeForm === 'edit') {
       sku = this._dataSource.simpleObject.sku;
-      ean = this._dataSource.simpleObject.ean;      
-      this.hasBarCodes = true
+      ean = this._dataSource.simpleObject.ean;
+      this.hasBarCodes = true;
     } else {
       this.hasBarCodes = false;
     }
@@ -101,13 +107,15 @@ export class AddEditProductsPage implements OnInit, AfterViewInit {
   }
 
   setBarCodes(sku: string, ean: string) {
+    let eanFormat = 'EAN' + ean.length;
+    if (ean.length === 7 || ean.length === 8) eanFormat = 'EAN8';
     JsBarcode(this.sku.nativeElement, sku, {
       format: 'CODE128',
       width: 2,
     });
 
     JsBarcode(this.ean.nativeElement, ean, {
-      format: 'EAN13',
+      format: eanFormat,
       width: 2,
     });
   }
@@ -208,6 +216,7 @@ export class AddEditProductsPage implements OnInit, AfterViewInit {
       sku: [''],
       ean: [''],
       stock_actual: ['', [Validators.required]],
+      stock_infinito: [false],
       unidad: [1],
       proveedor: this._fb.group({
         id: ['', [Validators.required]],

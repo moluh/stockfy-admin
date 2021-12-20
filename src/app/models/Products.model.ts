@@ -21,6 +21,7 @@ export class Products {
   sku?: string;
   ean?: string;
   stock_actual?: number;
+  stock_infinito?: boolean;
   proveedor: Providers;
   marca: Brands;
   categoria_uno: Categories;

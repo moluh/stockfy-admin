@@ -98,7 +98,9 @@ export class MovementsComponent implements OnInit, OnDestroy {
   calculateTotal() {
     let total = 0;
     this.movement?.movimiento_lineas?.map((p) => {
-      total += p.cantidad * p.precio_venta;
+      if (p.porcentaje !== 0)
+        total += p.cantidad * (p.precio_venta + p.precio_venta * p.porcentaje);
+      else total += p.cantidad * p.precio_venta;
     });
 
     this.isDiscountAvailable
@@ -142,13 +144,33 @@ export class MovementsComponent implements OnInit, OnDestroy {
   async changePrice(idProduct: number, indexProduct: number) {
     const newPrice = await this._toast.sweetInput('Valor del producto:');
 
-    const prodToReplace = this.movement.movimiento_lineas.find(
+    const productToUpdate = this.movement.movimiento_lineas.find(
       (prod) => prod.id_producto === idProduct
     );
 
     if (/^\d+$/.test(newPrice)) {
       // check if it is a number
-      prodToReplace.precio_venta = parseFloat(newPrice);
+      productToUpdate.precio_venta = parseFloat(newPrice);
+      this.calculateTotal();
+    } else {
+      this._toast.toastError('Ingrese un valor numérico', '');
+    }
+  }
+
+  async applyPercentage(idProduct: number, indexProduct: number) {
+    let percentage = await this._toast.sweetInput('Porcentaje:');
+    const productToUpdate = this.movement.movimiento_lineas.find(
+      (prod) => prod.id_producto === idProduct
+    );
+
+    if (/^-?\d*\.?\d+$/.test(percentage) && productToUpdate) {
+      // check if it is a number
+      if (percentage.includes('-')) {
+        percentage = percentage.substring(1);
+        productToUpdate.porcentaje = parseFloat('-0.' + percentage);
+      } else {
+        productToUpdate.porcentaje = parseFloat('0.' + percentage);
+      }
       this.calculateTotal();
     } else {
       this._toast.toastError('Ingrese un valor numérico', '');
@@ -303,9 +325,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
 
     if (
       this.quantity === 0 ||
-      this.quantity === undefined ||
-      !this.quantity ||
-      typeof this.quantity === 'string'
+      !this.isNumber(this.quantity)
     )
       return this._toast.toastAlert('Ingrese la cantidad', '');
 
@@ -363,9 +383,8 @@ export class MovementsComponent implements OnInit, OnDestroy {
     else this.post();
   }
 
-  validateNumberInput(input) {
+  isNumber(input) {
     return /^\d+$/.test(input);
-    // return typeof input === 'number' ? true : false;
   }
 
   /**

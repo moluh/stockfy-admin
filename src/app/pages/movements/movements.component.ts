@@ -99,10 +99,8 @@ export class MovementsComponent implements OnInit, OnDestroy {
     let total = 0;
     this.movement?.movimiento_lineas?.map((p) => {
       if (p.porcentaje !== 0) {
-        console.log('entra porcentaje !== 0');
         total +=
           p.cantidad * p.precio_venta + p.precio_venta * (p.porcentaje / 100);
-        console.log('total', total);
       } else total += p.cantidad * p.precio_venta;
     });
 

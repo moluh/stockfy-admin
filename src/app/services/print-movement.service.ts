@@ -14,11 +14,15 @@ export class PrintMovementService {
   getDocumentDefinition(movement: Movements) {
     return {
       content: [
+        /**
+         * =====================================
+         * SECCION DATOS DEL MOVIMIENTO
+         * =====================================
+         */
         {
           text: 'Datos del movimiento',
           style: 'header',
         },
-
         {
           //  layout: 'noBorders',
           table: {
@@ -95,7 +99,11 @@ export class PrintMovementService {
             ],
           },
         },
-
+        /**
+         * =====================================
+         * SECCION LISTA DE PRODUCTOS
+         * =====================================
+         */
         {
           text: 'Productos',
           style: 'header',
@@ -103,7 +111,7 @@ export class PrintMovementService {
         {
           table: {
             headerRows: 1,
-            widths: ['auto', '55%', 'auto', '15%', '15%'],
+            widths: ['auto', '45%', 'auto', 'auto', '15%', '15%'],
             body: [
               [
                 {
@@ -112,6 +120,10 @@ export class PrintMovementService {
                 },
                 {
                   text: 'Título',
+                  style: 'tableHeader',
+                },
+                {
+                  text: '%',
                   style: 'tableHeader',
                 },
                 {
@@ -131,6 +143,7 @@ export class PrintMovementService {
                 return [
                   { text: p.id_producto, style: 'tableDescription' },
                   { text: p.nombre, style: 'tableDescription' },
+                  { text: p.porcentaje, style: 'tableDescription' },
                   { text: p.cantidad, style: 'tableDescription' },
                   {
                     text: `$${p.precio_venta.toFixed(2)}`,
@@ -145,6 +158,11 @@ export class PrintMovementService {
             ],
           },
         },
+        /**
+         * =====================================
+         * SECCION LISTA DE PAGOS
+         * =====================================
+         */
         movement.pagos.length > 0
           ? {
               text: 'Pagos',

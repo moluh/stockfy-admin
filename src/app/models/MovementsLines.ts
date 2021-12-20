@@ -8,5 +8,6 @@ export class MovementsLines {
     descripcion?: string;
     precio_venta?: number;
     precio_oferta?: number;
+    porcentaje?: number;
     oferta?: false;
 }

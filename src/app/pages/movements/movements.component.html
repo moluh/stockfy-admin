@@ -201,6 +201,9 @@
                   <button class="btn btn-sm btn-block btn-danger" (click)="deleteProduct(prod)">
                     <app-icon [iconName]="'times'"></app-icon>
                   </button>
+                  <button class="btn btn-sm btn-block btn-primary" (click)="applyPercentage(prod.id_producto, i)">
+                    %
+                  </button>
                 </td>
               </tr>
             </tbody>

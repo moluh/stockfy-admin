@@ -98,9 +98,12 @@ export class MovementsComponent implements OnInit, OnDestroy {
   calculateTotal() {
     let total = 0;
     this.movement?.movimiento_lineas?.map((p) => {
-      if (p.porcentaje !== 0)
-        total += p.cantidad * (p.precio_venta + p.precio_venta * p.porcentaje);
-      else total += p.cantidad * p.precio_venta;
+      if (p.porcentaje !== 0) {
+        console.log('entra porcentaje !== 0');
+        total +=
+          p.cantidad * p.precio_venta + p.precio_venta * (p.porcentaje / 100);
+        console.log('total', total);
+      } else total += p.cantidad * p.precio_venta;
     });
 
     this.isDiscountAvailable
@@ -164,13 +167,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
     );
 
     if (/^-?\d*\.?\d+$/.test(percentage) && productToUpdate) {
-      // check if it is a number
-      if (percentage.includes('-')) {
-        percentage = percentage.substring(1);
-        productToUpdate.porcentaje = parseFloat('-0.' + percentage);
-      } else {
-        productToUpdate.porcentaje = parseFloat('0.' + percentage);
-      }
+      productToUpdate.porcentaje = parseFloat(percentage);
       this.calculateTotal();
     } else {
       this._toast.toastError('Ingrese un valor numérico', '');
@@ -187,6 +184,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
       descripcion: this.foundProduct.descripcion,
       precio_venta: this.foundProduct.precio_venta,
       precio_oferta: this.foundProduct.rebaja,
+      porcentaje: 0,
       oferta: false,
     });
 
@@ -323,10 +321,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
     if (!this.foundProduct)
       return this._toast.toastError('No se encontró el artículo', '');
 
-    if (
-      this.quantity === 0 ||
-      !this.isNumber(this.quantity)
-    )
+    if (this.quantity === 0 || !this.isNumber(this.quantity))
       return this._toast.toastAlert('Ingrese la cantidad', '');
 
     // iniciamos el array de lineas

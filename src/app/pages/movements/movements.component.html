@@ -5,25 +5,47 @@
     <div class="row">
       <div class="col-sm-12 col-md-6 col-lg-6">
         <label for="barcode">Código</label>
-        <input id="barcode" type="text" class="form-control form-control-sm" placeholder="Código" [(ngModel)]="barcode"
-          (change)="getProductByCode()" (keyup.enter)="getProductByCode()" />
+        <input
+          id="barcode"
+          type="text"
+          class="form-control form-control-sm"
+          placeholder="Código"
+          [(ngModel)]="barcode"
+          (change)="getProductByCode()"
+          (keyup.enter)="getProductByCode()"
+        />
       </div>
       <div class="col-sm-12 col-md-3 col-lg-3">
         <label for="quantity">Cant.</label>
-        <input id="quantity" type="number" class="form-control form-control-sm" placeholder="Cant."
-          [(ngModel)]="quantity" (keyup.enter)="validateProductToPush(); changeStateForm(true)" />
+        <input
+          id="quantity"
+          type="number"
+          class="form-control form-control-sm"
+          placeholder="Cant."
+          [(ngModel)]="quantity"
+          (keyup.enter)="validateProductToPush(); changeStateForm(true)"
+        />
       </div>
       <div class="col-sm-12 col-md-3 col-lg-3">
         <label for="agregar">Agregar</label>
-        <button id="agregar" type="button" class="btn btn-sm btn-block btn-primary" (click)="validateProductToPush()"
-          (keyup.enter)="validateProductToPush(); changeStateForm(true)">
+        <button
+          id="agregar"
+          type="button"
+          class="btn btn-sm btn-block btn-primary"
+          (click)="validateProductToPush()"
+          (keyup.enter)="validateProductToPush(); changeStateForm(true)"
+        >
           <app-icon [iconName]="'plus'"></app-icon>
         </button>
       </div>
       <!-- *ngIf="showFilter" -->
       <div class="col-md-6 mt-3">
         <label for="attribute">Búsqueda por</label>
-        <select class="form-control form-control-sm" id="attribute" [(ngModel)]="attribute">
+        <select
+          class="form-control form-control-sm"
+          id="attribute"
+          [(ngModel)]="attribute"
+        >
           <option value="nombre" selected>Nombre</option>
           <option value="descripcion">Descripción</option>
           <option value="codigo_fabricante">Cod. fabricante</option>
@@ -31,8 +53,14 @@
       </div>
       <div class="col-md-6 mt-3">
         <label for="text">Filtrar</label>
-        <input id="text" type="text" class="form-control form-control-sm" placeholder="Buscar.." [(ngModel)]="text"
-          (keyup)="getPaginatedByTxt()" />
+        <input
+          id="text"
+          type="text"
+          class="form-control form-control-sm"
+          placeholder="Buscar.."
+          [(ngModel)]="text"
+          (keyup)="getPaginatedByTxt()"
+        />
       </div>
       <!-- *ngIf="foundProduct" -->
       <div class="col-md-12 mt-2">
@@ -50,8 +78,15 @@
         <div>
           <label for="text">Artículos filtrados</label>
           <div class="card-container">
-            <div class="m-2 card shadow" *ngFor="let prod of products"
-              (click)="setProduct(prod); showFilter = !showFilter; changeStateForm(true)">
+            <div
+              class="m-2 card shadow"
+              *ngFor="let prod of products"
+              (click)="
+                setProduct(prod);
+                showFilter = !showFilter;
+                changeStateForm(true)
+              "
+            >
               <div>{{ prod.nombre }}</div>
               <div>
                 <b>{{ prod.precio_venta | currency: "ARS":"symbol":"1.0" }} </b>
@@ -59,9 +94,9 @@
               </div>
               <div>
                 {{
-                prod.descripcion.length > 30
-                ? (prod.descripcion | slice: 0:30) + "..."
-                : prod.descripcion
+                  prod.descripcion.length > 30
+                    ? (prod.descripcion | slice: 0:30) + "..."
+                    : prod.descripcion
                 }}
               </div>
             </div>
@@ -76,7 +111,12 @@
         <label for="salesType">
           Cond. venta <span class="text-danger"> *</span>
         </label>
-        <select class="form-control form-control-sm" id="salesType" (change)="checkSalesType(); changeStateForm(true)" [(ngModel)]="salesType">
+        <select
+          class="form-control form-control-sm"
+          id="salesType"
+          (change)="checkSalesType(); changeStateForm(true)"
+          [(ngModel)]="salesType"
+        >
           <option value="EFECTIVO" selected>Efectivo</option>
           <option value="CTACTE">Cuenta corriente</option>
           <option value="TARJETA">Tarjeta</option>
@@ -85,18 +125,39 @@
       <!-- *ngIf="movement.estado === 'PENDIENTE'" -->
       <div class="col-sm-12 col-md-4 col-lg-4">
         <label for="delivery">Entrega:</label>
-        <input [disabled]="movement.estado !== 'PENDIENTE'" id="delivery" type="number"
-          class="form-control form-control-sm" [(ngModel)]="delivery" (keyup)="calculateTotal()"
-          (change)="calculateTotal()" placeholder="$" />
+        <input
+          [disabled]="movement.estado !== 'PENDIENTE'"
+          id="delivery"
+          type="number"
+          class="form-control form-control-sm"
+          [(ngModel)]="delivery"
+          (keyup)="calculateTotal()"
+          (change)="calculateTotal()"
+          placeholder="$"
+        />
       </div>
       <div class="col-sm-12 col-md-4 col-lg-4">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="descuento" (change)="applyDiscountChange()" />
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="descuento"
+            (change)="applyDiscountChange()"
+          />
           <label class="form-check-label" for="descuento"> Descuento </label>
         </div>
         <div class="mt-2">
-          <input [disabled]="!isDiscountAvailable" id="text" type="number" class="form-control form-control-sm"
-            [(ngModel)]="discount" (keyup)="calculateTotal()" (change)="calculateTotal()" placeholder="$" />
+          <input
+            [disabled]="!isDiscountAvailable"
+            id="text"
+            type="number"
+            class="form-control form-control-sm"
+            [(ngModel)]="discount"
+            (keyup)="calculateTotal()"
+            (change)="calculateTotal()"
+            placeholder="$"
+          />
         </div>
       </div>
     </div>
@@ -105,15 +166,25 @@
         <label>Cliente <span class="text-danger"> *</span></label>
       </div>
       <div class="col-sm-2 col-md-2 col-lg-2">
-        <button type="button" id="client" class="btn btn-block btn-outline-primary btn-sm" data-toggle="modal"
-          data-target="#selectClient">
+        <button
+          type="button"
+          id="client"
+          class="btn btn-block btn-outline-primary btn-sm"
+          data-toggle="modal"
+          data-target="#selectClient"
+        >
           <app-icon [iconName]="'search'"></app-icon>
           <!-- Seleccionar -->
         </button>
       </div>
       <div class="col-sm-2 col-md-2 col-lg-2">
-        <button type="button" id="client" class="btn btn-block btn-outline-primary btn-sm" data-toggle="modal"
-          data-target="#addClient">
+        <button
+          type="button"
+          id="client"
+          class="btn btn-block btn-outline-primary btn-sm"
+          data-toggle="modal"
+          data-target="#addClient"
+        >
           <app-icon [iconName]="'plus'"></app-icon>
           <!-- Nuevo -->
         </button>
@@ -121,18 +192,24 @@
       <div class="mt-3 mb-3 col-sm-12 col-md-12 col-lg-12">
         <p>
           {{
-          !_dataSource.simpleObject?.nombre
-          ? "Seleccione un usuario"
-          : _dataSource.simpleObject?.nombre +
-          " " +
-          _dataSource.simpleObject?.apellido
+            !_dataSource.simpleObject?.nombre
+              ? "Seleccione un usuario"
+              : _dataSource.simpleObject?.nombre +
+                " " +
+                _dataSource.simpleObject?.apellido
           }}
         </p>
       </div>
     </div>
     <!-- find client Modal  -->
-    <div class="modal fade bd-example-modal-lg" id="selectClient" tabindex="-1" role="dialog"
-      aria-labelledby="selectClient" aria-hidden="true">
+    <div
+      class="modal fade bd-example-modal-lg"
+      id="selectClient"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="selectClient"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content p-4">
           <app-title-section [title]="'Buscar usuario'"></app-title-section>
@@ -141,8 +218,14 @@
       </div>
     </div>
     <!-- add edit client Modal  -->
-    <div class="modal fade bd-example-modal-lg" id="addClient" tabindex="-1" role="dialog" aria-labelledby="addClient"
-      aria-hidden="true">
+    <div
+      class="modal fade bd-example-modal-lg"
+      id="addClient"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addClient"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content p-4">
           <app-title-section [title]="'Agregar usuario'"></app-title-section>
@@ -156,54 +239,79 @@
         <div class="form-group">
           <label for="descrip" (click)="showHideDescription()">
             Descripción
-            <app-icon *ngIf="!showDescription" [iconName]="'chevDown'"></app-icon>
+            <app-icon
+              *ngIf="!showDescription"
+              [iconName]="'chevDown'"
+            ></app-icon>
             <app-icon *ngIf="showDescription" [iconName]="'chevUp'"></app-icon>
           </label>
-          <textarea *ngIf="showDescription" class="form-control" id="descrip" rows="3"
-            [(ngModel)]="commentary" (change)="changeStateForm(true)"></textarea>
+          <textarea
+            *ngIf="showDescription"
+            class="form-control"
+            id="descrip"
+            rows="3"
+            [(ngModel)]="commentary"
+            (change)="changeStateForm(true)"
+          ></textarea>
         </div>
       </div>
     </div>
 
     <div class="row" *ngIf="movement?.movimiento_lineas?.length > 0">
       <div class="col-sm-12 col-md-12 col-lg-12">
-        <div id="table" class="
+        <div
+          id="table"
+          class="
             table-responsive table-sm table-striped
             uk-table-condensed
             my-custom-scrollbar
-          ">
+          "
+        >
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Cant.</th>
+                <th scope="col" style="width: 35%">Nombre</th>
+                <!-- <th scope="col">Cant.</th> -->
+                <th scope="col">%</th>
                 <th scope="col">Precio</th>
                 <!-- <th scope="col">Rebaja</th> -->
                 <th scope="col">Total</th>
-                <th scope="col" style="width: 4%;">Acciones</th>
+                <th scope="col" style="width: 2%">Acciones</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let prod of movement.movimiento_lineas; index as i">
                 <td>{{ prod.nombre }}</td>
-                <td>{{ prod.cantidad }}</td>
-                <td style="cursor: pointer;" (click)="changePrice(prod.id_producto, i)">
-                  {{ prod.precio_venta | currency: "ARS":"symbol":"2.0" }}
+                <td
+                  style="cursor: pointer"
+                  (click)="applyPercentage(prod.id_producto, i)"
+                >
+                  %{{ prod.porcentaje }}
+                </td>
+                <td
+                  style="cursor: pointer"
+                  (click)="changePrice(prod.id_producto, i)"
+                >
+                  {{ prod.precio_venta | currency: "ARS":"symbol":"2.0" }} x
+                  {{ prod.cantidad }}
                 </td>
                 <!-- <td>{{ prod.precio_oferta | currency:'ARS':'symbol':'2.0' }}</td> -->
                 <td>
                   {{
-                  prod.precio_venta * prod.cantidad
-                  | currency: "ARS":"symbol":"2.0"
+                    prod.precio_venta * prod.cantidad
+                      | currency: "ARS":"symbol":"2.0"
                   }}
                 </td>
                 <td>
-                  <button class="btn btn-sm btn-block btn-danger" (click)="deleteProduct(prod)">
+                  <button
+                    class="btn btn-sm btn-block btn-danger"
+                    (click)="deleteProduct(prod)"
+                  >
                     <app-icon [iconName]="'times'"></app-icon>
                   </button>
-                  <button class="btn btn-sm btn-block btn-primary" (click)="applyPercentage(prod.id_producto, i)">
+                  <!-- <button class="btn btn-sm btn-block btn-primary" (click)="applyPercentage(prod.id_producto, i)">
                     %
-                  </button>
+                  </button> -->
                 </td>
               </tr>
             </tbody>
@@ -213,24 +321,37 @@
     </div>
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12">
-        <div class="alert alert-total d-flex justify-content-between" id="alertTotal" role="alert">
-          <h5 class="text-center" *ngIf="
+        <div
+          class="alert alert-total d-flex justify-content-between"
+          id="alertTotal"
+          role="alert"
+        >
+          <h5
+            class="text-center"
+            *ngIf="
               movement?.movimiento_lineas?.length === 0 ||
               movement?.movimiento_lineas === undefined
-            ">
+            "
+          >
             Sin artículos cargados
           </h5>
-          <h5 class="text-center" *ngIf="
+          <h5
+            class="text-center"
+            *ngIf="
               movement?.movimiento_lineas?.length > 0 &&
               movement?.movimiento_lineas !== undefined
-            ">
+            "
+          >
             Total: {{ totalOfSale | currency: "ARS":"symbol":"2.0" }}
           </h5>
-          <h5 class="text-center" *ngIf="
+          <h5
+            class="text-center"
+            *ngIf="
               movement?.movimiento_lineas?.length > 0 &&
               movement?.saldo > 0 &&
               movement?.saldo !== null
-            ">
+            "
+          >
             Saldo: {{ movement?.saldo | currency: "ARS":"symbol":"2.0" }}
           </h5>
         </div>
@@ -238,8 +359,12 @@
 
       <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="mt-2 mb-3">
-          <button style="font-size: larger" type="button" class="btn btn-sm btn-block btn-success"
-            (click)="isValidMovement()">
+          <button
+            style="font-size: larger"
+            type="button"
+            class="btn btn-sm btn-block btn-success"
+            (click)="isValidMovement()"
+          >
             Confirmar movimiento
           </button>
         </div>

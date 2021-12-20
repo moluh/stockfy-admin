@@ -190,8 +190,8 @@ export class MovementsComponent implements OnInit, OnDestroy {
       (data: any) => {
         if (data.data.length === 0)
           return this._toast.toastError('No se encontró el artículo', '');
-        else if (data.data.id) {
-          this.setProduct(data.data);
+        else {
+          this.setProduct(data.data[0]);
           this.quantity = 1;
           document.getElementById('quantity').focus();
         }

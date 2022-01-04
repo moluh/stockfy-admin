@@ -5,14 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Brands } from 'src/app/models/Brands.model';
 import { Categories } from 'src/app/models/Categories.model';
@@ -94,8 +87,10 @@ export class AddEditProductsPage implements OnInit, AfterViewInit {
     let sku = 'SIN-CODIGOS';
     let ean = '1234567890128';
     if (this.typeForm === 'edit') {
-      sku = this._dataSource.simpleObject.sku;
-      ean = this._dataSource.simpleObject.ean;
+      if (this._dataSource.simpleObject.sku)
+        sku = this._dataSource.simpleObject.sku;
+      if (this._dataSource.simpleObject.ean)
+        ean = this._dataSource.simpleObject.ean;
       this.hasBarCodes = true;
     } else {
       this.hasBarCodes = false;
@@ -107,15 +102,18 @@ export class AddEditProductsPage implements OnInit, AfterViewInit {
   }
 
   setBarCodes(sku: string, ean: string) {
-    let eanFormat = 'EAN' + ean.length;
-    if (ean.length === 7 || ean.length === 8) eanFormat = 'EAN8';
+    let eanFormat = '';
+    if (ean) {
+      eanFormat = 'EAN' + ean.length;
+      if (ean.length === 7 || ean.length === 8) eanFormat = 'EAN8';
+      JsBarcode(this.ean.nativeElement, ean, {
+        format: eanFormat,
+        width: 2,
+      });
+    }
+
     JsBarcode(this.sku.nativeElement, sku, {
       format: 'CODE128',
-      width: 2,
-    });
-
-    JsBarcode(this.ean.nativeElement, ean, {
-      format: eanFormat,
       width: 2,
     });
   }

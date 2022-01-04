@@ -1,36 +1,20 @@
 <form [formGroup]="productForm" (ngSubmit)="send()">
-    <input
-    id="id"
-    class="form-control form-control-sm"
-    type="text"
-    placeholder="id"
-    formControlName="id"
-    disabled
-  />
-  <div class="row p-2 m-4">
-    <div class="col-sm-12 col-md-6 col-lg-6">
-      <svg id="sku" #sku></svg>
+  <div class="row p-2 m-2">
+    <div *ngIf="productForm.controls['id'].value" class="col-sm-12 col-md-12 col-lg-12">
+      <label for="id">
+        ID: <b> {{ productForm.controls["id"].value }} </b>
+      </label>
       <input
-        id="sku"
+        id="id"
         class="form-control form-control-sm"
         type="text"
-        placeholder="sku"
-        formControlName="sku"
+        placeholder="id"
+        formControlName="id"
+        disabled
+        hidden
       />
     </div>
-    <div class="col-sm-12 col-md-6 col-lg-6">
-      <svg id="ean" #ean></svg>
-      <input
-        id="ean"
-        class="form-control form-control-sm"
-        type="text"
-        placeholder="ean"
-        formControlName="ean"
-      />
-    </div>
-  </div>
 
-  <div class="row p-2 m-4">
     <div class="col-sm-12 col-md-12 col-lg-12">
       <label for="nombre">Nombre <b class="text-danger">*</b></label>
       <input
@@ -58,8 +42,8 @@
       </textarea>
       <!-- <small *ngIf="descripNoValida" class="text-danger">Descripción Inválido</small> -->
     </div>
-    
-    <div class="col-sm-12 col-md-3 col-lg-3">
+
+    <div class="col-sm-12 col-md-3 col-lg-3 mt-2">
       <div class="form-check">
         <input
           formControlName="stock_infinito"
@@ -69,7 +53,9 @@
           id="stock_infinito"
           (change)="isEditing = true"
         />
-        <label class="form-check-label" for="stock_infinito"> Stock Infinito </label>
+        <label class="form-check-label" for="stock_infinito">
+          Stock Infinito
+        </label>
       </div>
     </div>
 
@@ -342,6 +328,35 @@
         (change)="isEditing = true"
       >
       </textarea>
+    </div>
+  </div>
+
+  <div class="row p-2 m-4">
+    
+    <div class="col-sm-12 col-md-6 col-lg-6">
+      <label for="sku">SKU</label>  
+      <br>   
+      <svg id="sku" #sku></svg>
+      <input
+        id="sku"
+        class="form-control form-control-sm mt-2"
+        type="text"
+        placeholder="sku"
+        formControlName="sku"
+      />
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+      <label for="ean">EAN</label>
+      <br>   
+      <svg id="ean" #ean></svg>
+      <input
+        id="ean"
+        class="form-control form-control-sm mt-2"
+        type="text"
+        placeholder="ean"
+        formControlName="ean"
+      />
     </div>
   </div>
 

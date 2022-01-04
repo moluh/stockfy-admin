@@ -25,107 +25,130 @@ import { TabSizesComponent } from './pages/tab-sizes/tab-sizes.component';
 import { ExpensesComponent } from './pages/expenses/expenses.component';
 import { AddEditExpensesComponent } from './pages/add-edit-expenses/add-edit-expenses.component';
 
-
 const routes: Routes = [
-  { path: 'dashboard', component: DashboardPage, canActivate: [CanActivateService] },
-  { path: 'ventas', component: MovementsComponent, canActivate: [CanActivateService] },
+  {
+    path: 'dashboard',
+    component: DashboardPage,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: 'ventas',
+    component: MovementsComponent,
+    canActivate: [CanActivateService],
+  },
   {
     path: 'gastos',
-    component: ExpensesComponent, canActivate: [CanActivateService],
+    component: ExpensesComponent,
+    canActivate: [CanActivateService],
     children: [
       {
         path: 'add-edit-expenses',
-        component: AddEditExpensesComponent
-      }
-
-    ]
-
+        component: AddEditExpensesComponent,
+      },
+    ],
   },
   {
     path: 'productos',
-    component: ProductsPage, canActivate: [CanActivateService],
+    component: TabProductsComponent,
+    canActivate: [CanActivateService],
     children: [
       {
-        path: 'tab-productos',
-        component: TabProductsComponent,
-        children: [
-          {
-            path: 'add-edit-productos',
-            component: AddEditProductsPage
-          }
-        ]
+        path: 'add-edit-productos',
+        component: AddEditProductsPage,
       },
+    ],
+  },
+  {
+    path: 'categorias',
+    component: TabCategoriesComponent,
+    canActivate: [CanActivateService],
+    children: [
       {
-        path: 'tab-categorias',
-        component: TabCategoriesComponent,
-        children: [
-          {
-            path: 'add-edit-categorias',
-            component: AddEditCategoriesComponent
-          }
-        ]
+        path: 'add-edit-categorias',
+        component: AddEditCategoriesComponent,
       },
+    ],
+  },
+  {
+    path: 'marcas',
+    component: TabBrandsComponent,
+    canActivate: [CanActivateService],
+    children: [
       {
-        path: 'tab-marcas',
-        component: TabBrandsComponent,
-        children: [
-          {
-            path: 'add-edit-marcas',
-            component: AddEditBrandsComponent
-          }
-        ]
+        path: 'add-edit-marcas',
+        component: AddEditBrandsComponent,
       },
+    ],
+  },
+  {
+    path: 'talles',
+    component: TabSizesComponent,
+    canActivate: [CanActivateService],
+    children: [
       {
-        path: 'tab-talles',
-        component: TabSizesComponent,
-        children: [
-          {
-            path: 'add-edit-talles',
-            component: AddEditSizesComponent
-          }
-        ]
+        path: 'add-edit-talles',
+        component: AddEditSizesComponent,
       },
+    ],
+  },
+  {
+    path: 'proveedores',
+    component: TabProvidersComponent,
+    canActivate: [CanActivateService],
+    children: [
       {
-        path: 'tab-proveedores',
-        component: TabProvidersComponent,
-        children: [
-          {
-            path: 'add-edit-proveedores',
-            component: AddEditProvidersComponent
-          }
-        ]
-      }
-    ]
+        path: 'add-edit-proveedores',
+        component: AddEditProvidersComponent,
+      },
+    ],
   },
   {
     path: 'usuarios',
-    component: UsersPage, canActivate: [CanActivateService],
+    component: UsersPage,
+    canActivate: [CanActivateService],
     children: [
       {
         path: 'tab-usuarios',
         component: TabUsersComponent,
+        canActivate: [CanActivateService],
         children: [
           {
             path: 'add-edit-usuarios',
-            component: AddEditUsersComponent
-          }
-        ]
+            component: AddEditUsersComponent,
+          },
+        ],
       },
-    ]
+    ],
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'movimientos-lista', component: MovementsListComponent },
-  { path: 'estadisticas', component: StatisticsComponent },
-  { path: 'configuraciones', component: ConfigurationsComponent },
+  {
+    path: 'movimientos-lista',
+    component: MovementsListComponent,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: 'estadisticas',
+    component: StatisticsComponent,
+    canActivate: [CanActivateService],
+  },
+  {
+    path: 'configuraciones',
+    component: ConfigurationsComponent,
+    canActivate: [CanActivateService],
+  },
 
+  { path: 'login', component: LoginComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'dashboard' },
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
-
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true, initialNavigation: 'enabled', relativeLinkResolution: 'legacy' })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      useHash: true,
+      initialNavigation: 'enabled',
+      relativeLinkResolution: 'legacy',
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
-
+export class AppRoutingModule {}

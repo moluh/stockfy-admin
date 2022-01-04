@@ -1,11 +1,9 @@
 @import 'src/assets/styles/variables.scss';
 
 .navbar {
-  height: 60px;
-  border-color: $primary-color;
-  // border-top-width: 5px;
-  // border-top-style: solid;
-  color: $primary-font-color;
+  height: 40px;  
+  background: $primary-color;  /* fallback for old browsers */
+  color: $white;
 }
 
 .btn-bars {

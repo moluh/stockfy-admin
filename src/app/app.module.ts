@@ -61,6 +61,7 @@ import { ExpensesComponent } from './pages/expenses/expenses.component';
 import { AddEditExpensesComponent } from './pages/add-edit-expenses/add-edit-expenses.component';
 import { AddEditPaymentsComponent } from './pages/add-edit-payments/add-edit-payments.component';
 import { SeeMovementComponent } from './pages/see-movement/see-movement.component';
+import { ExpandedListItemComponent } from './components/expanded-list-item/expanded-list-item.component';
 
 
 @NgModule({
@@ -98,6 +99,7 @@ import { SeeMovementComponent } from './pages/see-movement/see-movement.componen
     AddEditExpensesComponent,
     AddEditPaymentsComponent,
     SeeMovementComponent,
+    ExpandedListItemComponent,
   ],
   imports: [
     CommonModule,

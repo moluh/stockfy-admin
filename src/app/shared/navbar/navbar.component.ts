@@ -14,13 +14,14 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   icons = icons;
-  side: boolean = true;
+  // side: boolean = true;
   ulMobile: boolean = false;
   comSubs: Subscription;
   isLogged$: Observable<boolean>;
   usuario: Users;
 
-  constructor(public auth: AuthService, public _side: SidebarService,
+  constructor(public auth: AuthService,
+    // public _side: SidebarService,
     public _users: UsersService) {
     this.comSubs = this.auth.getUser().subscribe({
       next: (user: Users) => {        
@@ -31,7 +32,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       error: () => {},
     });
 
-    this._side.setShowSide(true);
+    // this._side.setShowSide(true);
   }
 
   setUlMobile() {
@@ -46,10 +47,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     );
   }
 
-  setSide() {
-    this.side ? this._side.setShowSide(false) : this._side.setShowSide(true);
-    this.side = !this.side;
-  }
+  // setSide() {
+  //   this.side ? this._side.setShowSide(false) : this._side.setShowSide(true);
+  //   this.side = !this.side;
+  // }
 
   ngOnDestroy(): void {
     this.comSubs.unsubscribe();

@@ -6,6 +6,14 @@
     }"
     class="animated fadeInLeft"
   >
+    <li class="d-flex align-items-center" (click)="setSide()">
+      <div class="li-icon m-2">
+        <app-icon [iconName]="'bars'" [iconSize]="18"></app-icon>
+      </div>
+      <div *ngIf="showDescrip" class="li-descrip">
+        <img src="assets/images/logo.png" width="100" />
+      </div>
+    </li>
     <li
       (click)="goTo('dashboard'); urlActive = 'dashboard'"
       class="dir d-flex align-items-center"
@@ -60,15 +68,19 @@
       </div>
     </li>
 
+    <!-- (click)="goTo('productos'); urlActive = 'productos'"
+    (click)="showTable()" -->
     <li
-      *ngIf="_users.hasSuperAdminRole(usuario.roles) || _users.hasAdminRole(usuario.roles)"
-      (click)="goTo('productos'); urlActive = 'productos'"
+      *ngIf="
+        _users.hasSuperAdminRole(usuario.roles) ||
+        _users.hasAdminRole(usuario.roles)
+      "
       class="dir d-flex align-items-center"
       [ngClass]="{
         active: urlActive === 'productos',
         collapsed: !showDescrip
       }"
-      (click)="showTable()"
+      (click)="expandOrHideItem('productos')"
     >
       <div class="li-icon">
         <app-icon
@@ -79,12 +91,26 @@
       </div>
 
       <div *ngIf="showDescrip" class="li-descrip">
-        <span> Productos </span>
+        <span>
+          Productos
+          <app-icon
+            [iconName]="!itemListDinamic['productos'] ? 'chevDown' : 'chevUp'"
+            [iconSize]="12"
+          ></app-icon>
+        </span>
       </div>
     </li>
+    <div *ngIf="itemListDinamic['productos'] && showDescrip">
+      <app-expanded-list-item
+        [itemList]="itemList['productos']"
+      ></app-expanded-list-item>
+    </div>
 
     <li
-      *ngIf="_users.hasSuperAdminRole(usuario.roles) || _users.hasAdminRole(usuario.roles)"
+      *ngIf="
+        _users.hasSuperAdminRole(usuario.roles) ||
+        _users.hasAdminRole(usuario.roles)
+      "
       (click)="goTo('gastos'); urlActive = 'gastos'"
       class="dir d-flex align-items-center"
       [ngClass]="{
@@ -105,7 +131,10 @@
     </li>
 
     <li
-      *ngIf="_users.hasSuperAdminRole(usuario.roles) || _users.hasAdminRole(usuario.roles)"
+      *ngIf="
+        _users.hasSuperAdminRole(usuario.roles) ||
+        _users.hasAdminRole(usuario.roles)
+      "
       (click)="goTo('usuarios'); urlActive = 'usuarios'"
       class="dir d-flex align-items-center"
       [ngClass]="{
@@ -124,8 +153,11 @@
     </li>
 
     <li
-      *ngIf="_users.hasSuperAdminRole(usuario.roles) || _users.hasAdminRole(usuario.roles)"
-      (click)="goTo('estadisticas'); urlActive = 'estadisticas'"
+      *ngIf="
+        _users.hasSuperAdminRole(usuario.roles) ||
+        _users.hasAdminRole(usuario.roles)
+      "
+      (click)="expandOrHideItem('estadisticas')"
       class="dir d-flex align-items-center"
       [ngClass]="{
         active: urlActive === 'estadisticas',
@@ -137,12 +169,28 @@
       </div>
 
       <div *ngIf="showDescrip" class="li-descrip">
-        <span> Estadísticas </span>
+        <span>
+          Estadísticas
+          <app-icon
+            [iconName]="
+              !itemListDinamic['estadisticas'] ? 'chevDown' : 'chevUp'
+            "
+            [iconSize]="12"
+          ></app-icon>
+        </span>
       </div>
     </li>
+    <div *ngIf="itemListDinamic['estadisticas'] && showDescrip">
+      <app-expanded-list-item
+        [itemList]="itemList['estadisticas']"
+      ></app-expanded-list-item>
+    </div>
 
     <li
-      *ngIf="_users.hasSuperAdminRole(usuario.roles) || _users.hasAdminRole(usuario.roles)"
+      *ngIf="
+        _users.hasSuperAdminRole(usuario.roles) ||
+        _users.hasAdminRole(usuario.roles)
+      "
       (click)="urlActive = 'configuraciones'"
       class="dir d-flex align-items-center"
       [routerLink]="['/configuraciones']"

@@ -1,10 +1,9 @@
 <div *ngIf="(isLogged$ | async)">
 
-  <app-navbar></app-navbar>
-  
   <app-sidebar></app-sidebar>
-
+  
   <div id="main">
+    <app-navbar></app-navbar>
 
     <div class="container shadow rounded mb-5 pb-3">
       <router-outlet class="mb-5"></router-outlet>

@@ -16,19 +16,18 @@
 .dir {
   cursor: pointer;
   width: 200px;
-  height: 40px;
+  height: 30px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
 
 .sidenav {
   height: 100%;
-  width: 40px;
+  position: absolute;
+  color: $white;
   top: 0;
   left: 0;
-  background: #0F2027;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to top, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to top, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: $primary-color;  /* fallback for old browsers */
   overflow-x: hidden;
   transition: 0.5s;
 }
@@ -41,7 +40,7 @@ p {
 }
 
 .sidenav .dir:hover {
-  color: #ffffff;
+  color: $white;
   transition: 0.5s;
   background: $secondary-color;
 }
@@ -51,9 +50,7 @@ div::-webkit-scrollbar {
 }
 
 .animated {
-  margin-top: 10px;
   position: absolute;
-  background-color: $primary-background;
   position: absolute;
   z-index: 999;
   border-radius: 5px;
@@ -69,6 +66,6 @@ span {
 }
 
 .active {
-  background-color: $primary-color;
+  background-color: $secondary-color;
   color: #ffffff;
 }

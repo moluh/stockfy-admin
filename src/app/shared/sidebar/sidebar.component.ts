@@ -17,6 +17,26 @@ import { IsEditingService } from 'src/app/services/is-editing.service';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toasts.service';
 
+const ITEM_LIST_FOR_EXPAND_OR_HIDE = {
+  productos: false,
+  estadisticas: false
+};
+
+const ITEM_LIST = {
+  productos: [
+    { id: "productos", name: "Productos" },
+    { id: "categorias", name: "Categorías" },
+    { id: "marcas", name: "Marcas" },
+    { id: "talles", name: "Talles" },
+    { id: "proveedores", name: "Proveedores" }
+  ],
+  estadisticas: [    
+    { id: "estadisticas", name: "Dashboard" },
+    { id: "estadisticas", name: "Barras" },
+    { id: "estadisticas", name: "Líneas" },
+  ]
+}
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -24,8 +44,11 @@ import { ToastService } from 'src/app/services/toasts.service';
 })
 export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
   icons = icons;
-  showSide: Subscription;
+  showSide: Subscription;  
+  side: boolean = true;
   showDescrip: boolean = true;
+  itemListDinamic: any = ITEM_LIST_FOR_EXPAND_OR_HIDE;
+  itemList: any = ITEM_LIST;
   comSubs: Subscription;
   isLogged$: Observable<boolean>;
   public usuario: Users;
@@ -38,7 +61,7 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     public auth: AuthService,
     private _isEditing: IsEditingService,
-    private _showSide: SidebarService,
+    private _side: SidebarService,
     private _tabs: TabsServices,
     public _users: UsersService,
     private _router: Router,
@@ -64,12 +87,22 @@ export class SidebarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.showSide = this._showSide
+    this.showSide = this._side
       .observerShowSide()
       .subscribe((show: boolean) => {
         if (show) this.openNav();
         else this.closeNav();
       });
+  }
+
+  
+  setSide() {
+    this.side ? this._side.setShowSide(false) : this._side.setShowSide(true);
+    this.side = !this.side;
+  }
+
+  expandOrHideItem(item: string) {
+    this.itemListDinamic[item] = !this.itemListDinamic[item];
   }
 
   goTo(url: string) {

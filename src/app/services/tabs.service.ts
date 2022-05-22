@@ -1,22 +1,19 @@
-import { Injectable } from '@angular/core';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { Subject, Observable, BehaviorSubject } from 'rxjs'
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class TabsServices {
+    showTable = new BehaviorSubject<boolean>(true)
 
-  showTable = new BehaviorSubject<boolean>(true);
+    constructor() {}
 
-  constructor() { }
+    observerShowTable(): Observable<boolean> {
+        return this.showTable.asObservable()
+    }
 
-  observerShowTable(): Observable<boolean> {
-    return this.showTable.asObservable();
-  }
-
-  setShowTable(showTable: boolean) {
-    this.showTable.next(showTable);
-  }
-
-
+    setShowTable(showTable: boolean) {
+        this.showTable.next(showTable)
+    }
 }

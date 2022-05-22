@@ -1,5 +1,5 @@
 export class Sizes {
-    id?: number;
-    talle?: string;
-    activo?: boolean;
+    id?: number
+    talle?: string
+    activo?: boolean
 }

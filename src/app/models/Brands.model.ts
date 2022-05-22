@@ -1,4 +1,4 @@
 export class Brands {
-    id: number;
-    marca: string;
+    id: number
+    marca: string
 }

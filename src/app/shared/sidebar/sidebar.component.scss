@@ -1,71 +1,71 @@
 @import 'src/assets/styles/variables.scss';
 
-.li-icon {    
-  width: 20px;
-  margin-left: 10px;
+.li-icon {
+    width: 20px;
+    margin-left: 10px;
 }
 
 .li-descrip {
-  width: auto;
+    width: auto;
 }
 
 .ped-icon {
-  margin-left: 12px;
+    margin-left: 12px;
 }
 
 .dir {
-  cursor: pointer;
-  width: 200px;
-  height: 30px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+    cursor: pointer;
+    width: 200px;
+    height: 30px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .sidenav {
-  height: 100%;
-  position: absolute;
-  color: $white;
-  top: 0;
-  left: 0;
-  background: $primary-color;  /* fallback for old browsers */
-  overflow-x: hidden;
-  transition: 0.5s;
+    height: 100%;
+    position: absolute;
+    color: $white;
+    top: 0;
+    left: 0;
+    background: $primary-color; /* fallback for old browsers */
+    overflow-x: hidden;
+    transition: 0.5s;
 }
 
 p {
-  color: #000000;
-  cursor: pointer;
-  display: block;
-  margin-bottom: 0px !important;
+    color: #000000;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 0px !important;
 }
 
 .sidenav .dir:hover {
-  color: $white;
-  transition: 0.5s;
-  background: $secondary-color;
+    color: $white;
+    transition: 0.5s;
+    background: $secondary-color;
 }
 
 div::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 .animated {
-  position: absolute;
-  position: absolute;
-  z-index: 999;
-  border-radius: 5px;
-  padding: 0px;
+    position: absolute;
+    position: absolute;
+    z-index: 999;
+    border-radius: 5px;
+    padding: 0px;
 }
 
 .collapsed {
-  width: 40px;
+    width: 40px;
 }
 
 span {
-  margin-left: 5px;
+    margin-left: 5px;
 }
 
 .active {
-  background-color: $secondary-color;
-  color: #ffffff;
+    background-color: $secondary-color;
+    color: #ffffff;
 }

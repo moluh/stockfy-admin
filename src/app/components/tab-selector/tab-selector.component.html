@@ -1,21 +1,21 @@
 <div class="row">
-  <div class="col-md-10">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li *ngFor="let tab of tabList; index as i" class="nav-item">
-        <a
-          class="nav-link"
-          id="{{ tab.id }}-tab"
-          data-toggle="tab"
-          href="#{{ tab.id }}"
-          role="tab"
-          aria-controls="{{ tab.id }}"
-          aria-selected="true"
-          [ngClass]="{ active: i === 0 }"
-          (click)="sendTabNameEvent(tab.name)"
-        >
-          {{ tab.name }}
-        </a>
-      </li>
-    </ul>
-  </div>
+    <div class="col-md-10">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li *ngFor="let tab of tabList; index as i" class="nav-item">
+                <a
+                    class="nav-link"
+                    id="{{ tab.id }}-tab"
+                    data-toggle="tab"
+                    href="#{{ tab.id }}"
+                    role="tab"
+                    aria-controls="{{ tab.id }}"
+                    aria-selected="true"
+                    [ngClass]="{ active: i === 0 }"
+                    (click)="sendTabNameEvent(tab.name)"
+                >
+                    {{ tab.name }}
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

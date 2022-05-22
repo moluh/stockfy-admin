@@ -1,43 +1,43 @@
-import { Injectable } from '@angular/core';
-import { ENVIRONMENT, PRODUCTION } from 'src/environments/environment';
-import { ApiResponse } from '../models/ApiResponse.model';
-import { ToastService } from './toasts.service';
+import { Injectable } from '@angular/core'
+import { ENVIRONMENT, PRODUCTION } from 'src/environments/environment'
+import { ApiResponse } from '../models/ApiResponse.model'
+import { ToastService } from './toasts.service'
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class ApiService {
-  production: boolean;
-  api: any = {};
+    production: boolean
+    api: any = {}
 
-  constructor(private _toast: ToastService) {
-    this.production = PRODUCTION;
-    this.api = ENVIRONMENT.api;
-  }
+    constructor(private _toast: ToastService) {
+        this.production = PRODUCTION
+        this.api = ENVIRONMENT.api
+    }
 
-  getApiUrl(): string {
-    return this.production ? this.api.prod.url : this.api.dev.url;
-  }
+    getApiUrl(): string {
+        return this.production ? this.api.prod.url : this.api.dev.url
+    }
 
-  handleSuccess(res: ApiResponse, title: string, text: string) {
-    this._toast.toastSuccess(text, title);
-  }
+    handleSuccess(res: ApiResponse, title: string, text: string) {
+        this._toast.toastSuccess(text, title)
+    }
 
-  handleError(res: ApiResponse | any, title: string, text: string) {
-    this._toast.toastError('Error', res.error.error);
-    this.log(res);
-  }
+    handleError(res: ApiResponse | any, title: string, text: string) {
+        this._toast.toastError('Error', res.error.error)
+        this.log(res)
+    }
 
-  handleAlert(res: ApiResponse | any, title: string, text: string) {
-    if (res.ok) this._toast.toastAlert(text, title);
-    else this._toast.toastAlert(res.error.error, title);
-  }
+    handleAlert(res: ApiResponse | any, title: string, text: string) {
+        if (res.ok) this._toast.toastAlert(text, title)
+        else this._toast.toastAlert(res.error.error, title)
+    }
 
-  log(res: ApiResponse) {
-    if (!this.production) console.log('[Response ERROR]\n ', res, ' \n');
-  }
+    log(res: ApiResponse) {
+        if (!this.production) console.log('[Response ERROR]\n ', res, ' \n')
+    }
 
-  /**
+    /**
    * Todos los datos devueltos en el cuerpo del error deben estar en formato json
    * El formato de los errores debe estar estandarizado para todos los errores
    * @param error

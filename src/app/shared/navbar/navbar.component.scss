@@ -1,49 +1,49 @@
 @import 'src/assets/styles/variables.scss';
 
 .navbar {
-  height: 40px;  
-  background: $primary-color;  /* fallback for old browsers */
-  color: $white;
+    height: 40px;
+    background: $primary-color; /* fallback for old browsers */
+    color: $white;
 }
 
 .btn-bars {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 ul {
-  width: 100%;
+    width: 100%;
 }
 
-.ul-mobile{
-  position: absolute;
-  background-color: white;
-  z-index: 9999;
-  padding: 10px;
-  width: 90%;
-  border-radius: 5px;
-  border-width: 1px;
-  border-style: double;
-  border-color: $primary-color;
+.ul-mobile {
+    position: absolute;
+    background-color: white;
+    z-index: 9999;
+    padding: 10px;
+    width: 90%;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: double;
+    border-color: $primary-color;
 }
 
 .sign-out {
-  margin-left: auto;
-  border-radius: 5px;
+    margin-left: auto;
+    border-radius: 5px;
 }
 
 .btn-sign-out:hover {
-  background-color: $primary-color;
-  color: white;
-  transition: 1.5;
+    background-color: $primary-color;
+    color: white;
+    transition: 1.5;
 }
 
 a {
-  cursor: pointer;
-  color: #000000;  
+    cursor: pointer;
+    color: #000000;
 }
 
 img {
-  height: 40px;
-  width: auto;
-  border-radius: 5px;
+    height: 40px;
+    width: auto;
+    border-radius: 5px;
 }

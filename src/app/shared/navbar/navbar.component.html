@@ -1,65 +1,66 @@
 <nav class="navbar navbar-expand-lg">
-  <!-- <div class="btn-bars" (click)="setSide()">
+    <!-- <div class="btn-bars" (click)="setSide()">
     <app-icon [iconName]="'bars'"></app-icon>
   </div> -->
 
-  <!-- <a *ngIf="usuario | async as user" class="navbar-brand"> 
+    <!-- <a *ngIf="usuario | async as user" class="navbar-brand"> 
     {{ user.nombre }} 
   </a> -->
 
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#nav"
-    aria-controls="nav"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-    (click)="setUlMobile()"
-  >
-    <app-icon [iconName]="'users'"></app-icon>
-  </button>
-
-  <div class="collapse navbar-collapse" id="nav">
-    <ul
-      [ngClass]="{ 'ul-mobile': ulMobile }"
-      class="navbar-nav text-center d-flex align-items-center"
+    <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#nav"
+        aria-controls="nav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        (click)="setUlMobile()"
     >
+        <app-icon [iconName]="'users'"></app-icon>
+    </button>
 
-      <li class="ml-3">
-        <a
-          *ngIf="_users.hasSuperAdminRole(usuario.roles)"
-          class="navbar-brand"
+    <div class="collapse navbar-collapse" id="nav">
+        <ul
+            [ngClass]="{ 'ul-mobile': ulMobile }"
+            class="navbar-nav text-center d-flex align-items-center"
         >
-          SuperAdmin: {{ usuario.nombre + " " + usuario.apellido }}
-        </a>
-        <a
-          *ngIf="_users.hasAdminRole(usuario.roles)"
-          class="navbar-brand"
-        >
-          Admin: {{ usuario.nombre + " " + usuario.apellido }}
-        </a>
-        <a
-          *ngIf="_users.hasUserRole(usuario.roles)"
-          class="navbar-brand"
-        >
-          {{
-            (usuario.nombre ? usuario.nombre : "") +
-              " " +
-              (usuario.apellido !== 'undefined' ? usuario.apellido : "")
-          }}
-        </a>
-      </li>
+            <li class="ml-3">
+                <a
+                    *ngIf="_users.hasSuperAdminRole(usuario.roles)"
+                    class="navbar-brand"
+                >
+                    SuperAdmin: {{ usuario.nombre + ' ' + usuario.apellido }}
+                </a>
+                <a
+                    *ngIf="_users.hasAdminRole(usuario.roles)"
+                    class="navbar-brand"
+                >
+                    Admin: {{ usuario.nombre + ' ' + usuario.apellido }}
+                </a>
+                <a
+                    *ngIf="_users.hasUserRole(usuario.roles)"
+                    class="navbar-brand"
+                >
+                    {{
+                        (usuario.nombre ? usuario.nombre : '') +
+                            ' ' +
+                            (usuario.apellido !== 'undefined'
+                                ? usuario.apellido
+                                : '')
+                    }}
+                </a>
+            </li>
 
-      <li class="sign-out">
-        <button
-          class="btn btn-sm btn-outline btn-sign-out"
-          (click)="auth.logout()"
-        >
-          <app-icon [iconName]="'signOut'"></app-icon>
-          Salir
-        </button>
-      </li>
-    </ul>
-  </div>
+            <li class="sign-out">
+                <button
+                    class="btn btn-sm btn-outline btn-sign-out"
+                    (click)="auth.logout()"
+                >
+                    <app-icon [iconName]="'signOut'"></app-icon>
+                    Salir
+                </button>
+            </li>
+        </ul>
+    </div>
 </nav>

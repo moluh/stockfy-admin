@@ -1,25 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { AddEditProvidersComponent } from './add-edit-providers.component';
+import { AddEditProvidersComponent } from './add-edit-providers.component'
 
 describe('AddEditProvidersComponent', () => {
-  let component: AddEditProvidersComponent;
-  let fixture: ComponentFixture<AddEditProvidersComponent>;
+    let component: AddEditProvidersComponent
+    let fixture: ComponentFixture<AddEditProvidersComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ AddEditProvidersComponent ]
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            declarations: [AddEditProvidersComponent],
+        }).compileComponents()
     })
-    .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AddEditProvidersComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AddEditProvidersComponent)
+        component = fixture.componentInstance
+        fixture.detectChanges()
+    })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    it('should create', () => {
+        expect(component).toBeTruthy()
+    })
+})

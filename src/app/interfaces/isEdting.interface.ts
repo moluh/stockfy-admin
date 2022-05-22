@@ -1,4 +1,4 @@
 export interface Editing {
-  isEditing: boolean;
-  component: string;
+    isEditing: boolean
+    component: string
 }

@@ -5,7 +5,7 @@
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
             <b> Fecha/Hora </b>
-            {{ movementSelected.fecha | date: "dd-MM-YYYY" }}
+            {{ movementSelected.fecha | date: 'dd-MM-YYYY' }}
             {{ movementSelected.hora }}
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
@@ -19,54 +19,51 @@
         <div class="col-sm-12 col-md-4 col-lg-4">
             <b> Estado </b>
             {{
-            (movementSelected.estado === "PENDIENTE"
-            ? "Pendiente"
-            : movementSelected.estado === "COMPLETADO"
-            ? "Completado"
-            : "Anulado"
-            ) | uppercase
+                (movementSelected.estado === 'PENDIENTE'
+                    ? 'Pendiente'
+                    : movementSelected.estado === 'COMPLETADO'
+                    ? 'Completado'
+                    : 'Anulado'
+                ) | uppercase
             }}
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
             <b> Total </b>
-            {{ movementSelected.total | currency: "ARS":"symbol":"1.0" }}
+            {{ movementSelected.total | currency: 'ARS':'symbol':'1.0' }}
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
             <b> Saldo </b>
-            {{ movementSelected.saldo | currency: "ARS":"symbol":"1.0" }}
+            {{ movementSelected.saldo | currency: 'ARS':'symbol':'1.0' }}
         </div>
     </div>
 </div>
 <div class="mt-3 p-2 col-md-12 col-sm-12 col-lg-12 shadow card">
     <b> Modo de pago</b> {{ movementSelected.modo_pago | uppercase }}
 </div>
-<div *ngIf="movementSelected.comentario !== ''" class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card">
+<div
+    *ngIf="movementSelected.comentario !== ''"
+    class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card"
+>
     <b> Descripción </b> {{ movementSelected.comentario | uppercase }}
 </div>
 <div class="mt-3">
     <div class="col-md-12 d-flex flex-row justify-content-around">
-        <button (click)="generatePdf('open')" class="
-              btn btn-outline-primary
-              d-flex
-              align-items-center
-              justify-content-center
-            ">
+        <button
+            (click)="generatePdf('open')"
+            class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+        >
             <span>Abrir PDF</span>
         </button>
-        <button (click)="generatePdf('download')" class="
-              btn btn-outline-primary
-              d-flex
-              align-items-center
-              justify-content-center
-            ">
+        <button
+            (click)="generatePdf('download')"
+            class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+        >
             <span>Descargar</span>
         </button>
-        <button (click)="generatePdf('print')" class="
-              btn btn-outline-primary
-              d-flex
-              align-items-center
-              justify-content-center
-            ">
+        <button
+            (click)="generatePdf('print')"
+            class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+        >
             <span>Imprimir</span>
         </button>
     </div>
@@ -86,17 +83,18 @@
                     <tr *ngFor="let art of movementSelected.movimiento_lineas">
                         <td>{{ art.id_producto }}</td>
                         <td>{{ art.nombre }}</td>
+                        <td>{{ art.porcentaje }}%</td>
                         <td>
-                            {{ art.porcentaje }}%
-                        </td>
-                        <td>
-                            {{ art.precio_venta | currency: "ARS":"symbol":"2.0" }}
+                            {{
+                                art.precio_venta
+                                    | currency: 'ARS':'symbol':'2.0'
+                            }}
                             x {{ art.cantidad }}
                         </td>
                         <td>
                             {{
-                            art.cantidad * art.precio_venta
-                            | currency: "ARS":"symbol":"2.0"
+                                art.cantidad * art.precio_venta
+                                    | currency: 'ARS':'symbol':'2.0'
                             }}
                         </td>
                     </tr>
@@ -104,10 +102,13 @@
             </table>
         </div>
     </div>
-    <div *ngIf="
+    <div
+        *ngIf="
             movementSelected.modo_pago === 'CTACTE' ||
             movementSelected.modo_pago === 'TARJETA'
-          " class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card">
+        "
+        class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card"
+    >
         <b> Pagos: </b>
         <div class="table-responsive text-center">
             <table class="table table-sm table-hover">
@@ -123,16 +124,26 @@
                     <tr *ngFor="let pago of movementSelected.pagos">
                         <td>{{ pago?.pago_nro }}</td>
                         <td>
-                            {{ pago?.monto | currency: "ARS":"symbol":"1.0" }}
+                            {{ pago?.monto | currency: 'ARS':'symbol':'1.0' }}
                         </td>
                         <td>
-                            {{ pago?.fecha | date: "dd-MM-YYYY" }} {{ pago?.hora }}
+                            {{ pago?.fecha | date: 'dd-MM-YYYY' }}
+                            {{ pago?.hora }}
                         </td>
-                        <td>{{ pago?.tasa_interes + "%" }}</td>
-                        <td>{{ pago?.ganancia | currency: "ARS":"symbol":"1.0" }}</td>
+                        <td>{{ pago?.tasa_interes + '%' }}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary">Editar</button>
-                            <button class="btn btn-sm btn-danger" (click)="deletePayment(pago)">
+                            {{
+                                pago?.ganancia | currency: 'ARS':'symbol':'1.0'
+                            }}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-primary">
+                                Editar
+                            </button>
+                            <button
+                                class="btn btn-sm btn-danger"
+                                (click)="deletePayment(pago)"
+                            >
                                 Eliminar
                             </button>
                         </td>
@@ -141,19 +152,30 @@
             </table>
         </div>
     </div>
-    <div *ngIf="
+    <div
+        *ngIf="
             movementSelected.modo_pago === 'CTACTE' ||
             movementSelected.modo_pago === 'TARJETA'
-          " class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card">
-        <button class="btn btn-primary btn-sm float-right m-2" type="button" data-toggle="collapse"
-            data-target="#newPay" aria-expanded="false" aria-controls="newPay">
+        "
+        class="mt-3 col-md-12 col-sm-12 col-lg-12 shadow card"
+    >
+        <button
+            class="btn btn-primary btn-sm float-right m-2"
+            type="button"
+            data-toggle="collapse"
+            data-target="#newPay"
+            aria-expanded="false"
+            aria-controls="newPay"
+        >
             Añadir pago
         </button>
 
         <div class="collapse" id="newPay">
-            <app-add-edit-payments (getMovement)="getMovement($event)" [movementSelected]="movementSelected">
+            <app-add-edit-payments
+                (getMovement)="getMovement($event)"
+                [movementSelected]="movementSelected"
+            >
             </app-add-edit-payments>
-
         </div>
     </div>
 </div>

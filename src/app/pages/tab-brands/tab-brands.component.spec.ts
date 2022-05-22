@@ -1,25 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { TabBrandsComponent } from './tab-brands.component';
+import { TabBrandsComponent } from './tab-brands.component'
 
 describe('TabBrandsComponent', () => {
-  let component: TabBrandsComponent;
-  let fixture: ComponentFixture<TabBrandsComponent>;
+    let component: TabBrandsComponent
+    let fixture: ComponentFixture<TabBrandsComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ TabBrandsComponent ]
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            declarations: [TabBrandsComponent],
+        }).compileComponents()
     })
-    .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TabBrandsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TabBrandsComponent)
+        component = fixture.componentInstance
+        fixture.detectChanges()
+    })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    it('should create', () => {
+        expect(component).toBeTruthy()
+    })
+})

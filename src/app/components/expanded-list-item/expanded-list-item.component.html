@@ -1,17 +1,13 @@
-<ul
-
-  class="animated fadeInLeft"
->
-
-<!-- [ngClass]="{
+<ul class="animated fadeInLeft">
+    <!-- [ngClass]="{
     fadeInLeft: showDescrip,
     fadeInRight: !showDescrip
   }" -->
-  <li
-    *ngFor="let item of itemList"
-    (click)="goTo(item.id)"
-    style="cursor: pointer"
-  >
-    {{ item.name }}
-  </li>
+    <li
+        *ngFor="let item of itemList"
+        (click)="goTo(item.id)"
+        style="cursor: pointer"
+    >
+        {{ item.name }}
+    </li>
 </ul>

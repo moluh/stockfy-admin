@@ -1,25 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { TitleSectionComponent } from './title-section.component';
+import { TitleSectionComponent } from './title-section.component'
 
 describe('TitleSectionComponent', () => {
-  let component: TitleSectionComponent;
-  let fixture: ComponentFixture<TitleSectionComponent>;
+    let component: TitleSectionComponent
+    let fixture: ComponentFixture<TitleSectionComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ TitleSectionComponent ]
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            declarations: [TitleSectionComponent],
+        }).compileComponents()
     })
-    .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TitleSectionComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TitleSectionComponent)
+        component = fixture.componentInstance
+        fixture.detectChanges()
+    })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    it('should create', () => {
+        expect(component).toBeTruthy()
+    })
+})

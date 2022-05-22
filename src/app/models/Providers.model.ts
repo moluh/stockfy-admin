@@ -1,4 +1,4 @@
 export class Providers {
-    id: number;
-    proveedor: string;
+    id: number
+    proveedor: string
 }

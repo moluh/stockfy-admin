@@ -1,20 +1,17 @@
-<div *ngIf="(isLogged$ | async)">
+<div *ngIf="isLogged$ | async">
+    <app-sidebar></app-sidebar>
 
-  <app-sidebar></app-sidebar>
-  
-  <div id="main">
-    <app-navbar></app-navbar>
+    <div id="main">
+        <app-navbar></app-navbar>
 
-    <div class="container shadow rounded mb-5 pb-3">
-      <router-outlet class="mb-5"></router-outlet>
+        <div class="container shadow rounded mb-5 pb-3">
+            <router-outlet class="mb-5"></router-outlet>
+        </div>
+
+        <div class="d-none d-sm-none d-md-block">
+            <app-footer></app-footer>
+        </div>
     </div>
-
-    <div class="d-none d-sm-none d-md-block">
-      <app-footer></app-footer>
-    </div>
-
-  </div>
-
 </div>
 
 <app-login *ngIf="!(isLogged$ | async)"></app-login>

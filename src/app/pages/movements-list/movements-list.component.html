@@ -1,153 +1,256 @@
 <app-title-section [title]="title"></app-title-section>
 
 <div>
-  <section>
-    <div class="d-flex justify-content-start row m-1">
-      <div class="col-md-3">
-        <select class="form-control form-control-sm" name="filter" id="filter" [(ngModel)]="attr_selected">
-          <option *ngFor="let attr of attr_list" [ngValue]="attr">
-            {{
-            attr === "id"
-            ? "ID"
-            : attr === "fecha"
-            ? "Fecha"
-            : attr === "entre_fechas"
-            ? "Entre fechas"
-            : attr === "comentario"
-            ? "Comentario"
-            : attr === "estado"
-            ? "Estado"
-            : attr === "modo_pago"
-            ? "Modo Pago"
-            : "Usuario"
-            }}
-          </option>
-        </select>
-      </div>
-      <div [ngSwitch]="attr_selected" class="col-md-6">
-        <div *ngSwitchCase="'entre_fechas'" class="d-flex justify-content-around">
-          <div>
-            <input [(ngModel)]="dateFrom" id="dateFrom" class="form-control form-control-sm" type="date" />
-          </div>
-          <div>
-            <input [(ngModel)]="dateTo" id="dateTo" class="form-control form-control-sm" type="date" />
-          </div>
+    <section>
+        <div class="d-flex justify-content-start row m-1">
+            <div class="col-md-3">
+                <select
+                    class="form-control form-control-sm"
+                    name="filter"
+                    id="filter"
+                    [(ngModel)]="attr_selected"
+                >
+                    <option *ngFor="let attr of attr_list" [ngValue]="attr">
+                        {{
+                            attr === 'id'
+                                ? 'ID'
+                                : attr === 'fecha'
+                                ? 'Fecha'
+                                : attr === 'entre_fechas'
+                                ? 'Entre fechas'
+                                : attr === 'comentario'
+                                ? 'Comentario'
+                                : attr === 'estado'
+                                ? 'Estado'
+                                : attr === 'modo_pago'
+                                ? 'Modo Pago'
+                                : 'Usuario'
+                        }}
+                    </option>
+                </select>
+            </div>
+            <div [ngSwitch]="attr_selected" class="col-md-6">
+                <div
+                    *ngSwitchCase="'entre_fechas'"
+                    class="d-flex justify-content-around"
+                >
+                    <div>
+                        <input
+                            [(ngModel)]="dateFrom"
+                            id="dateFrom"
+                            class="form-control form-control-sm"
+                            type="date"
+                        />
+                    </div>
+                    <div>
+                        <input
+                            [(ngModel)]="dateTo"
+                            id="dateTo"
+                            class="form-control form-control-sm"
+                            type="date"
+                        />
+                    </div>
+                </div>
+                <div
+                    *ngSwitchCase="'fecha'"
+                    class="d-flex justify-content-around"
+                >
+                    <div>
+                        <input
+                            [(ngModel)]="date"
+                            id="date"
+                            class="form-control form-control-sm"
+                            type="date"
+                        />
+                    </div>
+                </div>
+                <div
+                    *ngIf="
+                        attr_selected === 'id' || attr_selected === 'comentario'
+                    "
+                    class="form-check"
+                >
+                    <input
+                        class="form-control form-control-sm round"
+                        type="text"
+                        id="search"
+                        placeholder="Buscar.."
+                        [(ngModel)]="searchText"
+                    />
+                </div>
+
+                <select
+                    *ngSwitchCase="'estado'"
+                    class="form-control form-control-sm"
+                    name="id_filter_list"
+                    id="id_filter_list"
+                    [(ngModel)]="id_filter_list"
+                >
+                    <option selected [ngValue]="'c'">COMPLETADO</option>
+                    <option [ngValue]="'p'">PENDIENTE</option>
+                    <option [ngValue]="'a'">ANULADO</option>
+                </select>
+
+                <select
+                    *ngSwitchCase="'modo_pago'"
+                    class="form-control form-control-sm"
+                    name="id_filter_list"
+                    id="id_filter_list"
+                    [(ngModel)]="id_filter_list"
+                >
+                    <option selected [ngValue]="'EFECTIVO'">EFECTIVO</option>
+                    <option [ngValue]="'CTACTE'">CTA. CTE.</option>
+                    <option [ngValue]="'TARJETA'">TARJETA</option>
+                </select>
+
+                <select
+                    *ngSwitchCase="'usuario'"
+                    class="form-control form-control-sm"
+                    name="id_filter_list"
+                    id="id_filter_list"
+                    [(ngModel)]="id_filter_list"
+                >
+                    <option selected [ngValue]="'1389'">prueba</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button
+                    class="btn btn-sm btn-outline-secondary"
+                    (click)="applyFilter()"
+                >
+                    <app-icon [iconName]="'filter'"></app-icon>
+                    Aplicar filtro
+                </button>
+                <button
+                    *ngIf="isFiltering"
+                    class="btn btn-sm btn-outline-secondary"
+                    (click)="removeFilter()"
+                >
+                    <app-icon [iconName]="'trash'"></app-icon>
+                    Remover filtro
+                </button>
+            </div>
         </div>
-        <div *ngSwitchCase="'fecha'" class="d-flex justify-content-around">
-          <div>
-            <input [(ngModel)]="date" id="date" class="form-control form-control-sm" type="date" />
-          </div>
+        <div class="row">
+            <div class="table-responsive text-center">
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col" width="11%">Fecha/Hora</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Cond. Venta</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let movement of movements">
+                            <td>{{ movement.id }}</td>
+                            <td>
+                                {{ movement.fecha | date: 'dd/MM/YYYY' }}
+                                <br />
+                                {{ movement.hora.slice(0, 5) }}
+                            </td>
+                            <td>
+                                {{
+                                    movement.usuario.nombre +
+                                        ' ' +
+                                        movement.usuario.apellido
+                                }}
+                            </td>
+                            <td>
+                                {{
+                                    (movement.estado === 'PENDIENTE'
+                                        ? 'Pendiente'
+                                        : movement.estado === 'COMPLETADO'
+                                        ? 'Completado'
+                                        : 'Anulado'
+                                    ) | uppercase
+                                }}
+                            </td>
+                            <td>
+                                {{
+                                    movement.total
+                                        | currency: 'ARS':'symbol':'1.0'
+                                }}
+                            </td>
+                            <td>{{ movement.modo_pago | uppercase }}</td>
+                            <td>
+                                <button
+                                    class="btn btn-primary btn-sm btn-acciones"
+                                    data-toggle="modal"
+                                    data-target="#seeMovement"
+                                    (click)="setMovementSelected(movement)"
+                                >
+                                    Ver
+                                </button>
+
+                                <button
+                                    *ngIf="
+                                        movement.estado === 'COMPLETADO' ||
+                                        movement.estado === 'PENDIENTE'
+                                    "
+                                    class="btn btn-danger btn-sm btn-acciones"
+                                    (click)="
+                                        changeState(movement.id, 'ANULADO')
+                                    "
+                                >
+                                    Anular
+                                </button>
+
+                                <button
+                                    *ngIf="
+                                        movement.estado === 'ANULADO' ||
+                                        movement.estado === 'PENDIENTE'
+                                    "
+                                    class="btn btn-success btn-sm btn-acciones"
+                                    (click)="
+                                        changeState(movement.id, 'COMPLETADO')
+                                    "
+                                >
+                                    Completo
+                                </button>
+
+                                <button
+                                    *ngIf="
+                                        movement.estado === 'ANULADO' ||
+                                        movement.estado === 'COMPLETADO'
+                                    "
+                                    class="btn btn-warning btn-sm btn-acciones"
+                                    (click)="
+                                        changeState(movement.id, 'PENDIENTE')
+                                    "
+                                >
+                                    Pendiente
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div *ngIf="attr_selected === 'id' || attr_selected === 'comentario'" class="form-check">
-          <input class="form-control form-control-sm round" type="text" id="search" placeholder="Buscar.."
-            [(ngModel)]="searchText" />
-        </div>
+    </section>
 
-        <select *ngSwitchCase="'estado'" class="form-control form-control-sm" name="id_filter_list" id="id_filter_list"
-          [(ngModel)]="id_filter_list">
-          <option selected [ngValue]="'c'">COMPLETADO</option>
-          <option [ngValue]="'p'">PENDIENTE</option>
-          <option [ngValue]="'a'">ANULADO</option>
-        </select>
-
-        <select *ngSwitchCase="'modo_pago'" class="form-control form-control-sm" name="id_filter_list"
-          id="id_filter_list" [(ngModel)]="id_filter_list">
-          <option selected [ngValue]="'EFECTIVO'">EFECTIVO</option>
-          <option [ngValue]="'CTACTE'">CTA. CTE.</option>
-          <option [ngValue]="'TARJETA'">TARJETA</option>
-        </select>
-
-        <select *ngSwitchCase="'usuario'" class="form-control form-control-sm" name="id_filter_list" id="id_filter_list"
-          [(ngModel)]="id_filter_list">
-          <option selected [ngValue]="'1389'">prueba</option>
-        </select>
-      </div>
-      <div class="col-md-3">
-        <button class="btn btn-sm btn-outline-secondary" (click)="applyFilter()">
-          <app-icon [iconName]="'filter'"></app-icon>
-          Aplicar filtro
-        </button>
-        <button *ngIf="isFiltering" class="btn btn-sm btn-outline-secondary" (click)="removeFilter()">
-          <app-icon [iconName]="'trash'"></app-icon>
-          Remover filtro
-        </button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="table-responsive text-center">
-        <table class="table table-sm table-hover">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col" width="11%">Fecha/Hora</th>
-              <th scope="col">Usuario</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Total</th>
-              <th scope="col">Cond. Venta</th>
-              <th scope="col">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let movement of movements">
-              <td>{{ movement.id }}</td>
-              <td>
-                {{ movement.fecha | date: "dd/MM/YYYY" }}
-                <br />
-                {{ movement.hora.slice(0,5) }}
-              </td>
-              <td>
-                {{ movement.usuario.nombre + " " + movement.usuario.apellido }}
-              </td>
-              <td>
-                {{
-                (movement.estado === "PENDIENTE"
-                ? "Pendiente"
-                : movement.estado === "COMPLETADO"
-                ? "Completado"
-                : "Anulado"
-                ) | uppercase
-                }}
-              </td>
-              <td>{{ movement.total | currency: "ARS":"symbol":"1.0" }}</td>
-              <td>{{ movement.modo_pago | uppercase }}</td>
-              <td>
-                <button class="btn btn-primary btn-sm btn-acciones" data-toggle="modal" data-target="#seeMovement"
-                  (click)="setMovementSelected(movement)">
-                  Ver
-                </button>
-
-                <button *ngIf="movement.estado === 'COMPLETADO' || movement.estado === 'PENDIENTE'"
-                  class="btn btn-danger btn-sm btn-acciones" (click)="changeState(movement.id, 'ANULADO')">
-                  Anular
-                </button>
-
-                <button *ngIf="movement.estado === 'ANULADO' || movement.estado === 'PENDIENTE'"
-                  class="btn btn-success btn-sm btn-acciones" (click)="changeState(movement.id, 'COMPLETADO')">
-                  Completo
-                </button>
-
-                <button *ngIf="movement.estado === 'ANULADO' || movement.estado === 'COMPLETADO'"
-                  class="btn btn-warning btn-sm btn-acciones" (click)="changeState(movement.id, 'PENDIENTE')">
-                  Pendiente
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <app-paginacion (changePage)="pageChanged($event)"></app-paginacion>
+    <app-paginacion (changePage)="pageChanged($event)"></app-paginacion>
 </div>
 
-<div class="modal fade bd-example-modal-lg" id="seeMovement" tabindex="-1" role="dialog" aria-labelledby="seeMovement"
-  aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content p-4 text-center">
-      <app-see-movement [selectedMovement]="movementSelected"></app-see-movement>
+<div
+    class="modal fade bd-example-modal-lg"
+    id="seeMovement"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="seeMovement"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content p-4 text-center">
+            <app-see-movement
+                [selectedMovement]="movementSelected"
+            ></app-see-movement>
+        </div>
     </div>
-  </div>
 </div>
 
 <router-outlet></router-outlet>

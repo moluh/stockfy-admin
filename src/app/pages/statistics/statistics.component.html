@@ -5,90 +5,95 @@
 <app-title-section [title]="'Dashboard'"></app-title-section>
 
 <div class="row mb-5">
-  <div class="col-sm-12 col-md-4 col-lg-4">
-    <label for="fromDashboard">Desde</label>
-    <input
-      [(ngModel)]="fromDashboard"
-      id="fromDashboard"
-      class="form-control form-control-sm"
-      type="date"
-    />
-  </div>
-  <div class="col-sm-12 col-md-4 col-lg-4">
-    <label for="toDashboard">Hasta</label>
-    <input
-      [(ngModel)]="toDashboard"
-      id="toDashboard"
-      class="form-control form-control-sm"
-      type="date"
-    />
-  </div>
+    <div class="col-sm-12 col-md-4 col-lg-4">
+        <label for="fromDashboard">Desde</label>
+        <input
+            [(ngModel)]="fromDashboard"
+            id="fromDashboard"
+            class="form-control form-control-sm"
+            type="date"
+        />
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-4">
+        <label for="toDashboard">Hasta</label>
+        <input
+            [(ngModel)]="toDashboard"
+            id="toDashboard"
+            class="form-control form-control-sm"
+            type="date"
+        />
+    </div>
 
-  <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
-    <button
-      class="btn btn-block btn-sm btn-outline-success"
-      (click)="getStatsDashboard()"
-    >
-      Obtener estadísticas
-    </button>
-  </div>
+    <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
+        <button
+            class="btn btn-block btn-sm btn-outline-success"
+            (click)="getStatsDashboard()"
+        >
+            Obtener estadísticas
+        </button>
+    </div>
 </div>
 
 <div *ngIf="statisticsDashboard" class="row text-center">
-  <div class="col-sm-12 col-md-4 col-lg-4 mb-3">
-    <div class="card text-dark bg-light shadow-lg">
-      <div class="card-body">
-        <h6 class="card-text">Suma de Ventas</h6>
-        <h3 class="card-title">
-          {{
-            statisticsDashboard.TotalVendido | currency: "ARS":"symbol":"1.0"
-          }}
-        </h3>
-      </div>
+    <div class="col-sm-12 col-md-4 col-lg-4 mb-3">
+        <div class="card text-dark bg-light shadow-lg">
+            <div class="card-body">
+                <h6 class="card-text">Suma de Ventas</h6>
+                <h3 class="card-title">
+                    {{
+                        statisticsDashboard.TotalVendido
+                            | currency: 'ARS':'symbol':'1.0'
+                    }}
+                </h3>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-sm-12 col-md-4 col-lg-4 mb-3">
-    <div class="card text-dark bg-light shadow-lg">
-      <div class="card-body">
-        <h6 class="card-text">Suma de Pagos</h6>
-        <h3 class="card-title">
-          {{
-            statisticsDashboard.TotalDePagos | currency: "ARS":"symbol":"1.0"
-          }}
-        </h3>
-      </div>
+    <div class="col-sm-12 col-md-4 col-lg-4 mb-3">
+        <div class="card text-dark bg-light shadow-lg">
+            <div class="card-body">
+                <h6 class="card-text">Suma de Pagos</h6>
+                <h3 class="card-title">
+                    {{
+                        statisticsDashboard.TotalDePagos
+                            | currency: 'ARS':'symbol':'1.0'
+                    }}
+                </h3>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-sm-12 col-md-4 col-lg-4 mb-3">
-    <div class="card text-dark bg-light shadow-lg">
-      <div class="card-body">
-        <h6 class="card-text">Ganancias por interes</h6>
-        <h3 class="card-title">
-          {{ statisticsDashboard.Ganancias | currency: "ARS":"symbol":"1.0" }}
-        </h3>
-      </div>
+    <div class="col-sm-12 col-md-4 col-lg-4 mb-3">
+        <div class="card text-dark bg-light shadow-lg">
+            <div class="card-body">
+                <h6 class="card-text">Ganancias por interes</h6>
+                <h3 class="card-title">
+                    {{
+                        statisticsDashboard.Ganancias
+                            | currency: 'ARS':'symbol':'1.0'
+                    }}
+                </h3>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
-    <div class="card text-dark bg-light shadow-lg">
-      <div class="card-body">
-        <h6 class="card-text">Cantidad de pagos</h6>
-        <h3 class="card-title">
-          {{ statisticsDashboard.CountPagos }}
-        </h3>
-      </div>
+    <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
+        <div class="card text-dark bg-light shadow-lg">
+            <div class="card-body">
+                <h6 class="card-text">Cantidad de pagos</h6>
+                <h3 class="card-title">
+                    {{ statisticsDashboard.CountPagos }}
+                </h3>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
-    <div class="card text-dark bg-light shadow-lg">
-      <div class="card-body">
-        <h6 class="card-text">Cantidad de movimientos</h6>
-        <h3 class="card-title">
-          {{ statisticsDashboard.CountMovimientos }}
-        </h3>
-      </div>
+    <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
+        <div class="card text-dark bg-light shadow-lg">
+            <div class="card-body">
+                <h6 class="card-text">Cantidad de movimientos</h6>
+                <h3 class="card-title">
+                    {{ statisticsDashboard.CountMovimientos }}
+                </h3>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <br />
@@ -96,197 +101,197 @@
 <app-title-section [title]="'Gráficos'"></app-title-section>
 
 <div class="row mb-5">
-  <div class="col-sm-12 col-md-4 col-lg-4">
-    <label for="fromGraphic">Desde</label>
-    <input
-      [(ngModel)]="fromGraphic"
-      id="fromGraphic"
-      class="form-control form-control-sm"
-      type="date"
-    />
-  </div>
-  <div class="col-sm-12 col-md-4 col-lg-4">
-    <label for="toGraphic">Hasta</label>
-    <input
-      [(ngModel)]="toGraphic"
-      id="toGraphic"
-      class="form-control form-control-sm"
-      type="date"
-    />
-  </div>
-  <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
-    <button
-      class="btn btn-block btn-sm btn-outline-success"
-      (click)="getStatsGraphics()"
-    >
-      Obtener estadísticas
-    </button>
-  </div>
+    <div class="col-sm-12 col-md-4 col-lg-4">
+        <label for="fromGraphic">Desde</label>
+        <input
+            [(ngModel)]="fromGraphic"
+            id="fromGraphic"
+            class="form-control form-control-sm"
+            type="date"
+        />
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-4">
+        <label for="toGraphic">Hasta</label>
+        <input
+            [(ngModel)]="toGraphic"
+            id="toGraphic"
+            class="form-control form-control-sm"
+            type="date"
+        />
+    </div>
+    <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
+        <button
+            class="btn btn-block btn-sm btn-outline-success"
+            (click)="getStatsGraphics()"
+        >
+            Obtener estadísticas
+        </button>
+    </div>
 </div>
 
 <div class="row mb-5 pb-5">
-  <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
-    <b> Estilo de los gráficos: </b>
-  </div>
-  <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
-    <button
-      class="btn btn-block btn-sm btn-outline-secondary"
-      (click)="styleGraphic = 'bar'"
-    >
-      Gráfico de Barras
-    </button>
-  </div>
-  <div class="d-flex align-items-center col-sm-12 col-md-4 col-lg-4">
-    <button
-      class="btn btn-block btn-sm btn-outline-secondary"
-      (click)="styleGraphic = 'line'"
-    >
-      Gráfico de Líneas
-    </button>
-  </div>
+    <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
+        <b> Estilo de los gráficos: </b>
+    </div>
+    <div class="d-flex align-items-end col-sm-12 col-md-4 col-lg-4">
+        <button
+            class="btn btn-block btn-sm btn-outline-secondary"
+            (click)="styleGraphic = 'bar'"
+        >
+            Gráfico de Barras
+        </button>
+    </div>
+    <div class="d-flex align-items-center col-sm-12 col-md-4 col-lg-4">
+        <button
+            class="btn btn-block btn-sm btn-outline-secondary"
+            (click)="styleGraphic = 'line'"
+        >
+            Gráfico de Líneas
+        </button>
+    </div>
 </div>
 
 <div *ngIf="statisticsGraphic && styleGraphic == 'line'">
-  <div style="display: block">
-    <canvas
-      baseChart
-      width="400"
-      height="400"
-      [datasets]="lineDataCountMovimientos"
-      [labels]="lineLabelsCountMovimientos"
-      [options]="lineChartOptions"
-      [colors]="lineChartColors"
-      [legend]="lineChartLegend"
-      [chartType]="lineChartType"
-      [plugins]="lineChartPlugins"
-    >
-    </canvas>
-  </div>
-  <div style="display: block">
-    <canvas
-      baseChart
-      width="400"
-      height="400"
-      [datasets]="lineDataCountPagos"
-      [labels]="lineLabelsCountPagos"
-      [options]="lineChartOptions"
-      [colors]="lineChartColors"
-      [legend]="lineChartLegend"
-      [chartType]="lineChartType"
-      [plugins]="lineChartPlugins"
-    >
-    </canvas>
-  </div>
-  <div style="display: block">
-    <canvas
-      baseChart
-      width="400"
-      height="400"
-      [datasets]="lineDataGanancias"
-      [labels]="lineLabelsGanancias"
-      [options]="lineChartOptions"
-      [colors]="lineChartColors"
-      [legend]="lineChartLegend"
-      [chartType]="lineChartType"
-      [plugins]="lineChartPlugins"
-    >
-    </canvas>
-  </div>
-  <div style="display: block">
-    <canvas
-      baseChart
-      width="400"
-      height="400"
-      [datasets]="lineDataTotalDePagos"
-      [labels]="lineLabelsTotalDePagos"
-      [options]="lineChartOptions"
-      [colors]="lineChartColors"
-      [legend]="lineChartLegend"
-      [chartType]="lineChartType"
-      [plugins]="lineChartPlugins"
-    >
-    </canvas>
-  </div>
-  <div style="display: block">
-    <canvas
-      baseChart
-      width="400"
-      height="400"
-      [datasets]="lineDataTotalVendido"
-      [labels]="lineLabelsTotalVendido"
-      [options]="lineChartOptions"
-      [colors]="lineChartColors"
-      [legend]="lineChartLegend"
-      [chartType]="lineChartType"
-      [plugins]="lineChartPlugins"
-    >
-    </canvas>
-  </div>
+    <div style="display: block">
+        <canvas
+            baseChart
+            width="400"
+            height="400"
+            [datasets]="lineDataCountMovimientos"
+            [labels]="lineLabelsCountMovimientos"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            [plugins]="lineChartPlugins"
+        >
+        </canvas>
+    </div>
+    <div style="display: block">
+        <canvas
+            baseChart
+            width="400"
+            height="400"
+            [datasets]="lineDataCountPagos"
+            [labels]="lineLabelsCountPagos"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            [plugins]="lineChartPlugins"
+        >
+        </canvas>
+    </div>
+    <div style="display: block">
+        <canvas
+            baseChart
+            width="400"
+            height="400"
+            [datasets]="lineDataGanancias"
+            [labels]="lineLabelsGanancias"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            [plugins]="lineChartPlugins"
+        >
+        </canvas>
+    </div>
+    <div style="display: block">
+        <canvas
+            baseChart
+            width="400"
+            height="400"
+            [datasets]="lineDataTotalDePagos"
+            [labels]="lineLabelsTotalDePagos"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            [plugins]="lineChartPlugins"
+        >
+        </canvas>
+    </div>
+    <div style="display: block">
+        <canvas
+            baseChart
+            width="400"
+            height="400"
+            [datasets]="lineDataTotalVendido"
+            [labels]="lineLabelsTotalVendido"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            [plugins]="lineChartPlugins"
+        >
+        </canvas>
+    </div>
 </div>
 
 <div *ngIf="statisticsGraphic && styleGraphic == 'bar'">
-  <div class="chart-wrapper m-4">
-    <canvas
-      baseChart
-      [datasets]="barDataCountMovimientos"
-      [labels]="barLabelsCountMovimientos"
-      [options]="barChartOptions"
-      [plugins]="barChartPlugins"
-      [legend]="barChartLegend"
-      [chartType]="barChartType"
-    >
-    </canvas>
-  </div>
+    <div class="chart-wrapper m-4">
+        <canvas
+            baseChart
+            [datasets]="barDataCountMovimientos"
+            [labels]="barLabelsCountMovimientos"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+        >
+        </canvas>
+    </div>
 
-  <div class="chart-wrapper m-4">
-    <canvas
-      baseChart
-      [datasets]="barDataCountPagos"
-      [labels]="barLabelsCountPagos"
-      [options]="barChartOptions"
-      [plugins]="barChartPlugins"
-      [legend]="barChartLegend"
-      [chartType]="barChartType"
-    >
-    </canvas>
-  </div>
+    <div class="chart-wrapper m-4">
+        <canvas
+            baseChart
+            [datasets]="barDataCountPagos"
+            [labels]="barLabelsCountPagos"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+        >
+        </canvas>
+    </div>
 
-  <div class="chart-wrapper m-4">
-    <canvas
-      baseChart
-      [datasets]="barDataGanancias"
-      [labels]="barLabelsGanancias"
-      [options]="barChartOptions"
-      [plugins]="barChartPlugins"
-      [legend]="barChartLegend"
-      [chartType]="barChartType"
-    >
-    </canvas>
-  </div>
+    <div class="chart-wrapper m-4">
+        <canvas
+            baseChart
+            [datasets]="barDataGanancias"
+            [labels]="barLabelsGanancias"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+        >
+        </canvas>
+    </div>
 
-  <div class="chart-wrapper m-4">
-    <canvas
-      baseChart
-      [datasets]="barDataTotalDePagos"
-      [labels]="barLabelsTotalDePagos"
-      [options]="barChartOptions"
-      [plugins]="barChartPlugins"
-      [legend]="barChartLegend"
-      [chartType]="barChartType"
-    >
-    </canvas>
-  </div>
+    <div class="chart-wrapper m-4">
+        <canvas
+            baseChart
+            [datasets]="barDataTotalDePagos"
+            [labels]="barLabelsTotalDePagos"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+        >
+        </canvas>
+    </div>
 
-  <div class="chart-wrapper m-4">
-    <canvas
-      baseChart
-      [datasets]="barDataTotalVendido"
-      [labels]="barLabelsTotalVendido"
-      [options]="barChartOptions"
-      [plugins]="barChartPlugins"
-      [legend]="barChartLegend"
-      [chartType]="barChartType"
-    >
-    </canvas>
-  </div>
+    <div class="chart-wrapper m-4">
+        <canvas
+            baseChart
+            [datasets]="barDataTotalVendido"
+            [labels]="barLabelsTotalVendido"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+        >
+        </canvas>
+    </div>
 </div>

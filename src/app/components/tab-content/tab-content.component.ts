@@ -1,19 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core'
+import { Observable } from 'rxjs'
 
 @Component({
-  selector: 'app-tab-content',
-  templateUrl: './tab-content.component.html',
-  styleUrls: ['./tab-content.component.scss']
+    selector: 'app-tab-content',
+    templateUrl: './tab-content.component.html',
+    styleUrls: ['./tab-content.component.scss'],
 })
 export class TabContentComponent implements OnInit {
+    @Input() tabName: string = ''
 
-  @Input() tabName: string = "";
+    constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-    // console.log(this.tabName)
-  }
-
+    ngOnInit(): void {
+        // console.log(this.tabName)
+    }
 }

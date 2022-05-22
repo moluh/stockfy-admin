@@ -1,25 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { TabSelectorComponent } from './tab-selector.component';
+import { TabSelectorComponent } from './tab-selector.component'
 
 describe('TabSelectorComponent', () => {
-  let component: TabSelectorComponent;
-  let fixture: ComponentFixture<TabSelectorComponent>;
+    let component: TabSelectorComponent
+    let fixture: ComponentFixture<TabSelectorComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ TabSelectorComponent ]
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            declarations: [TabSelectorComponent],
+        }).compileComponents()
     })
-    .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TabSelectorComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TabSelectorComponent)
+        component = fixture.componentInstance
+        fixture.detectChanges()
+    })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    it('should create', () => {
+        expect(component).toBeTruthy()
+    })
+})

@@ -4,7 +4,10 @@
     <section>
         <div class="row">
             <div *ngIf="!blockButtons" class="col-sm-12 col-md-12 col-lg-12">
-                <button class="btn btn-sm btn-outline-primary float-right" (click)="goTo()">
+                <button
+                    class="btn btn-sm btn-outline-primary float-right"
+                    (click)="goTo()"
+                >
                     + Nuevo
                 </button>
             </div>
@@ -23,17 +26,30 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let exp of expenses">
-                            <td> {{ exp.id }} </td>
-                            <td> {{ exp.monto | currency:'ARS':'symbol':'1.0' }} </td>
-                            <td>{{ exp.fecha | date: "dd-MM-YYYY" }} {{ exp.hora }}</td>
-                            <td> {{ exp.descripcion }} </td>
+                            <td>{{ exp.id }}</td>
                             <td>
-                                <button *ngIf="!blockButtons" (click)="goTo(exp)" class="btn btn-primary btn-sm m-1"
-                                    title="Editar">
+                                {{ exp.monto | currency: 'ARS':'symbol':'1.0' }}
+                            </td>
+                            <td>
+                                {{ exp.fecha | date: 'dd-MM-YYYY' }}
+                                {{ exp.hora }}
+                            </td>
+                            <td>{{ exp.descripcion }}</td>
+                            <td>
+                                <button
+                                    *ngIf="!blockButtons"
+                                    (click)="goTo(exp)"
+                                    class="btn btn-primary btn-sm m-1"
+                                    title="Editar"
+                                >
                                     Ver
                                 </button>
-                                <button *ngIf="!blockButtons" (click)="delete(exp)" class="btn btn-danger btn-sm m-1"
-                                    title="Eliminar">
+                                <button
+                                    *ngIf="!blockButtons"
+                                    (click)="delete(exp)"
+                                    class="btn btn-danger btn-sm m-1"
+                                    title="Eliminar"
+                                >
                                     Eliminar
                                 </button>
                             </td>

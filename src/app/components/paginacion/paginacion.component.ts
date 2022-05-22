@@ -1,69 +1,74 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Page } from './paginacion';
-import { Subscription } from 'rxjs';
-import { PaginacionService } from './paginacion.service';
+import {
+    Component,
+    OnInit,
+    Input,
+    Output,
+    EventEmitter,
+    OnDestroy,
+} from '@angular/core'
+import { Page } from './paginacion'
+import { Subscription } from 'rxjs'
+import { PaginacionService } from './paginacion.service'
 
 @Component({
-  selector: 'app-paginacion',
-  templateUrl: './paginacion.component.html',
-  styleUrls: ['./paginacion.component.css']
+    selector: 'app-paginacion',
+    templateUrl: './paginacion.component.html',
+    styleUrls: ['./paginacion.component.css'],
 })
 export class PaginacionComponent implements OnInit, OnDestroy {
+    @Input() pageNro: number = 0
+    @Input() pageSize: number = 10
+    @Output() changePage = new EventEmitter()
 
-  @Input() pageNro: number = 0;
-  @Input() pageSize: number = 10;
-  @Output() changePage = new EventEmitter();
+    reset: Subscription
+    size: Subscription
+    btn: Subscription
 
-  reset: Subscription;
-  size: Subscription;
-  btn: Subscription;
+    blockBtn: boolean = false
 
-  blockBtn: boolean = false;
+    pageModel: Page = {
+        pageNro: this.pageNro,
+        pageSize: this.pageSize,
+    }
 
-  pageModel: Page = {
-    pageNro: this.pageNro,
-    pageSize: this.pageSize
-  };
+    constructor(private _pag: PaginacionService) {
+        this.reset = this._pag.returnPagNro().subscribe((val) => {
+            this.pageModel.pageNro = val
+            this.emit()
+        })
 
-  constructor(private _pag: PaginacionService) {
+        this.size = this._pag.returnPagSize().subscribe((val) => {
+            this.pageModel.pageSize = val
+            this.emit()
+        })
 
-    this.reset = this._pag.returnPagNro().subscribe(val => {
-      this.pageModel.pageNro = val;
-      this.emit();
-    });
+        this.btn = this._pag
+            .returnBtn()
+            .subscribe((state) => (this.blockBtn = state))
+    }
 
-    this.size = this._pag.returnPagSize().subscribe(val => {
-      this.pageModel.pageSize = val;
-      this.emit();
-    });
+    ngOnInit() {
+        this.emit()
+    }
 
-    this.btn = this._pag.returnBtn().subscribe(state => this.blockBtn = state);
-  }
+    emit() {
+        this.changePage.emit(this.pageModel)
+    }
 
-  ngOnInit() {
-    this.emit();
-  }
+    next() {
+        this.pageModel.pageNro++
+        this.emit()
+    }
 
-  emit() {
-    this.changePage.emit(this.pageModel);
-  }
+    back() {
+        if (this.pageModel.pageNro == 0) return
+        this.pageModel.pageNro--
+        this.emit()
+    }
 
-  next() {
-    this.pageModel.pageNro++;
-    this.emit();
-  }
-
-  back() {
-    if (this.pageModel.pageNro == 0) return;
-    this.pageModel.pageNro--;
-    this.emit();
-  }
-
-  ngOnDestroy(): void {
-    this.btn.unsubscribe();
-    this.reset.unsubscribe();
-    this.size.unsubscribe();
-  }
-
-
+    ngOnDestroy(): void {
+        this.btn.unsubscribe()
+        this.reset.unsubscribe()
+        this.size.unsubscribe()
+    }
 }
